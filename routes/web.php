@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//$parameters = request()->all();
+// Display all GET parameters
+//dd($parameters);
+
 Route::get('/', function () {
-    return view('welcome2');
+
+    return view('welcome');
 });
 
 Auth::routes();
