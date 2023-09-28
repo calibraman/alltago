@@ -18,9 +18,21 @@ use Illuminate\Support\Facades\Route;
 //dd($parameters);
 
 Route::get('/', function () {
-
     return view('welcome');
 });
+
+Route::get('/mobile-ios/inAppSuccess', function () {
+    return view('mobile-ios/inAppSuccess');
+});
+
+
+Route::get('/mobile-ios/inAppExpired', function () {
+    return view('mobile-ios/inAppExpired');
+});
+
+
+
+
 
 Auth::routes();
 
