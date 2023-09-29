@@ -1466,6 +1466,11 @@ img.mx-auto {
   margin: 0 auto;
   display: block;
 }
+.btn-center-xl {
+  width: 320px;
+  margin: 0 auto;
+  display: block;
+}
 
 .btn-center-xl {
   width: 250px;
