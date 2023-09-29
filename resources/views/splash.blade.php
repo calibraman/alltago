@@ -27,20 +27,11 @@
             <div class="card-center text-center">
                 <!-- shows in light mode-->
                 <div class="show-on-theme-light">
-                    <h1 class="color-black font-40 font-700 mt-3">HERZlich willkommen</h1>
-                    <p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>
+                    <h1 class="color-black font-30 font-700 mt-3">HERZlich willkommen</h1>
+                    <p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch<br>und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>
 
                     <p class="boxed-text-xl font-14 font-400 line-height-l opacity-70 color-black">
                         Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang komplett kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
-                    </p>
-                </div>
-                <!-- shows in dark mode-->
-                <div class="show-on-theme-dark">
-                    <h1 class="color-white font-40 mt-3">Welcome</h1>
-                    <p class="color-white opacity-50">StickyMobile - The Best Mobile Kit</p>
-
-                    <p class="boxed-text-xl font-14 line-height-l color-white">
-                        StickyMobile is the best Selling Mobile Web Kit on the Envato Marketplaces, blazing fast and with full PWA, RTL and Dark Mode Support.
                     </p>
                 </div>
                 <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen komplett kostenfrei.</a>
@@ -55,15 +46,15 @@
     <div id="menu-signin" class="menu menu-box-bottom menu-box-detached rounded-m"
          data-menu-effect="menu-parallax">
         <div class="me-3 ms-3 mt-4">
-            <h1 class="text-uppercase font-900 mb-0">LOGIN</h1>
+            <h1 class="text-uppercase font-900 mb-0">Einloggen</h1>
             <p class="font-11  mt-n1 mb-2">
-                Hello, stranger! Please enter your credentials below.
+                Hallo und willkommen zurück, bitte loggen Sie sich ein.
             </p>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-user"></i>
-                <input type="name" class="form-control validate-name" id="form1a" placeholder="Name">
-                <label for="form1a" class="color-blue-dark">Name</label>
+                <i class="fa fa-at"></i>
+                <input type="name" class="form-control validate-email" id="form1a" placeholder="E-Mail Adresse">
+                <label for="form1a" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
@@ -71,19 +62,19 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-user"></i>
-                <input type="password" class="form-control validate-text" id="form3a" placeholder="Password">
-                <label for="form3a" class="color-blue-dark">Password</label>
+                <input type="password" class="form-control validate-text" id="form3a" placeholder="Passwort">
+                <label for="form3a" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <a href="#" data-menu="menu-forgot" class="font-10">Forgot Password?</a>
+                    <a href="#" data-menu="menu-forgot" class="font-10">Passwort vergessen?</a>
                 </div>
                 <div class="col-6">
-                    <a data-menu="menu-signup" href="#" class="float-end font-10">Create Account</a>
-                    <div class="clearfix"></div>
+                    <!--<a data-menu="menu-signup" href="#" class="float-end font-10">Create Account</a>
+                    <div class="clearfix"></div>-->
                 </div>
             </div>
             <a href="#" data-menu="menu-signup" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">LOGIN</a>
@@ -93,15 +84,15 @@
     <div id="menu-signup" class="menu menu-box-bottom menu-box-detached rounded-m"
          data-menu-effect="menu-parallax">
         <div class="me-3 ms-3 mt-4">
-            <h1 class="text-uppercase font-900 mb-0">Register</h1>
+            <h1 class="text-uppercase font-900 mb-0">Registrieren</h1>
             <p class="font-11  mt-n1 mb-0">
-                Don't have an account? Register below.
+                Hallo und Willkommen bei uns. Bitte erstellen Sie sich hier einen Zugang, völlig kostenfrei.
             </p>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-user"></i>
-                <input type="name" class="form-control validate-name" id="form1ab" placeholder="Name">
-                <label for="form1ab" class="color-blue-dark">Name</label>
+                <input type="name" class="form-control validate-name" id="form1ab" placeholder="Vorname">
+                <label for="form1ab" class="color-blue-dark">Vorname</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
@@ -109,8 +100,8 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-at"></i>
-                <input type="email" class="form-control validate-email" id="form1aa" placeholder="Name">
-                <label for="form1aa" class="color-blue-dark">Name</label>
+                <input type="email" class="form-control validate-email" id="form1aa" placeholder="E-Mail Adresse">
+                <label for="form1aa" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
@@ -118,35 +109,35 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-lock"></i>
-                <input type="password" class="form-control validate-password" id="form3a" placeholder="Password">
-                <label for="form3a" class="color-blue-dark">Password</label>
+                <input type="password" class="form-control validate-password" id="form3a" placeholder="Passwort">
+                <label for="form3a" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
             </div>
-            <p class="text-center pb-0 mb-n1 pt-1">
+           <!-- <p class="text-center pb-0 mb-n1 pt-1">
                 <a href="#" data-menu="menu-signin" class="text-center font-11 color-gray-dark">Already Registered? Sign In Here.</a>
-            </p>
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue-dark mt-4 mb-3">Register</a>
+            </p> -->
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue-dark mt-4 mb-3">Registrierung abschließen</a>
         </div>
     </div>
 
     <div id="menu-forgot" class="menu menu-box-bottom menu-box-detached rounded-m"
          data-menu-effect="menu-parallax">
         <div class="me-3 ms-3 mt-4">
-            <h2 class="text-uppercase font-900 mb-0">Forgot Password?</h2>
+            <h2 class="text-uppercase font-900 mb-0">Passwort vergessen?</h2>
             <p class="font-11 mb-3">
-                Let's get you back into your account. Enter your email to reset.
+                Kein Problem, geben Sie hier bitte Ihre E-Mail Adresse ein und Sie erhalten sofort ein neues Passwort.
             </p>
             <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-user"></i>
-                <input type="email" class="form-control validate-email" id="form1a4" placeholder="Email">
-                <label for="form1a4" class="color-blue-dark">Email</label>
+                <i class="fa fa-at"></i>
+                <input type="email" class="form-control validate-email" id="form1a4" placeholder="E-Mail Adresse">
+                <label for="form1a4" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
             </div>
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3">SEND RECOVERY EMAIL</a>
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3">Neues Passwort zuschicken</a>
         </div>
     </div>
 
