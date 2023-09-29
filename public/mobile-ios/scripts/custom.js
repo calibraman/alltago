@@ -26,9 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Attaching Menu Hider
         var menuHider = document.getElementsByClassName('menu-hider');
         if(!menuHider.length){var hider = document.createElement('div'); hider.setAttribute("class", "menu-hider");document.body.insertAdjacentElement('beforebegin', hider);}
-        setTimeout(function(){if(menuHider){menuHider.classList.remove('menu-active')}},50);
-
-        //Activating Menus
+         //Activating Menus
         document.querySelectorAll('.menu').forEach(el=>{el.style.display='block'})
 
         //Validator
