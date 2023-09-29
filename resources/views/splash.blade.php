@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="de">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -37,10 +37,10 @@
                     <p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch<br>und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>
 
                     <p class="boxed-text-xl font-14 font-400 line-height-l opacity-70 color-black">
-                        Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang komplett kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
+                        Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
                     </p>
                 </div>
-                <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen komplett kostenfrei.</a>
+                <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
                 <a href="#" data-menu="menu-signin" class="color-theme font-500 opacity-50">Sie haben bereits einen Zugang? Hier anmelden</a>
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
@@ -151,14 +151,14 @@
 
 </div>
 
+
 <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.js') }}"></script>
 
+
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
-
-
 
 
 <script>

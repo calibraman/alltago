@@ -39,7 +39,7 @@ var REQUIRED_FILES = [
 ];
 
 // Service Worker Diagnostic. Set true to get console logs.
-var APP_DIAG = false;
+var APP_DIAG = true;
 
 //Service Worker Function Below.
 self.addEventListener('install', function(event) {
