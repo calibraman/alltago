@@ -18,7 +18,7 @@
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
 
-<div id="page"> 
+<div id="page">
 
     <div class="page-content pb-0">
 
@@ -27,11 +27,11 @@
             <div class="card-center text-center">
                 <!-- shows in light mode-->
                 <div class="show-on-theme-light">
-                    <h1 class="color-black font-40 font-800 mt-3">Welcome</h1>
-                    <p class="color-black opacity-50">StickyMobile - The Best Mobile Kit</p>
+                    <h1 class="color-black font-40 font-800 mt-3">HERZlich willkommen</h1>
+                    <p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>
 
                     <p class="boxed-text-xl font-14 font-400 line-height-l opacity-70 color-black">
-                        StickyMobile is the best Selling Mobile Web Kit on the Envato Marketplaces, blazing fast and with full PWA, RTL and Dark Mode Support.
+                        Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang komplett kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
                     </p>
                 </div>
                 <!-- shows in dark mode-->
@@ -43,8 +43,8 @@
                         StickyMobile is the best Selling Mobile Web Kit on the Envato Marketplaces, blazing fast and with full PWA, RTL and Dark Mode Support.
                     </p>
                 </div>
-                <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-l mb-3 mt-5 bg-highlight">Login to Get Started</a>
-                <a href="#" data-menu="menu-signup" class="color-theme font-500 opacity-50">Don't have an account? Create Account</a>
+                <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-l mb-3 mt-5 bg-highlight">Sie haben bereits einen Zugang? Hier anmelden</a>
+                <a href="#" data-menu="menu-signup" class="color-theme font-500 opacity-50">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen komplett kostenfrei.</a>
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
             <div class="card-overlay-infinite preload-img" data-src="{{ URL::asset('mobile-ios/images/pictures/_bg-infinite.jpg') }}"></div>
