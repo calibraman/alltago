@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //dd($parameters);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('splash');
 });
 
 Route::get('/mobile-ios/inAppSuccess', function () {
