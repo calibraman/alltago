@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <title>StickyMobile BootStrap</title>
+    <title>ALLTAGO</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/style.css') }}">
+    <link href="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.css') }}" rel="stylesheet" type="text/css" />
+
+
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/fonts/css/fontawesome-all.min.css') }}">
     <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
@@ -57,7 +63,7 @@
                 <label for="form1a" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
@@ -66,7 +72,7 @@
                 <label for="form3a" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
             <div class="row">
                 <div class="col-6">
@@ -86,39 +92,39 @@
         <div class="me-3 ms-3 mt-4">
             <h1 class="text-uppercase font-900 mb-0">Registrieren</h1>
             <p class="font-11  mt-n1 mb-0">
-                Hallo und Willkommen bei uns. Bitte erstellen Sie sich hier einen Zugang, völlig kostenfrei.
+                Hallo und Willkommen bei uns. Bitte erstellen Sie sich hier einen Zugang, völlig kostenfrei.<br><br>
             </p>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-user"></i>
-                <input type="name" class="form-control validate-name" id="form1ab" placeholder="Vorname">
-                <label for="form1ab" class="color-blue-dark">Vorname</label>
+                <input type="name" class="form-control validate-name" id="txtNeuerAnsprechpartnerVorname" placeholder="Vorname">
+                <label for="txtNeuerAnsprechpartnerVorname" class="color-blue-dark">Vorname</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-at"></i>
-                <input type="email" class="form-control validate-email" id="form1aa" placeholder="E-Mail Adresse">
-                <label for="form1aa" class="color-blue-dark">E-Mail Adresse</label>
+                <input type="email" class="form-control validate-email" id="txtNeuerAnsprechpartnerEmail" placeholder="E-Mail Adresse">
+                <label for="txtNeuerAnsprechpartnerEmail" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-lock"></i>
-                <input type="password" class="form-control validate-password" id="form3a" placeholder="Passwort">
-                <label for="form3a" class="color-blue-dark">Passwort</label>
+                <input type="password" class="form-control validate-password" id="txtNeuerAnsprechpartnerPasswort" placeholder="Passwort">
+                <label for="txtNeuerAnsprechpartnerPasswort" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
            <!-- <p class="text-center pb-0 mb-n1 pt-1">
                 <a href="#" data-menu="menu-signin" class="text-center font-11 color-gray-dark">Already Registered? Sign In Here.</a>
             </p> -->
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue-dark mt-4 mb-3">Registrierung abschließen</a>
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue-dark mt-4 mb-3" onclick="benutzerAnlegen()">Registrierung abschließen</a>
         </div>
     </div>
 
@@ -135,9 +141,9 @@
                 <label for="form1a4" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3">Neues Passwort zuschicken</a>
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3">Neues Passwort zusenden</a>
         </div>
     </div>
 
@@ -147,4 +153,112 @@
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
+
+<script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
+<script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.js') }}"></script>
+
+<script>
+    function benutzerAnlegen() {
+        var email = $('#txtNeuerAnsprechpartnerEmail').val().trim();
+        var vorname = $('#txtNeuerAnsprechpartnerVorname').val().trim();
+        var passwort = $('#txtNeuerAnsprechpartnerPasswort').val().trim();
+
+        if (vorname == "") {
+            Toastify({
+                text: "Bitte geben Sie Ihren Vornamen an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (email == "") {
+            Toastify({
+                text: "Bitte geben Sie eine E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+        if (validateEmail(email)) {
+        } else {
+            Toastify({
+                text: "Bitte geben Sie eine gültige E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (passwort == "") {
+            Toastify({
+                text: "Bitte geben Sie ein Passwort an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*   401: function(){
+                       location.href = "./";
+                   },
+                   419: function(){
+                       location.href = "./";
+                   },
+               405: function(){
+                   location.href = "./";
+               }*/
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.anlegen') }}",
+            data: {'vorname': vorname,
+                   'passwort': passwort,
+                   'email': email },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    Toastify({
+                        text: "Herzlich willkommen :)",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+</script>
 </body>

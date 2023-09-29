@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController;
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +38,22 @@ Route::get('/mobile-ios/inAppExpired', function () {
 
 
 
+///////////////////
+///////////////////
+/// BENUTZER
+///////////////////
+///////////////////
+Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen')->middleware(['auth', 'verified']);
+
+
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
