@@ -67,7 +67,7 @@
             </div>
 
             <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-user"></i>
+                <i class="fa fa-user"></i> 
                 <input type="password" class="form-control validate-text" id="form3a" placeholder="Passwort">
                 <label for="form3a" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
