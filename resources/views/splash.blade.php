@@ -59,8 +59,8 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-at"></i>
-                <input type="name" class="form-control validate-email" id="form1a" placeholder="E-Mail Adresse">
-                <label for="form1a" class="color-blue-dark">E-Mail Adresse</label>
+                <input type="name" class="form-control validate-email" id="txtLoginUsername" placeholder="E-Mail Adresse" value="k@streckers.de">
+                <label for="txtLoginUsername" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(erforderlich)</em>
@@ -68,8 +68,8 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-user"></i>
-                <input type="password" class="form-control validate-text" id="form3a" placeholder="Passwort">
-                <label for="form3a" class="color-blue-dark">Passwort</label>
+                <input type="password" class="form-control validate-text" id="txtLoginPassword" placeholder="Passwort" value="test">
+                <label for="txtLoginPassword" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(erforderlich)</em>
@@ -83,7 +83,7 @@
                     <div class="clearfix"></div>-->
                 </div>
             </div>
-            <a href="/home" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">LOGIN</a>
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>
         </div>
     </div>
 
@@ -242,6 +242,81 @@
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
+                    Toastify({
+                        text: "Herzlich willkommen :)",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+
+    function login() {
+        var username = $('#txtLoginUsername').val().trim();
+        var password = $('#txtLoginPassword').val().trim();
+
+        if (username == "") {
+            Toastify({
+                text: "Bitte geben Sie Ihre E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+
+        if (password == "") {
+            Toastify({
+                text: "Bitte geben Sie Ihr Passwort ein.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*   401: function(){
+                       location.href = "./";
+                   },
+                   419: function(){
+                       location.href = "./";
+                   },
+               405: function(){
+                   location.href = "./";
+               }*/
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('login') }}",
+            data: {'email': username,
+                   'password': password },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    alert("W");
                     Toastify({
                         text: "Herzlich willkommen :)",
                         className: "info",

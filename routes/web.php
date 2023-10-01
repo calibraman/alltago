@@ -23,7 +23,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('splash');
-});
+})->name('splash');
 
 Route::get('/mobile-ios/inAppSuccess', function () {
     return view('mobile-ios/inAppSuccess');
@@ -35,15 +35,12 @@ Route::get('/mobile-ios/inAppExpired', function () {
 });
 
 
-
-
-
 ///////////////////
 ///////////////////
 /// BENUTZER
 ///////////////////
 ///////////////////
-Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen')->middleware(['auth', 'verified']);
+Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
 
 
 

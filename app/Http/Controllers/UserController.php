@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
 
     public function userAnlegen(Request $request)
     {
@@ -19,7 +19,7 @@ class UserController extends Controller
         $email = trim($request->email);
         $passwortLesbar = trim($request->passwort);
 
-        $passwortLesbar = $this->generierePasswort(8, 3, 5, true);
+       // $passwortLesbar = $this->generierePasswort(8, 3, 5, true);
         $passwort = Hash::make($passwortLesbar);
 
 
@@ -75,11 +75,11 @@ class UserController extends Controller
         // E-Mail versenden
         // ANREDE basteln
         $apAnrede = "Sehr geehrte Damen und Herren,";
-        if ($anrede == "Frau") {
+      /*  if ($anrede == "Frau") {
             $apAnrede = "Sehr geehrte Frau " . $nachname . ",";
         } elseif ($anrede == "Herr") {
             $apAnrede = "Sehr geehrter Herr " .$nachname . ",";
-        }
+        }*/
 
         // Job anlegen
         /*
