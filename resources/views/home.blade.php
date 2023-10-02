@@ -146,21 +146,21 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="tel" class="form-control validate-text" id="form4" placeholder="Sys">
+                <input type="number" class="form-control validate-text" id="form4" placeholder="Sys">
                 <label for="form4" class="color-highlight">SYS</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="num" class="form-control validate-text" id="form4" placeholder="Dia">
+                <input type="number" class="form-control validate-text" id="form4" placeholder="Dia">
                 <label for="form4" class="color-highlight">DIA</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(required)</em>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="num" class="form-control validate-text" id="form4" placeholder="Puls">
+                <input type="number" class="form-control validate-text" id="form4" placeholder="Puls">
                 <label for="form4" class="color-highlight">PULS</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
