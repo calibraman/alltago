@@ -610,8 +610,15 @@ class UserController extends Controller
                                      messungen.userID = ".$benutzerID." ORDER BY messungen.datum DESC ".$sqlLimit);
         $query->execute();
         $letztesDatum = '';
+
+
+
         while($r=$query->fetch(\PDO::FETCH_BOTH)) {
-            $humanTiming = '';
+            $iconTageszeit = '';
+            if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;Morgens um ';
+            if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;Mittags um ';
+            if ($r['tageszeit'] == 'abend') $iconTageszeit = '<i class="fa-solid fa-bed"></i>>&nbsp;Morgens um ';
+
             /*
             $events .= '<div class="acitivity-item py-3 d-flex">
                                         <div class="flex-shrink-0">
@@ -642,13 +649,39 @@ class UserController extends Controller
                             </div>';
                 } else {
 
-                    $events.= ' <div class="timeline-item">
+                 /*   $events.= ' <div class="timeline-item">
                                 <div class="card rounded-s shadow-l m-3">
                                     <h5 class="font-300 text-center">
                                         '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
                                     </h5>
                                 </div>
                             </div>';
+                    */
+                    $events .= '<div class="card card-style mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br>'. $r['tageszeit'].'</h4>
+                                                <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    <i class="fa fa-check color-green-dark font-11"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 07:30 AM - 08:00 AM</span>
+                                            </div>
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-green-dark opacity-50"></div>
+                                </div>';
                 }
 
             } else {
