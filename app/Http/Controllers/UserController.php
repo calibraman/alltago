@@ -682,7 +682,7 @@ class UserController extends Controller
             <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
                 <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
                 <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
-                <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag im Durchschnitt.</strong>
+                <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag.</strong>
             </div>    ';
 
 
@@ -714,9 +714,9 @@ class UserController extends Controller
                                             <div class="align-self-center">
                                                 <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
                                             </div>
-                                          <!--  <div class="align-self-center ms-auto">
-                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
-                                            </div> -->
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
@@ -753,9 +753,9 @@ class UserController extends Controller
                                             <div class="align-self-center">
                                                 <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
                                             </div>
-                                          <!--  <div class="align-self-center ms-auto">
-                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
-                                            </div> -->
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
@@ -774,7 +774,7 @@ class UserController extends Controller
             <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
                 <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
                 <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
-                <strong class="alert-icon-text">Der Blutdruck liegt im Bereich einer leichten<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Erhöhung im Durchschnitt an diesem Tag.</strong>
+                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
             </div>     ';
                 $events .= '<div class="card card-style mb-3">
                                     <div class="card-body">
@@ -795,9 +795,9 @@ class UserController extends Controller
                                             <div class="align-self-center">
                                                 <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
                                             </div>
-                                          <!--  <div class="align-self-center ms-auto">
-                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
-                                            </div> -->
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
