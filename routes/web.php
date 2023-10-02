@@ -22,8 +22,8 @@ use App\Http\Controllers\UserController;
 //dd($parameters);
 
 Route::get('/', function () {
-    return view('splash');
-})->name('splash');
+    return view('home');
+})->name('home');
 
 Route::get('/home2', function () {
     return view('home2');
@@ -38,6 +38,9 @@ Route::get('/mobile-ios/inAppExpired', function () {
     return view('mobile-ios/inAppExpired');
 });
 
+Route::get('splash', function () {
+    return view('splash');
+})->name('splash');
 
 ///////////////////
 ///////////////////
