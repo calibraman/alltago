@@ -45,81 +45,111 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div class="page-content header-clear-medium">
 
-        <div class="timeline-body timeline-body-center">
-            <div class="timeline-deco"></div>
-
-            <div class="timeline-item">
-                <i class="far fa-map bg-blue-dark shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Stop saying pink is the new black! Pink is just pink! Seriously! <a href="#">#funnyRant</a>
-                    </h5>
-                    <div class="mt-4 text-center">
-                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
+        <div class="card card-style mb-3">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="align-self-start">
+                        <h4 class="mb-0 font-18">Introduction to Event</h4>
+                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
+                    </div>
+                    <div class="align-self-start ms-auto ps-3">
+						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+							<i class="fa fa-check color-green-dark font-11"></i>
+						</span>
+                    </div>
+                </div>
+                <div class="divider mt-2 mb-2"></div>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 07:30 AM - 08:00 AM</span>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
                     </div>
                 </div>
             </div>
-
-            <div class="timeline-item">
-                <i class="fa fa-globe bg-yellow-dark shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Heading to a PhotoShoot on Mars with <a href="#">@Elon Musk</a>. This will be fun!
-                    </h5>
-                    <p class="text-center color-theme mt-3 mb-0 pb-0 font-10"><i class="fa fa-map-pin me-3 font-11"></i>Posted from Mars. No, Realy!</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-facebook-f bg-facebook shadow-l timeline-icon"></i>
-                <div class="timeline-item-content-full rounded-s shadow-l">
-                    <img data-src="images/pictures/9w.jpg" alt="img" src="images/empty.png" class="preload-img img-fluid">
-                    <h5 class="font-300 text-center mt-3">
-                        Our first Photo on Google Plus. We're adding stuff here too now!
-                    </h5>
-                    <a href="#" class="btn btn-m btn-center-l rounded-s bg-facebook text-uppercase font-700">Follow on Facebook</a>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-pinterest-p bg-pinterest shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Just updated our Facebook Page. You can visit it <a href="#">on our Page</a>.
-                    </h5>
-                    <a href="#" class="mt-4 mb-2 btn btn-m btn-center-l rounded-s bg-pinterest text-uppercase font-700">Pinned from Pinterest</a>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-twitter bg-twitter shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Twitter is struggling to get users. We're considering moving over to Google Plus. <a href="#">#feedback #needed</a>
-                    </h5>
-                    <p class="text-center mt-4 mb-0 pb-0">
-                        <a href="#" class="text-center font-400">Follow us @iEnabled via Twitter for iOS</a>
-                    </p>
-                </div>
-            </div>
+            <div class="card-overlay bg-green-dark opacity-50"></div>
         </div>
 
-        <div class="footer card card-style">
-            <a href="#" class="footer-title"><span class="color-highlight">StickyMobile</span></a>
-            <p class="footer-text"><span>Made with <i class="fa fa-heart color-highlight font-16 ps-2 pe-2"></i> by Enabled</span><br><br>Powered by the best Mobile Website Developer on Envato Market. Elite Quality. Elite Products.</p>
-            <div class="text-center mb-3">
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-phone"><i class="fa fa-phone"></i></a>
-                <a href="#" data-menu="menu-share" class="icon icon-xs rounded-sm me-1 shadow-l bg-red-dark"><i class="fa fa-share-alt"></i></a>
-                <a href="#" class="back-to-top icon icon-xs rounded-sm shadow-l bg-dark-light"><i class="fa fa-angle-up"></i></a>
+        <div class="card card-style mb-3">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="align-self-start">
+                        <h4 class="mb-0 font-18">King of The Hill</h4>
+                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Gold's Gym, California</span>
+                    </div>
+                    <div class="align-self-start ms-auto ps-3">
+						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+							<i class="fa fa-mountain color-red-dark font-11"></i>
+						</span>
+                    </div>
+                </div>
+                <div class="divider mt-2 mb-2"></div>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 09:00 AM - 11:00 AM</span>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <span class="font-12 color-theme opacity-30 font-500"><i class="fa fa-moon font-11 pe-1"></i> Do not Disturb</span>
+                    </div>
+                </div>
             </div>
-            <p class="footer-copyright">Copyright &copy; Enabled <span id="copyright-year">2017</span>. All Rights Reserved.</p>
-            <p class="footer-links"><a href="#" class="color-highlight">Privacy Policy</a> | <a href="#" class="color-highlight">Terms and Conditions</a> | <a href="#" class="back-to-top color-highlight"> Back to Top</a></p>
-            <div class="clear"></div>
+            <div class="card-overlay bg-red-dark opacity-30"></div>
         </div>
+
+        <div class="card card-style mb-3">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="align-self-start">
+                        <h4 class="mb-0 font-18">Team Deathmatch</h4>
+                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
+                    </div>
+                    <div class="align-self-start ms-auto ps-3">
+						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+							<i class="fa fa-skull color-teal-dark font-11"></i>
+						</span>
+                    </div>
+                </div>
+                <div class="divider mt-2 mb-2"></div>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 11:00 AM - 11:30 AM</span>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <span class="font-12 color-theme opacity-30 font-500"><i class="fa fa-link font-11 pe-1"></i> Check Paperwork</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-overlay bg-teal-dark opacity-40"></div>
+        </div>
+
+        <div class="card card-style mb-3">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="align-self-start">
+                        <h4 class="mb-0 font-18">Score Count & Report</h4>
+                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Starbucks, South Avenue</span>
+                    </div>
+                    <div class="align-self-start ms-auto ps-3">
+						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+							<i class="fa fa-coffee color-brown-dark font-11"></i>
+						</span>
+                    </div>
+                </div>
+                <div class="divider mt-2 mb-2"></div>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 12:30 AM - 2:45 PM</span>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <img src="images/pictures/faces/4s.png" width="30" class="rounded-circle ms-n3 border border-brown-dark border-xs">
+                    </div>
+                </div>
+            </div>
+            <div class="card-overlay bg-brown-dark opacity-40"></div>
+        </div>
+
+
 
     </div>
     <!-- End of Page Content-->
