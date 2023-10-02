@@ -59,27 +59,32 @@
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <div class="input-style no-borders has-icon validate-field mb-4">
-                    <i class="fa fa-at"></i>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                    <label for="txtLoginUsername" class="color-blue-dark">E-Mail Adresse</label>
-                    <i class="fa fa-times disabled invalid color-red-dark"></i>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
-                    <em>(erforderlich)</em>
-                </div>
+                <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
-                <div class="input-style no-borders has-icon validate-field mb-4">
-                    <i class="fa fa-user"></i>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                    <label for="txtLoginPassword" class="color-blue-dark">Passwort</label>
-                    <i class="fa fa-times disabled invalid color-red-dark"></i>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
-                    <em>(erforderlich)</em>
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
+                    <div class="col-md-6">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                    @enderror
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                    <div class="col-md-6">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
