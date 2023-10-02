@@ -90,7 +90,7 @@
                         <div class="clearfix"></div>-->
                     </div>
                 </div>
-                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>
+                <!--<a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>-->
 
                 <button type="submit" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">
                     {{ __('Login') }}
@@ -138,7 +138,6 @@
                 <a href="#" data-menu="menu-signin" class="text-center font-11 color-gray-dark">Already Registered? Sign In Here.</a>
             </p> -->
             <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-blue-dark mt-4 mb-3" onclick="benutzerAnlegen()">Registrierung abschließen</a>
-            <button id="myBtn">Try it</button>
         </div>
     </div>
 
