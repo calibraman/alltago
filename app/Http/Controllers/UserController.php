@@ -548,6 +548,13 @@ class UserController extends Controller
         if ($stunden >= 12 ) $tageszeit = 'mittag';
         if ($stunden >= 17 ) $tageszeit = 'abend';
 
+        $hypertonie = 0;
+        if ($txtNeueMessungSys >= 130 && $txtNeueMessungSys <= 139) $hypertonie = 1;
+        if ($txtNeueMessungDia >= 80 && $txtNeueMessungDia <= 89) $hypertonie = 1;
+
+        if ($txtNeueMessungSys >= 140) $hypertonie = 2;
+        if ($txtNeueMessungDia >= 90) $hypertonie = 2;
+
         try {
             $stmt = $pdo->prepare("INSERT INTO `messungen` (
                                                     `messungID` ,
@@ -556,6 +563,7 @@ class UserController extends Controller
                                                     `sys`,
                                                     `dia`,
                                                     `puls`,
+                                                    `hypertonie`,
                                                     `tageszeit`,
                                                     `eingetragenAm`
                                                   ) VALUES (
@@ -565,6 +573,7 @@ class UserController extends Controller
                                                     :sys,
                                                     :dia,
                                                     :puls,
+                                                    :hypertonie,
                                                     :tageszeit,
                                                     NOW()
                                           )");
@@ -574,6 +583,7 @@ class UserController extends Controller
             $stmt->bindParam(":dia",$txtNeueMessungDia);
             $stmt->bindParam(":puls",$txtNeueMessungPuls);
             $stmt->bindParam(":tageszeit",$tageszeit);
+            $stmt->bindParam(":hypertonie",$hypertonie);
             $stmt->execute();
             //$objEvent = new event();
             //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
@@ -615,9 +625,28 @@ class UserController extends Controller
 
         while($r=$query->fetch(\PDO::FETCH_BOTH)) {
             $iconTageszeit = '';
-            if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;Morgens um ';
-            if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;Mittags um ';
-            if ($r['tageszeit'] == 'abend') $iconTageszeit = '<i class="fa-solid fa-bed"></i>>&nbsp;Morgens um ';
+            if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;&nbsp;Morgens um ';
+            if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;&nbsp;Mittags um ';
+            if ($r['tageszeit'] == 'abend') $iconTageszeit = '<i class="fa-solid fa-bed"></i>&nbsp;&nbsp;Abends um ';
+
+            $iconInformation = '';
+            $farbe = '';
+            $beschreibung = '';
+            if ($r['hypertonie'] == 0) {
+                $farbe = 'green';
+                $iconInformation = '<i class="fa fa-check color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Optimaler Blutdruck';
+            }
+            if ($r['hypertonie'] == 1) {
+                $farbe = 'yellow';
+                $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Milde Hypertonie (Grad 1)';
+            }
+            if ($r['hypertonie'] == 2) {
+                $farbe = 'red';
+                $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Hypertonie (Grad 2)';
+            }
 
             /*
             $events .= '<div class="acitivity-item py-3 d-flex">
@@ -639,7 +668,7 @@ class UserController extends Controller
 
             if (!empty($letztesDatum)) {
                 if ($letztesDatum != substr($r['datum'],0,10)) {
-                    $events.= ' <div class="timeline-item">
+                /*    $events.= ' <div class="timeline-item">
                                 <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. substr($r['datum'],0,10).'</i>
                                 <div class="timeline-item-content rounded-s shadow-l">
                                     <h5 class="font-300 text-center">
@@ -647,6 +676,34 @@ class UserController extends Controller
                                     </h5>
                                 </div>
                             </div>';
+*/
+                    $events .= '<div class="card card-style mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    '.$iconInformation.'
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
+                                            </div>
+                                          <!--  <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
+                                </div>';
+
                 } else {
 
                  /*   $events.= ' <div class="timeline-item">
@@ -661,26 +718,27 @@ class UserController extends Controller
                                     <div class="card-body">
                                         <div class="d-flex">
                                             <div class="align-self-start">
-                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br>'. $r['tageszeit'].'</h4>
-                                                <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
-                                                    <i class="fa fa-check color-green-dark font-11"></i>
+                                                    '.$iconInformation.'
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="divider mt-2 mb-2"></div>
                                         <div class="d-flex">
                                             <div class="align-self-center">
-                                                <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 07:30 AM - 08:00 AM</span>
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
                                             </div>
-                                            <div class="align-self-center ms-auto">
+                                          <!--  <div class="align-self-center ms-auto">
                                                 <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
-                                    <div class="card-overlay bg-green-dark opacity-50"></div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
                                 </div>';
                 }
 

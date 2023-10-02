@@ -23,11 +23,11 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->name('home')->middleware(['auth', 'verified']);
 
 Route::get('/home2', function () {
     return view('home2');
-})->name('home2');
+})->name('home2')->middleware(['auth', 'verified']);
 
 Route::get('/mobile-ios/inAppSuccess', function () {
     return view('mobile-ios/inAppSuccess');
