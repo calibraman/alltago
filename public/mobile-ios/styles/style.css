@@ -4939,7 +4939,7 @@ input[type=number] {
   left: 50%;
   line-height: 60px;
   margin-left: -31px;
- // margin-top: -115px;
+  margin-top: -115px;
 }
 
 .timeline-body-center .timeline-deco {

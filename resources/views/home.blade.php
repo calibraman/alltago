@@ -298,6 +298,16 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script>
 
 
+    // Variable, um den aktuellen Offset zu speichern
+    let offset = 0;
+
+    $(document).ready(function() {
+        // Lade die ersten Events beim Start der Seite
+        $('#eventContainer').html('');
+        loadMoreEvents();
+    })
+
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -407,16 +417,6 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         });
     }
 
-
-
-    // Variable, um den aktuellen Offset zu speichern
-    let offset = 0;
-
-    $(document).ready(function() {
-        // Lade die ersten Events beim Start der Seite
-        $('#eventContainer').html('');
-        loadMoreEvents();
-    })
 
 
 

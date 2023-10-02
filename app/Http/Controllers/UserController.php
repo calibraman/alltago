@@ -608,7 +608,7 @@ class UserController extends Controller
         $sqlLimit = '';
         if(isset($request->lim) && !empty($request->lim)) $sqlLimit = ' LIMIT '.$request->offset.','.$request->lim;
 
-        //$objAllgemein = new AllgemeinController();
+        $objAllgemein = new AllgemeinController();
 
         $events = '';
 
@@ -678,13 +678,23 @@ class UserController extends Controller
                             </div>';
 */
 
+                    $events .= '<p></p>
+            <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
+                <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
+                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
+                <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag im Durchschnitt.</strong>
+            </div>    ';
 
-                    $events.= '     <div class="timeline-item-content rounded-s shadow-l">
+
+
+
+
+                /*    $events.= '     <div class="timeline-item-content rounded-s shadow-l">
                                     <h5 class="font-300 text-center">
-                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.substr($r['datum'],0,10).'<br>
+                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'<br>
                                     </h5>
                                 </div>
-                                ';
+                                ';*/
                     $events .= '<div class="card card-style mb-3 ">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -722,6 +732,8 @@ class UserController extends Controller
                                 </div>
                             </div>';
                     */
+
+
                     $events .= '<div class="card card-style mb-3">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -751,13 +763,19 @@ class UserController extends Controller
                 }
 
             } else {
-                $events.= '     <div class="timeline-item-content rounded-s shadow-l">
+              /*  $events.= '     <div class="timeline-item-content rounded-s shadow-l">
                                     <h5 class="font-300 text-center">
-                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.substr($r['datum'],0,10).'<br>
+                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'<br>
                                     </h5>
                                 </div>
                                 ';
-
+*/
+                $events .= '<p></p>
+            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
+                <strong class="alert-icon-text">Der Blutdruck liegt im Bereich einer leichten<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Erhöhung im Durchschnitt an diesem Tag.</strong>
+            </div>     ';
                 $events .= '<div class="card card-style mb-3">
                                     <div class="card-body">
                                         <div class="d-flex">
