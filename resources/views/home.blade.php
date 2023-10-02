@@ -319,24 +319,18 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
                 Messwerte:
                 <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
                     <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
-                    <i class="fa fa-times disabled invalid color-red-dark"></i>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
                     <em>(erforderlich)</em>
                 </div>
                 <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="Dia">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
                     <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
-                    <i class="fa fa-times disabled invalid color-red-dark"></i>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
                     <em>(erforderlich)</em>
                 </div>
                 <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="Puls">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
                     <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
-                    <i class="fa fa-times disabled invalid color-red-dark"></i>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
                     <em>(erforderlich)</em>
                 </div>
 
