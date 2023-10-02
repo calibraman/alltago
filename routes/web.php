@@ -25,6 +25,10 @@ Route::get('/', function () {
     return view('splash');
 })->name('splash');
 
+Route::get('/home2', function () {
+    return view('home2');
+})->name('home2');
+
 Route::get('/mobile-ios/inAppSuccess', function () {
     return view('mobile-ios/inAppSuccess');
 });

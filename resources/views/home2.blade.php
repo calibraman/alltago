@@ -38,24 +38,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div id="footer-bar" class="footer-bar-1">
         <!--<a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>-->
         <a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>
-        <a href="home" class="active-nav"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
-        <a href="home2"><i class="fa-solid fa-droplet"></i><span>Blutwerte</span></a>
+        <a href="home" ><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
+        <a href="home2" class="active-nav"><i class="fa-solid fa-droplet"></i><span>Blutwerte</span></a>
         <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellunen</span></a>
     </div>
 
     <div class="page-content header-clear-medium">
 
-        <div class="timeline-cover timeline-cover-center">
-            <div data-card-height="230" class="card preload-img" data-src="images/pictures/21.jpg">
-                <div class="card-center text-center">
-                    <h1 class="color-white fa-3x">Karla Black</h1>
-                    <p class="color-white opacity-90 mb-0">
-                        Professional Photographer, Europe
-                    </p>
-                </div>
-                <div class="card-overlay bg-black opacity-80"></div>
-            </div>
-        </div>
         <div class="timeline-body timeline-body-center">
             <div class="timeline-deco"></div>
 
