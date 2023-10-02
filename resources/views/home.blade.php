@@ -23,7 +23,11 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/fonts/css/fontawesome-all.min.css') }}">
     <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
     <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+    <style>
+
+    </style>
 </head>
+
 
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
 
@@ -48,6 +52,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div class="page-content header-clear-medium">
 
+        <!--
         <div class="timeline-cover timeline-cover-center">
             <div data-card-height="230" class="card preload-img" data-src="images/pictures/21.jpg">
                 <div class="card-center text-center">
@@ -59,9 +64,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <div class="card-overlay bg-black opacity-80"></div>
             </div>
         </div>
+-->
 
-
-        <div class="timeline-body timeline-body-center">
+        <div class=" timeline-body-center">
             <div id="eventContainer">
                 <!-- Hier werden die Events dynamisch hinzugefügt -->
             </div>
@@ -409,6 +414,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     $(document).ready(function() {
         // Lade die ersten Events beim Start der Seite
+        $('#eventContainer').html('');
         loadMoreEvents();
     })
 
@@ -421,7 +427,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             type: "POST",
             dataType: "json",
             url:"{{ route('user.holeFeed') }}",
-            data: {'lim':3,
+            data: {'lim':8,
                    'offset':offset},
             success: function (response) {
                 // Wenn Daten erfolgreich abgerufen wurden

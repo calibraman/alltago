@@ -609,6 +609,7 @@ class UserController extends Controller
                                  WHERE
                                      messungen.userID = ".$benutzerID." ORDER BY messungen.datum DESC ".$sqlLimit);
         $query->execute();
+        $letztesDatum = '';
         while($r=$query->fetch(\PDO::FETCH_BOTH)) {
             $humanTiming = '';
             /*
@@ -629,16 +630,40 @@ class UserController extends Controller
                                     </div>
             ';*/
 
+            if (!empty($letztesDatum)) {
+                if ($letztesDatum != substr($r['datum'],0,10)) {
+                    $events.= ' <div class="timeline-item">
+                                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. substr($r['datum'],0,10).'</i>
+                                <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                                    </h5>
+                                </div>
+                            </div>';
+                } else {
 
-            $events.= ' <div class="timeline-item">
-                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. $r['datum'].'</i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
-                    </h5>
-                </div>
-            </div>';
+                    $events.= ' <div class="timeline-item">
+                                <div class="card rounded-s shadow-l m-3">
+                                    <h5 class="font-300 text-center">
+                                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                                    </h5>
+                                </div>
+                            </div>';
+                }
 
+            } else {
+                $events.= ' <div class="timeline-item">
+                                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. substr($r['datum'],0,10).'</i>
+                                <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                                    </h5>
+                                </div>
+                            </div>';
+            }
+
+
+            $letztesDatum = substr($r['datum'],0,10);
 
         }
 
