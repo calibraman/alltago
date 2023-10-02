@@ -48,13 +48,14 @@ Route::get('splash', function () {
 ///////////////////
 ///////////////////
 Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
+Route::post('user.messungEintragen', [UserController::class, 'messungEintragen'])->name('user.messungEintragen')->middleware(['auth', 'verified']);
 
 
 
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
 
 
 

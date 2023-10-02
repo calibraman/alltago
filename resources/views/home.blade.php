@@ -10,12 +10,15 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>StickyMobile BootStrap</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/style.css') }}">
+    <link href="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/fonts/css/fontawesome-all.min.css') }}">
     <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
@@ -37,10 +40,10 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div id="footer-bar" class="footer-bar-1">
         <!--<a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>-->
         <a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>
+        <a href="home2"><i class="fa-solid fa-droplet"></i><span>Messungen</span></a>
         <a href="home" class="active-nav"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
-        <a href="home2"><i class="fa-solid fa-droplet"></i><span>Blutwerte</span></a>
-        <a href="#"  data-menu="menu-neueMessung"><i class="fa-solid fa-plus"></i><span>Neue Messung</span></a>
-        <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellunen</span></a>
+        <a href="#" onclick="zeigeNeueMessungModal()"><i class="fa-solid fa-plus"></i><span>Neue Messung</span></a>
+        <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellungen</span></a>
     </div>
 
     <div class="page-content header-clear-medium">
@@ -136,38 +139,41 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
     <div id="menu-neueMessung" class="menu menu-box-bottom menu-box-detached">
-        <div class="menu-title mt-0 pt-0"><h1>Neue Messung eintragen</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
+        <div class="menu-title mt-0 pt-0"><h1>Neue Messung eintragen</h1><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>
         <div class="content">
+
+            <!--
             <div class="input-style has-borders no-icon mb-4">
-                <input type="date" value="<?php echo date('Y-m-d'); ?>>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="form6" placeholder="Phone">
-                <label for="form6" class="color-highlight">Datum:</label>
+                <input type="date" value="<?php echo date('Y-m-d'); ?>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="txtNeueMessungDatum" placeholder="Phone">
+                <label for="txtNeueMessungDatum" class="color-highlight">Datum:</label>
                 <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
                 <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="number" class="form-control validate-text" id="form4" placeholder="Sys">
-                <label for="form4" class="color-highlight">SYS</label>
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
+                <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="number" class="form-control validate-text" id="form4" placeholder="Dia">
-                <label for="form4" class="color-highlight">DIA</label>
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="Dia">
+                <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
             <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="number" class="form-control validate-text" id="form4" placeholder="Puls">
-                <label for="form4" class="color-highlight">PULS</label>
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="Puls">
+                <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                <em>(erforderlich)</em>
             </div>
 
-
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+-->
 
         </div>
     </div>
@@ -289,6 +295,67 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 </div>
 
+
+<!-- Neue Messgung Eintragen -->
+<div id="modalNeueMessungEintragen" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Objekt anlegen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-style has-borders no-icon mb-4">
+                    <input type="date" value="<?php echo date('Y-m-d'); ?>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="txtNeueMessungDatum" placeholder="Phone">
+                    <label for="txtNeueMessungDatum" class="color-highlight">Datum:</label>
+                    <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
+                    <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
+                </div>
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
+                    <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(erforderlich)</em>
+                </div>
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="Dia">
+                    <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(erforderlich)</em>
+                </div>
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="Puls">
+                    <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(erforderlich)</em>
+                </div>
+
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-soft-warning" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Abbrechen</span>
+                </button>
+
+                <button type="button" id="btnObjektAnlegenSpeichern" class="btn btn-success ml-1" onclick="objektAnlegen()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Anlegen</span>
+                </button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
 <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -296,4 +363,115 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
+
+
+<script>
+
+
+    function zeigeNeueMessungModal(){
+        $('#txtNeueMessungDatum').val('');
+        $('#txtNeueMessungSys').val('');
+        $('#txtNeueMessungDia').val('');
+        $('#txtNeueMessungPuls').val('');
+        $('#modalNeueMessungEintragen').modal('toggle');
+
+    }
+
+    function neueMessungEintragen() {
+        var txtNeueMessungDatum = $('#txtNeueMessungDatum').val().trim();
+        var txtNeueMessungSys = $('#txtNeueMessungSys').val().trim();
+        var txtNeueMessungDia = $('#txtNeueMessungDia').val().trim();
+        var txtNeueMessungPuls = $('#txtNeueMessungPuls').val().trim();
+
+        if (txtNeueMessungDatum == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein Datum aus.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungSys == "") {
+            Toastify({
+                text: "Bitte geben Sie den Systolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungDia == "") {
+            Toastify({
+                text: "Bitte geben Sie den Diastolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungPuls == "") {
+            Toastify({
+                text: "Bitte geben Sie den Puls an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            statusCode: {
+                /*   401: function(){
+                       location.href = "./";
+                   },
+                   419: function(){
+                       location.href = "./";
+                   },
+               405: function(){
+                   location.href = "./";
+               }*/
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.messungEintragen') }}",
+            data: {'txtNeueMessungDatum': txtNeueMessungDatum,
+                   'txtNeueMessungSys': txtNeueMessungSys,
+                   'txtNeueMessungDia': txtNeueMessungDia ,
+                   'txtNeueMessungPuls': txtNeueMessungPuls },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    $('#modalNeueMessungEintragen').modal('toggle');
+                    Toastify({
+                        text: "Herzlich willkommen :)",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+</script>
 </body>

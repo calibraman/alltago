@@ -528,4 +528,54 @@ class UserController extends Controller
         return ['success'=>''];
     }
 
+    public function messungEintragen(Request $request)
+    {
+
+        $pdo = DB::connection()->getPdo();
+
+        $txtNeueMessungDatum = trim($request->txtNeueMessungDatum);
+        $txtNeueMessungSys = trim($request->txtNeueMessungSys);
+        $txtNeueMessungDia = trim($request->txtNeueMessungDia);
+        $txtNeueMessungPuls = trim($request->txtNeueMessungPuls);
+
+        $benutzerID =  Auth::user()->id;
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO `messungen` (
+                                                    `messungID` ,
+                                                    `userID` ,
+                                                    `datum`,
+                                                    `sys`,
+                                                    `dia`,
+                                                    `puls`,
+                                                    `eingetragenAm`
+                                                  ) VALUES (
+                                                    NULL ,
+                                                    :userID,
+                                                    :datum,
+                                                    :sys,
+                                                    :dia,
+                                                    :puls,
+                                                    NOW()
+                                          )");
+            $stmt->bindParam(":userID",$benutzerID);
+            $stmt->bindParam(":datum",$txtNeueMessungDatum);
+            $stmt->bindParam(":sys",$txtNeueMessungSys);
+            $stmt->bindParam(":dia",$txtNeueMessungDia);
+            $stmt->bindParam(":puls",$txtNeueMessungPuls);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler', 'text1' => "Fehler", 'text2' => "Es ist ein Fehler beim Eintragen der Messung aufgetreten.<br><br>" . $e->getMessage()));
+        }
+
+
+        return json_encode(array('ergebnis' => 'erfolgreich', 'text1' => "Die Messung wurde erfolgreich eingetragen."));
+
+    }
+
 }

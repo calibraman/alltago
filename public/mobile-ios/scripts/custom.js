@@ -1436,6 +1436,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function neueMessungMenuHide() {
+            menu('menu-neueMessung', 'hide', 250);
+        }
 
     }
 
