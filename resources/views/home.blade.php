@@ -305,30 +305,19 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
-                <div class="input-style has-borders no-icon mb-4">
-                    <input type="date" value="<?php echo date('Y-m-d'); ?>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="txtNeueMessungDatum" placeholder="Phone">
-                    <label for="txtNeueMessungDatum2" class="color-highlight">Datum:</label>
-                    <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
-                    <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
-                </div>
-                <div class="input-style has-borders no-icon mb-4">
+                Zeitpunkt:
+                <div class="input-style has-borders no-icon mb-5">
                     <input
                         type="datetime-local"
-                        id="meeting-txtNeueMessungDatum"
-                        name="meeting-time"
-                        value="2018-06-12T19:30"
+                        id="txtNeueMessungDatum"
+                        name="txtNeueMessungDatum"
+                        value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
                         min="2018-06-07T00:00"
                         max="2018-06-14T00:00"
                     />
                 </div>
-                <input
-                    type="datetime-local"
-                    id="meeting-time"
-                    name="meeting-time"
-                    value="2018-06-12T19:30"
-                    min="2018-06-07T00:00"
-                    max="2018-06-14T00:00"
-                />
+
+                Messwerte:
                 <div class="input-style has-borders no-icon validate-field mb-4">
                     <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
                     <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
