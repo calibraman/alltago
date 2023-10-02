@@ -63,7 +63,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             <div class="timeline-deco"></div>
 
             <div class="timeline-item">
-                <i class="far fa-map bg-blue-dark shadow-l timeline-icon"></i>
+                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon"><?php echo(date('d.m.Y')); ?></i>
                 <div class="timeline-item-content rounded-s shadow-l">
                     <h5 class="font-300 text-center">
                         Stop saying pink is the new black! Pink is just pink! Seriously! <a href="#">#funnyRant</a>
@@ -301,7 +301,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Objekt anlegen</h5>
+                <h5 class="modal-title" id="myModalLabel">Neue Messung eintragen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
             </div>
             <div class="modal-body">
@@ -333,20 +333,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     <em>(erforderlich)</em>
                 </div>
 
-                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
 
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-soft-warning" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="bx bx-x d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Abbrechen</span>
-                </button>
-
-                <button type="button" id="btnObjektAnlegenSpeichern" class="btn btn-success ml-1" onclick="objektAnlegen()">
-                    <i class="bx bx-check d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Anlegen</span>
-                </button>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
             </div>
 
         </div><!-- /.modal-content -->
@@ -460,7 +452,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 } else {
                     $('#modalNeueMessungEintragen').modal('toggle');
                     Toastify({
-                        text: "Herzlich willkommen :)",
+                        text: "Die Messung wurde erfolgreich eingetragen.",
                         className: "info",
                         duration: 5000,
                         position: "center",
