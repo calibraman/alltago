@@ -555,6 +555,9 @@ class UserController extends Controller
         if ($txtNeueMessungSys >= 140) $hypertonie = 2;
         if ($txtNeueMessungDia >= 90) $hypertonie = 2;
 
+        $mad = $txtNeueMessungDia + 1/3 * ($txtNeueMessungSys - $txtNeueMessungDia);
+
+
         try {
             $stmt = $pdo->prepare("INSERT INTO `messungen` (
                                                     `messungID` ,
@@ -562,6 +565,7 @@ class UserController extends Controller
                                                     `datum`,
                                                     `sys`,
                                                     `dia`,
+                                                    `mad`,
                                                     `puls`,
                                                     `hypertonie`,
                                                     `tageszeit`,
@@ -572,6 +576,7 @@ class UserController extends Controller
                                                     :datum,
                                                     :sys,
                                                     :dia,
+                                                    :mad,
                                                     :puls,
                                                     :hypertonie,
                                                     :tageszeit,
@@ -581,6 +586,7 @@ class UserController extends Controller
             $stmt->bindParam(":datum",$txtNeueMessungDatum);
             $stmt->bindParam(":sys",$txtNeueMessungSys);
             $stmt->bindParam(":dia",$txtNeueMessungDia);
+            $stmt->bindParam(":mad",$mad);
             $stmt->bindParam(":puls",$txtNeueMessungPuls);
             $stmt->bindParam(":tageszeit",$tageszeit);
             $stmt->bindParam(":hypertonie",$hypertonie);
@@ -624,6 +630,41 @@ class UserController extends Controller
 
 
         while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+
+            // Anzahl der Messungen ermitteln
+            $anzahlMessungen = 0;
+            $query_anzahl=$pdo->prepare("SELECT
+                                            count(messungen.messungID) as anzahl
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".substr($r['datum'],0,10)."%'");
+            $query_anzahl->execute();
+            while($r_anzahl=$query_anzahl->fetch(\PDO::FETCH_BOTH)) {
+                $anzahlMessungen = $r_anzahl['anzahl'];
+            }
+
+
+            // Summe von Hypertonie errechnen
+            $summeHypertonie = 0;
+            $query_summe=$pdo->prepare("SELECT
+                                            sum(messungen.hypertonie) as summe
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".substr($r['datum'],0,10)."%'");
+            $query_summe->execute();
+            while($r_summe=$query_summe->fetch(\PDO::FETCH_BOTH)) {
+                $summeHypertonie = $r_summe['summe'];
+            }
+
+            // Berechnung des Durchschnitts
+            $durchschnitt = $summeHypertonie / $anzahlMessungen;
+
+
+
             $iconTageszeit = '';
             if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;&nbsp;Morgens um ';
             if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;&nbsp;Mittags um ';
@@ -678,15 +719,38 @@ class UserController extends Controller
                             </div>';
 */
 
-                    $events .= '<p></p>
-            <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
-                <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
-                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
-                <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag.</strong>
-            </div>    ';
 
 
 
+
+                    $durchschnittHTML = '<p></p>
+                                            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                                <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                            </div>     ';
+
+                    if ($durchschnitt < 0.75) {
+                        $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                                </div>     ';
+                    }
+
+                    if ($durchschnitt < 0.4) {
+                        $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag.</strong>
+                                                </div>    ';
+                    }
+
+
+
+                    $events .= $durchschnittHTML;
 
 
                 /*    $events.= '     <div class="timeline-item-content rounded-s shadow-l">
@@ -701,7 +765,8 @@ class UserController extends Controller
                                             <div class="align-self-start">
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
@@ -740,7 +805,8 @@ class UserController extends Controller
                                             <div class="align-self-start">
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
@@ -770,19 +836,47 @@ class UserController extends Controller
                                 </div>
                                 ';
 */
-                $events .= '<p></p>
-            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
-                <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
-                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h4>
-                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
-            </div>     ';
+
+
+
+                $durchschnittHTML = '<p></p>
+                                            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                                <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                            </div>     ';
+
+                if ($durchschnitt < 0.75) {
+                    $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                                </div>     ';
+                }
+
+                if ($durchschnitt < 0.4) {
+                    $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag.</strong>
+                                                </div>    ';
+                }
+
+
+
+                $events .= $durchschnittHTML;
+
+
                 $events .= '<div class="card card-style mb-3">
                                     <div class="card-body">
                                         <div class="d-flex">
                                             <div class="align-self-start">
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
