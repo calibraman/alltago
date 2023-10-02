@@ -677,6 +677,14 @@ class UserController extends Controller
                                 </div>
                             </div>';
 */
+
+
+                    $events.= '     <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.substr($r['datum'],0,10).'<br>
+                                    </h5>
+                                </div>
+                                ';
                     $events .= '<div class="card card-style mb-3 ">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -743,9 +751,7 @@ class UserController extends Controller
                 }
 
             } else {
-                $events.= '
-
-                                <div class="timeline-item-content rounded-s shadow-l">
+                $events.= '     <div class="timeline-item-content rounded-s shadow-l">
                                     <h5 class="font-300 text-center">
                                         <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.substr($r['datum'],0,10).'<br>
                                     </h5>
