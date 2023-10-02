@@ -730,7 +730,7 @@ class UserController extends Controller
                                                 <strong class="alert-icon-text">Der Blutdruck war erhöht an diesem Tag.</strong>
                                             </div>     ';
 
-                    if ($durchschnitt < 0.75) {
+                    if ($durchschnitt < 1.5) {
                         $durchschnittHTML = '<p></p>
                                                 <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
                                                     <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
@@ -739,7 +739,7 @@ class UserController extends Controller
                                                 </div>     ';
                     }
 
-                    if ($durchschnitt < 0.4) {
+                    if ($durchschnitt < 1) {
                         $durchschnittHTML = '<p></p>
                                                 <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
                                                     <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
@@ -855,7 +855,7 @@ class UserController extends Controller
                                                 </div>     ';
                 }
 
-                if ($durchschnitt < 0.9) {
+                if ($durchschnitt < 1) {
                     $durchschnittHTML = '<p></p>
                                                 <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
                                                     <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
