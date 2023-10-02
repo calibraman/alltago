@@ -59,82 +59,14 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <div class="card-overlay bg-black opacity-80"></div>
             </div>
         </div>
+
+
         <div class="timeline-body timeline-body-center">
-            <div class="timeline-deco"></div>
-
-            <div class="timeline-item">
-                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon"><?php echo(date('d.m.Y')); ?></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Stop saying pink is the new black! Pink is just pink! Seriously! <a href="#">#funnyRant</a>
-                    </h5>
-                    <div class="mt-4 text-center">
-                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fa fa-globe bg-yellow-dark shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Heading to a PhotoShoot on Mars with <a href="#">@Elon Musk</a>. This will be fun!
-                    </h5>
-                    <p class="text-center color-theme mt-3 mb-0 pb-0 font-10"><i class="fa fa-map-pin me-3 font-11"></i>Posted from Mars. No, Realy!</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-facebook-f bg-facebook shadow-l timeline-icon"></i>
-                <div class="timeline-item-content-full rounded-s shadow-l">
-                    <img data-src="images/pictures/9w.jpg" alt="img" src="images/empty.png" class="preload-img img-fluid">
-                    <h5 class="font-300 text-center mt-3">
-                        Our first Photo on Google Plus. We're adding stuff here too now!
-                    </h5>
-                    <a href="#" class="btn btn-m btn-center-l rounded-s bg-facebook text-uppercase font-700">Follow on Facebook</a>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-pinterest-p bg-pinterest shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Just updated our Facebook Page. You can visit it <a href="#">on our Page</a>.
-                    </h5>
-                    <a href="#" class="mt-4 mb-2 btn btn-m btn-center-l rounded-s bg-pinterest text-uppercase font-700">Pinned from Pinterest</a>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <i class="fab fa-twitter bg-twitter shadow-l timeline-icon"></i>
-                <div class="timeline-item-content rounded-s shadow-l">
-                    <h5 class="font-300 text-center">
-                        Twitter is struggling to get users. We're considering moving over to Google Plus. <a href="#">#feedback #needed</a>
-                    </h5>
-                    <p class="text-center mt-4 mb-0 pb-0">
-                        <a href="#" class="text-center font-400">Follow us @iEnabled via Twitter for iOS</a>
-                    </p>
-                </div>
+            <div id="eventContainer">
+                <!-- Hier werden die Events dynamisch hinzugefügt -->
             </div>
         </div>
-
-        <div class="footer card card-style">
-            <a href="#" class="footer-title"><span class="color-highlight">StickyMobile</span></a>
-            <p class="footer-text"><span>Made with <i class="fa fa-heart color-highlight font-16 ps-2 pe-2"></i> by Enabled</span><br><br>Powered by the best Mobile Website Developer on Envato Market. Elite Quality. Elite Products.</p>
-            <div class="text-center mb-3">
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-phone"><i class="fa fa-phone"></i></a>
-                <a href="#" data-menu="menu-share" class="icon icon-xs rounded-sm me-1 shadow-l bg-red-dark"><i class="fa fa-share-alt"></i></a>
-                <a href="#" class="back-to-top icon icon-xs rounded-sm shadow-l bg-dark-light"><i class="fa fa-angle-up"></i></a>
-            </div>
-            <p class="footer-copyright">Copyright &copy; Enabled <span id="copyright-year">2017</span>. All Rights Reserved.</p>
-            <p class="footer-links"><a href="#" class="color-highlight">Privacy Policy</a> | <a href="#" class="color-highlight">Terms and Conditions</a> | <a href="#" class="back-to-top color-highlight"> Back to Top</a></p>
-            <div class="clear"></div>
-        </div>
-
+  
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
@@ -361,6 +293,23 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script>
 
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*   401: function(){
+                   location.href = "./";
+               },
+               419: function(){
+                   location.href = "./";
+               },
+           405: function(){
+               location.href = "./";
+           }*/
+        }
+    })
+
     function zeigeNeueMessungModal(){
         $('#txtNeueMessungDatum').val('');
         $('#txtNeueMessungSys').val('');
@@ -416,23 +365,6 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             return false;
         }
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                /*   401: function(){
-                       location.href = "./";
-                   },
-                   419: function(){
-                       location.href = "./";
-                   },
-               405: function(){
-                   location.href = "./";
-               }*/
-            }
-        })
-
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -451,6 +383,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
+                    offset = 0;
+                    loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
                     Toastify({
                         text: "Die Messung wurde erfolgreich eingetragen.",
@@ -466,5 +400,55 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             }
         });
     }
+
+
+
+    // Variable, um den aktuellen Offset zu speichern
+    let offset = 0;
+
+    $(document).ready(function() {
+        // Lade die ersten Events beim Start der Seite
+        loadMoreEvents();
+    })
+
+
+
+    // Funktion zum Abrufen und Anzeigen der Events
+    function loadMoreEvents() {
+        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.holeFeed') }}",
+            data: {'lim':3,
+                   'offset':offset},
+            success: function (response) {
+                // Wenn Daten erfolgreich abgerufen wurden
+                if (response.events.trim() !== "") {
+                    $('#eventContainer').append(response.events);
+                    offset += 8; // Inkrementiere den Offset für die nächste Ladung
+                } else {
+                    // Keine weiteren Events gefunden
+                    $('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                }
+            },
+            error: function () {
+                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
+                console.log('Fehler beim Abrufen der Events.');
+            }
+        });
+    }
+
+    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
+    function checkScroll() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            loadMoreEvents();
+        }
+    }
+
+    // Überwache das Scrollen des Benutzers
+    $(window).on('scroll', checkScroll);
+
+
 </script>
 </body>

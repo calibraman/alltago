@@ -578,4 +578,77 @@ class UserController extends Controller
 
     }
 
+
+    function holeFeed(Request $request) {
+        $pdo = DB::connection()->getPdo();
+
+        $benutzerID = Auth::user()->id;
+
+        $sqlLimit = '';
+        if(isset($request->lim) && !empty($request->lim)) $sqlLimit = ' LIMIT '.$request->offset.','.$request->lim;
+
+        //$objAllgemein = new AllgemeinController();
+
+        $events = '';
+
+        $query=$pdo->prepare("SELECT
+                                    *
+                                FROM
+                                    messungen
+                                 WHERE
+                                     messungen.userID = ".$benutzerID." ORDER BY messungen.messungID DESC ".$sqlLimit);
+        $query->execute();
+        while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+            $humanTiming = '';
+            /*
+            $events .= '<div class="acitivity-item py-3 d-flex">
+                                        <div class="flex-shrink-0">
+                                            <div class="avatar-xs acitivity-avatar">
+                                                <div class="avatar-title rounded-circle bg-soft-info text-info">
+                                                    <img src="'.$_ENV['APP_URL'].'/intern/pictures/users/'.$r['erstellt_profilbild'].'" alt="" class="avatar-xs rounded-circle">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="mb-1">'. $r['firma'].'</h5>
+                                            <h6 class="mb-1">'. $r['rubrik'].'</h6>
+                                            <p class="text-muted mb-2">'. $r['aktion'].'</p>
+                                            <small class="mb-0 text-muted">'.$objAllgemein->sqldate2date($r['zeitstempel']).' (vor '.$objAllgemein->humanTiming($r['zeitstempel']).')</small>
+                                        </div>
+                                    </div>
+            ';*/
+
+
+            $events.= ' <div class="timeline-item">
+                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. $r['datum'].'</i>
+                <div class="timeline-item-content rounded-s shadow-l">
+                    <h5 class="font-300 text-center">
+                        '. $r['datum'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                    </h5>
+                    <div class="mt-4 text-center">
+                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
+                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>';
+
+
+        }
+
+
+        return ['success'=>'','events'=>$events];
+    }
+
+
 }
