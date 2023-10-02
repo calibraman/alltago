@@ -751,6 +751,33 @@ class UserController extends Controller
                                     </h5>
                                 </div>
                                 ';
+
+                $events .= '<div class="card card-style mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    '.$iconInformation.'
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
+                                            </div>
+                                          <!--  <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
+                                </div>';
             }
 
 
