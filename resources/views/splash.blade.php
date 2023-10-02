@@ -57,33 +57,46 @@
                 Hallo und willkommen zurück, bitte loggen Sie sich ein.
             </p>
 
-            <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-at"></i>
-                <input type="name" class="form-control validate-email" id="txtLoginUsername" placeholder="E-Mail Adresse" value="k@streckers.de">
-                <label for="txtLoginUsername" class="color-blue-dark">E-Mail Adresse</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(erforderlich)</em>
-            </div>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="input-style no-borders has-icon validate-field mb-4">
+                    <i class="fa fa-at"></i>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <label for="txtLoginUsername" class="color-blue-dark">E-Mail Adresse</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(erforderlich)</em>
+                </div>
 
-            <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-user"></i>
-                <input type="password" class="form-control validate-text" id="txtLoginPassword" placeholder="Passwort" value="test">
-                <label for="txtLoginPassword" class="color-blue-dark">Passwort</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(erforderlich)</em>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <a href="#" data-menu="menu-forgot" class="font-10">Passwort vergessen?</a>
+                <div class="input-style no-borders has-icon validate-field mb-4">
+                    <i class="fa fa-user"></i>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <label for="txtLoginPassword" class="color-blue-dark">Passwort</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(erforderlich)</em>
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
                 </div>
-                <div class="col-6">
-                    <!--<a data-menu="menu-signup" href="#" class="float-end font-10">Create Account</a>
-                    <div class="clearfix"></div>-->
+                <div class="row">
+                    <div class="col-6">
+                        <a href="#" data-menu="menu-forgot" class="font-10">Passwort vergessen?</a>
+                    </div>
+                    <div class="col-6">
+                        <!--<a data-menu="menu-signup" href="#" class="float-end font-10">Create Account</a>
+                        <div class="clearfix"></div>-->
+                    </div>
                 </div>
-            </div>
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>
+
+                <button type="submit" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">
+                    {{ __('Login') }}
+                </button>
+
+            </form>
         </div>
     </div>
 
@@ -307,6 +320,7 @@
             data: {'email': username,
                    'password': password },
             success: function(data) {
+                console.log(data);
                 if(data.ergebnis == "fehler") {
                     Swal.fire({
                         title: 'Fehler',

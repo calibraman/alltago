@@ -521,7 +521,7 @@ class UserController extends Controller
 </body>
 </html>
 ';
-        $mailer = new MailerController();
+    //    $mailer = new MailerController();
         // $mailer->sendeEmail('Willkommen bei TELEFLOW',$emailInhalt,$email);
 
 
