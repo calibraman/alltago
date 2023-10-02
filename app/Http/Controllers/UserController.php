@@ -724,10 +724,10 @@ class UserController extends Controller
 
 
                     $durchschnittHTML = '<p></p>
-                                            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                            <div class="alert mb-4 rounded-s bg-red-dark" role="alert">
                                                 <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
                                                 <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
-                                                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                                <strong class="alert-icon-text">Der Blutdruck war erhöht an diesem Tag.</strong>
                                             </div>     ';
 
                     if ($durchschnitt < 0.75) {
@@ -840,13 +840,13 @@ class UserController extends Controller
 
 
                 $durchschnittHTML = '<p></p>
-                                            <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                            <div class="alert mb-4 rounded-s bg-red-dark" role="alert">
                                                 <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
                                                 <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
-                                                <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                                <strong class="alert-icon-text">Der Blutdruck war erhöht an diesem Tag.</strong>
                                             </div>     ';
 
-                if ($durchschnitt < 0.75) {
+                if ($durchschnitt < 1.5) {
                     $durchschnittHTML = '<p></p>
                                                 <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
                                                     <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
@@ -855,7 +855,7 @@ class UserController extends Controller
                                                 </div>     ';
                 }
 
-                if ($durchschnitt < 0.4) {
+                if ($durchschnitt < 0.9) {
                     $durchschnittHTML = '<p></p>
                                                 <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
                                                     <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
