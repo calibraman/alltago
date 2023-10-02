@@ -66,7 +66,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <!-- Hier werden die Events dynamisch hinzugefügt -->
             </div>
         </div>
-  
+
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
@@ -384,6 +384,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     });
                 } else {
                     offset = 0;
+                    $('#eventContainer').html('');
                     loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
                     Toastify({
