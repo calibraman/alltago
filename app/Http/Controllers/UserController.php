@@ -540,6 +540,14 @@ class UserController extends Controller
 
         $benutzerID =  Auth::user()->id;
 
+        $tageszeit = '';
+        $stunden = substr($txtNeueMessungDatum,11,2);
+
+        $tageszeit = 'morgen';
+        if ($stunden >= 5 ) $tageszeit = 'morgen';
+        if ($stunden >= 12 ) $tageszeit = 'mittag';
+        if ($stunden >= 17 ) $tageszeit = 'abend';
+
         try {
             $stmt = $pdo->prepare("INSERT INTO `messungen` (
                                                     `messungID` ,
@@ -548,6 +556,7 @@ class UserController extends Controller
                                                     `sys`,
                                                     `dia`,
                                                     `puls`,
+                                                    `tageszeit`,
                                                     `eingetragenAm`
                                                   ) VALUES (
                                                     NULL ,
@@ -556,6 +565,7 @@ class UserController extends Controller
                                                     :sys,
                                                     :dia,
                                                     :puls,
+                                                    :tageszeit,
                                                     NOW()
                                           )");
             $stmt->bindParam(":userID",$benutzerID);
@@ -563,6 +573,7 @@ class UserController extends Controller
             $stmt->bindParam(":sys",$txtNeueMessungSys);
             $stmt->bindParam(":dia",$txtNeueMessungDia);
             $stmt->bindParam(":puls",$txtNeueMessungPuls);
+            $stmt->bindParam(":tageszeit",$tageszeit);
             $stmt->execute();
             //$objEvent = new event();
             //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
@@ -596,7 +607,7 @@ class UserController extends Controller
                                 FROM
                                     messungen
                                  WHERE
-                                     messungen.userID = ".$benutzerID." ORDER BY messungen.messungID DESC ".$sqlLimit);
+                                     messungen.userID = ".$benutzerID." ORDER BY messungen.datum DESC ".$sqlLimit);
         $query->execute();
         while($r=$query->fetch(\PDO::FETCH_BOTH)) {
             $humanTiming = '';
@@ -623,23 +634,8 @@ class UserController extends Controller
                 <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. $r['datum'].'</i>
                 <div class="timeline-item-content rounded-s shadow-l">
                     <h5 class="font-300 text-center">
-                        '. $r['datum'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
                     </h5>
-                    <div class="mt-4 text-center">
-                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <a href="#" class="icon icon-xxs rounded-circle bg-red-dark "><i class="fa fa-heart"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-blue-dark me-3 ms-3"><i class="fa fa-sync"></i></a>
-                        <a href="#" class="icon icon-xxs rounded-circle bg-green-dark"><i class="fa fa-envelope"></i></a>
-                    </div>
                 </div>
             </div>';
 

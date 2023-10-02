@@ -430,7 +430,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     offset += 8; // Inkrementiere den Offset für die nächste Ladung
                 } else {
                     // Keine weiteren Events gefunden
-                    $('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
                 }
             },
             error: function () {
