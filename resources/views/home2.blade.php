@@ -3,25 +3,31 @@ $anrede = 'Hallo';
 if (date('G') > 5) $anrede = 'Guten Morgen';
 if (date('G') >= 8) $anrede = 'Guten Tag';
 if (date('G') >= 17) $anrede = 'Guten Abend';
-
 ?>
 
 
-<!DOCTYPE HTML>
+    <!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>StickyMobile BootStrap</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/style.css') }}">
+    <link href="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/fonts/css/fontawesome-all.min.css') }}">
     <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
     <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+    <style>
+
+    </style>
 </head>
+
 
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
 
@@ -38,122 +44,85 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div id="footer-bar" class="footer-bar-1">
         <!--<a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>-->
         <a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>
-        <a href="home" ><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
-        <a href="home2" class="active-nav"><i class="fa-solid fa-droplet"></i><span>Blutwerte</span></a>
-        <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellunen</span></a>
+        <!--<a href="home2"><i class="fa-solid fa-droplet"></i><span>Messungen</span></a>-->
+        <a href="home"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
+        <a href="home2" class="active-nav"><i class="fa-solid fa-book"></i><span>Tagebuch2</span></a>
+        <a href="#" onclick="zeigeNeueMessungModal()"><i class="fa-solid fa-plus"></i><span>Neue Messung</span></a>
+        <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellungen</span></a>
     </div>
 
     <div class="page-content header-clear-medium">
 
-        <div class="card card-style mb-3">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="align-self-start">
-                        <h4 class="mb-0 font-18">Introduction to Event</h4>
-                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
-                    </div>
-                    <div class="align-self-start ms-auto ps-3">
-						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
-							<i class="fa fa-check color-green-dark font-11"></i>
-						</span>
-                    </div>
+        <div class="calendar bg-theme shadow-xl rounded-m">
+            <div class="cal-footer">
+                <h6 class="cal-sub-title uppercase bold bg-highlight color-white">Schedule Box</h6>
+                <span class="cal-message mt-3 mb-3">
+                    <i class="fa fa-bell font-18 color-green-dark"></i>
+                    <strong class="color-gray-dark">Reminder: Call the plumber for Kitchen Sink</strong>
+                    <strong class="color-gray-dark">Reminder: Today is Karla Black's Birthday.</strong>
+                </span>
+                <div class="divider mb-0"></div>
+                <div class="cal-schedule">
+                    <em>08:00 PM<br>10:00 AM</em>
+                    <strong class="d-block mb-n2">Closing Hours</strong>
+                    <span><i class="fa fa-map-marker"></i>Envato Headquarters</span>
                 </div>
-                <div class="divider mt-2 mb-2"></div>
-                <div class="d-flex">
-                    <div class="align-self-center">
-                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 07:30 AM - 08:00 AM</span>
-                    </div>
-                    <div class="align-self-center ms-auto">
-                        <span class="font-12 color-theme opacity-30 font-500"><i class="far fa-car font-11 pe-1"></i> 25 min by car</span>
-                    </div>
+                <div class="cal-schedule">
+                    <em>09:00 PM<br>10:00 PM</em>
+                    <strong class="d-block mb-n2">Call David</strong>
+                    <span><i class="fa fa-phone"></i>Call David's Office Number</span>
                 </div>
             </div>
-            <div class="card-overlay bg-green-dark opacity-50"></div>
         </div>
 
-        <div class="card card-style mb-3">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="align-self-start">
-                        <h4 class="mb-0 font-18">King of The Hill</h4>
-                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Gold's Gym, California</span>
-                    </div>
-                    <div class="align-self-start ms-auto ps-3">
-						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
-							<i class="fa fa-mountain color-red-dark font-11"></i>
-						</span>
-                    </div>
-                </div>
-                <div class="divider mt-2 mb-2"></div>
-                <div class="d-flex">
-                    <div class="align-self-center">
-                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 09:00 AM - 11:00 AM</span>
-                    </div>
-                    <div class="align-self-center ms-auto">
-                        <span class="font-12 color-theme opacity-30 font-500"><i class="fa fa-moon font-11 pe-1"></i> Do not Disturb</span>
-                    </div>
-                </div>
+        <div class=" timeline-body-center">
+            <div id="eventContainer">
+                <!-- Hier werden die Events dynamisch hinzugefügt -->
             </div>
-            <div class="card-overlay bg-red-dark opacity-30"></div>
         </div>
-
-        <div class="card card-style mb-3">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="align-self-start">
-                        <h4 class="mb-0 font-18">Team Deathmatch</h4>
-                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Home, California</span>
-                    </div>
-                    <div class="align-self-start ms-auto ps-3">
-						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
-							<i class="fa fa-skull color-teal-dark font-11"></i>
-						</span>
-                    </div>
-                </div>
-                <div class="divider mt-2 mb-2"></div>
-                <div class="d-flex">
-                    <div class="align-self-center">
-                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 11:00 AM - 11:30 AM</span>
-                    </div>
-                    <div class="align-self-center ms-auto">
-                        <span class="font-12 color-theme opacity-30 font-500"><i class="fa fa-link font-11 pe-1"></i> Check Paperwork</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-overlay bg-teal-dark opacity-40"></div>
-        </div>
-
-        <div class="card card-style mb-3">
-            <div class="card-body">
-                <div class="d-flex">
-                    <div class="align-self-start">
-                        <h4 class="mb-0 font-18">Score Count & Report</h4>
-                        <span class="font-11"><i class="fa fa-map-marker font-10 pe-1"></i> Starbucks, South Avenue</span>
-                    </div>
-                    <div class="align-self-start ms-auto ps-3">
-						<span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
-							<i class="fa fa-coffee color-brown-dark font-11"></i>
-						</span>
-                    </div>
-                </div>
-                <div class="divider mt-2 mb-2"></div>
-                <div class="d-flex">
-                    <div class="align-self-center">
-                        <span class="font-12 color-theme opacity-70 font-500"><i class="far fa-clock font-11 pe-1"></i> 12:30 AM - 2:45 PM</span>
-                    </div>
-                    <div class="align-self-center ms-auto">
-                        <img src="images/pictures/faces/4s.png" width="30" class="rounded-circle ms-n3 border border-brown-dark border-xs">
-                    </div>
-                </div>
-            </div>
-            <div class="card-overlay bg-brown-dark opacity-40"></div>
-        </div>
-
-
 
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
+    <div id="menu-neueMessung" class="menu menu-box-bottom menu-box-detached">
+        <div class="menu-title mt-0 pt-0"><h1>Neue Messung eintragen</h1><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
+        <div class="divider divider-margins mb-n2"></div>
+        <div class="content">
+
+            <!--
+            <div class="input-style has-borders no-icon mb-4">
+                <input type="date" value="<?php echo date('Y-m-d'); ?>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="txtNeueMessungDatum" placeholder="Phone">
+                <label for="txtNeueMessungDatum" class="color-highlight">Datum:</label>
+                <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
+                <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
+            </div>
+            <div class="input-style has-borders no-icon validate-field mb-4">
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
+                <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
+                <i class="fa fa-times disabled invalid color-red-dark"></i>
+                <i class="fa fa-check disabled valid color-green-dark"></i>
+                <em>(erforderlich)</em>
+            </div>
+            <div class="input-style has-borders no-icon validate-field mb-4">
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="Dia">
+                <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
+                <i class="fa fa-times disabled invalid color-red-dark"></i>
+                <i class="fa fa-check disabled valid color-green-dark"></i>
+                <em>(erforderlich)</em>
+            </div>
+            <div class="input-style has-borders no-icon validate-field mb-4">
+                <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="Puls">
+                <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
+                <i class="fa fa-times disabled invalid color-red-dark"></i>
+                <i class="fa fa-check disabled valid color-green-dark"></i>
+                <em>(erforderlich)</em>
+            </div>
+
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+-->
+
+        </div>
+    </div>
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">
         <div class="menu-title mt-0 pt-0"><h1>Settings</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>
@@ -272,6 +241,60 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 </div>
 
+
+<!-- Neue Messgung Eintragen -->
+<div id="modalNeueMessungEintragen" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Neue Messung eintragen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                Zeitpunkt:
+                <div class="input-style has-borders no-icon mb-5">
+                    <input
+                        type="datetime-local"
+                        id="txtNeueMessungDatum"
+                        name="txtNeueMessungDatum"
+                        value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
+                        min="2018-06-07T00:00"
+                        max="2018-06-14T00:00"
+                    />
+                </div>
+
+                Messwerte:
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
+                    <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
+                    <em>(erforderlich)</em>
+                </div>
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
+                    <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
+                    <em>(erforderlich)</em>
+                </div>
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
+                    <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
+                    <em>(erforderlich)</em>
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
 <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -279,4 +302,169 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
+
+
+<script>
+
+
+    // Variable, um den aktuellen Offset zu speichern
+    let offset = 0;
+
+    $(document).ready(function() {
+        // Lade die ersten Events beim Start der Seite
+        $('#eventContainer').html('');
+        loadMoreEvents();
+    })
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*   401: function(){
+                   location.href = "./";
+               },
+               419: function(){
+                   location.href = "./";
+               },
+           405: function(){
+               location.href = "./";
+           }*/
+        }
+    })
+
+    function zeigeNeueMessungModal(){
+        $('#txtNeueMessungDatum').val('');
+        $('#txtNeueMessungSys').val('');
+        $('#txtNeueMessungDia').val('');
+        $('#txtNeueMessungPuls').val('');
+        $('#modalNeueMessungEintragen').modal('toggle');
+
+    }
+
+    function neueMessungEintragen() {
+        var txtNeueMessungDatum = $('#txtNeueMessungDatum').val().trim();
+        var txtNeueMessungSys = $('#txtNeueMessungSys').val().trim();
+        var txtNeueMessungDia = $('#txtNeueMessungDia').val().trim();
+        var txtNeueMessungPuls = $('#txtNeueMessungPuls').val().trim();
+
+        if (txtNeueMessungDatum == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein Datum aus.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungSys == "") {
+            Toastify({
+                text: "Bitte geben Sie den Systolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungDia == "") {
+            Toastify({
+                text: "Bitte geben Sie den Diastolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungPuls == "") {
+            Toastify({
+                text: "Bitte geben Sie den Puls an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.messungEintragen') }}",
+            data: {'txtNeueMessungDatum': txtNeueMessungDatum,
+                'txtNeueMessungSys': txtNeueMessungSys,
+                'txtNeueMessungDia': txtNeueMessungDia ,
+                'txtNeueMessungPuls': txtNeueMessungPuls },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    offset = 0;
+                    $('#eventContainer').html('');
+                    loadMoreEvents();
+                    $('#modalNeueMessungEintragen').modal('toggle');
+                    Toastify({
+                        text: "Die Messung wurde erfolgreich eingetragen.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+
+
+
+    // Funktion zum Abrufen und Anzeigen der Events
+    function loadMoreEvents() {
+        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.holeFeed2') }}",
+            data: {'lim':8,
+                'offset':offset},
+            success: function (response) {
+                // Wenn Daten erfolgreich abgerufen wurden
+                if (response.events.trim() !== "") {
+                    $('#eventContainer').append(response.events);
+                    offset += 8; // Inkrementiere den Offset für die nächste Ladung
+                } else {
+                    // Keine weiteren Events gefunden
+                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                }
+            },
+            error: function () {
+                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
+                console.log('Fehler beim Abrufen der Events.');
+            }
+        });
+    }
+
+    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
+    function checkScroll() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            loadMoreEvents();
+        }
+    }
+
+    // Überwache das Scrollen des Benutzers
+    $(window).on('scroll', checkScroll);
+
+
+</script>
 </body>

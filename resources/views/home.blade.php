@@ -6,7 +6,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 ?>
 
 
-<!DOCTYPE HTML>
+    <!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -44,8 +44,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div id="footer-bar" class="footer-bar-1">
         <!--<a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>-->
         <a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>
-        <a href="home2"><i class="fa-solid fa-droplet"></i><span>Messungen</span></a>
+        <!--<a href="home2"><i class="fa-solid fa-droplet"></i><span>Messungen</span></a>-->
         <a href="home" class="active-nav"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
+        <a href="home2"><i class="fa-solid fa-book"></i><span>Tagebuch2</span></a>
         <a href="#" onclick="zeigeNeueMessungModal()"><i class="fa-solid fa-plus"></i><span>Neue Messung</span></a>
         <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellungen</span></a>
     </div>
@@ -65,6 +66,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             </div>
         </div>
 -->
+
+
 
         <div class=" timeline-body-center">
             <div id="eventContainer">
@@ -385,9 +388,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             dataType: "json",
             url:"{{ route('user.messungEintragen') }}",
             data: {'txtNeueMessungDatum': txtNeueMessungDatum,
-                   'txtNeueMessungSys': txtNeueMessungSys,
-                   'txtNeueMessungDia': txtNeueMessungDia ,
-                   'txtNeueMessungPuls': txtNeueMessungPuls },
+                'txtNeueMessungSys': txtNeueMessungSys,
+                'txtNeueMessungDia': txtNeueMessungDia ,
+                'txtNeueMessungPuls': txtNeueMessungPuls },
             success: function(data) {
                 if(data.ergebnis == "fehler") {
                     Swal.fire({
@@ -428,7 +431,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             dataType: "json",
             url:"{{ route('user.holeFeed') }}",
             data: {'lim':8,
-                   'offset':offset},
+                'offset':offset},
             success: function (response) {
                 // Wenn Daten erfolgreich abgerufen wurden
                 if (response.events.trim() !== "") {

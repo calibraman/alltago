@@ -908,4 +908,312 @@ class UserController extends Controller
     }
 
 
+
+    function holeFeed2(Request $request) {
+        $pdo = DB::connection()->getPdo();
+
+        $benutzerID = Auth::user()->id;
+
+        $sqlLimit = '';
+        if(isset($request->lim) && !empty($request->lim)) $sqlLimit = ' LIMIT '.$request->offset.','.$request->lim;
+
+        $objAllgemein = new AllgemeinController();
+
+        $events = '';
+
+        $query=$pdo->prepare("SELECT
+                                    *
+                                FROM
+                                    messungen
+                                 WHERE
+                                     messungen.userID = ".$benutzerID." ORDER BY messungen.datum DESC ".$sqlLimit);
+        $query->execute();
+        $letztesDatum = '';
+
+
+
+        while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+
+            // Anzahl der Messungen ermitteln
+            $anzahlMessungen = 0;
+            $query_anzahl=$pdo->prepare("SELECT
+                                            count(messungen.messungID) as anzahl
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".substr($r['datum'],0,10)."%'");
+            $query_anzahl->execute();
+            while($r_anzahl=$query_anzahl->fetch(\PDO::FETCH_BOTH)) {
+                $anzahlMessungen = $r_anzahl['anzahl'];
+            }
+
+
+            // Summe von Hypertonie errechnen
+            $summeHypertonie = 0;
+            $query_summe=$pdo->prepare("SELECT
+                                            sum(messungen.hypertonie) as summe
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".substr($r['datum'],0,10)."%'");
+            $query_summe->execute();
+            while($r_summe=$query_summe->fetch(\PDO::FETCH_BOTH)) {
+                $summeHypertonie = $r_summe['summe'];
+            }
+
+            // Berechnung des Durchschnitts
+            $durchschnitt = $summeHypertonie / $anzahlMessungen;
+
+
+
+            $iconTageszeit = '';
+            if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;&nbsp;Morgens';
+            if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;&nbsp;Mittags';
+            if ($r['tageszeit'] == 'abend') $iconTageszeit = '<i class="fa-solid fa-bed"></i>&nbsp;&nbsp;Abends';
+
+            $iconInformation = '';
+            $farbe = '';
+            $beschreibung = '';
+            if ($r['hypertonie'] == 0) {
+                $farbe = 'green';
+                $iconInformation = '<i class="fa fa-check color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Optimaler Blutdruck';
+            }
+            if ($r['hypertonie'] == 1) {
+                $farbe = 'yellow';
+                $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Milde Hypertonie (Grad 1)';
+            }
+            if ($r['hypertonie'] == 2) {
+                $farbe = 'red';
+                $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbe.'-dark font-11"></i>';
+                $beschreibung = 'Hypertonie (Grad 2)';
+            }
+
+            /*
+            $events .= '<div class="acitivity-item py-3 d-flex">
+                                        <div class="flex-shrink-0">
+                                            <div class="avatar-xs acitivity-avatar">
+                                                <div class="avatar-title rounded-circle bg-soft-info text-info">
+                                                    <img src="'.$_ENV['APP_URL'].'/intern/pictures/users/'.$r['erstellt_profilbild'].'" alt="" class="avatar-xs rounded-circle">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="mb-1">'. $r['firma'].'</h5>
+                                            <h6 class="mb-1">'. $r['rubrik'].'</h6>
+                                            <p class="text-muted mb-2">'. $r['aktion'].'</p>
+                                            <small class="mb-0 text-muted">'.$objAllgemein->sqldate2date($r['zeitstempel']).' (vor '.$objAllgemein->humanTiming($r['zeitstempel']).')</small>
+                                        </div>
+                                    </div>
+            ';*/
+
+            if (!empty($letztesDatum)) {
+                if ($letztesDatum != substr($r['datum'],0,10)) {
+                /*    $events.= ' <div class="timeline-item">
+                                <i style="font-size:10px" class="far  bg-blue-dark shadow-l timeline-icon">'. substr($r['datum'],0,10).'</i>
+                                <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                                    </h5>
+                                </div>
+                            </div>';
+*/
+
+
+
+
+
+                    $durchschnittHTML = '<p></p>
+                                            <div class="alert mb-4 rounded-s bg-red-dark" role="alert">
+                                                <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                <strong class="alert-icon-text">Der Blutdruck war erhöht an diesem Tag.</strong>
+                                            </div>     ';
+
+                    if ($durchschnitt < 1.5) {
+                        $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-yellow-dark" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-exclamation font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war leicht erhöht an diesem Tag.</strong>
+                                                </div>     ';
+                    }
+
+                    if ($durchschnitt < 1) {
+                        $durchschnittHTML = '<p></p>
+                                                <div class="alert mb-4 rounded-s bg-green-dark p-3" role="alert">
+                                                    <span class="alert-icon"><i class="fa fa-check font-18"></i></span>
+                                                <h4 class="text-uppercase color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).' Anzahl:'.$anzahlMessungen.' Summe:'.$summeHypertonie.' Schnitt:'.$durchschnitt.'</h4>
+                                                    <strong class="alert-icon-text">Der Blutdruck war optimal an diesem Tag.</strong>
+                                                </div>    ';
+                    }
+
+
+
+                    $events .= $durchschnittHTML;
+
+
+                /*    $events.= '     <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'<br>
+                                    </h5>
+                                </div>
+                                ';*/
+                    $events .= '<div class="card card-style mb-3 ">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    '.$iconInformation.'
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
+                                            </div>
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
+                                </div>';
+
+                } else {
+
+                 /*   $events.= ' <div class="timeline-item">
+                                <div class="card rounded-s shadow-l m-3">
+                                    <h5 class="font-300 text-center">
+                                        '. $r['datum'].'<br>'. $r['tageszeit'].'<br><br>SYS:'. $r['sys'].'<br>DIA:'. $r['dia'].'<br>Puls:'. $r['puls'].'
+                                    </h5>
+                                </div>
+                            </div>';
+                    */
+
+
+                    $events .= '<div class="card card-style mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    '.$iconInformation.'
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
+                                            </div>
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
+                                </div>';
+                }
+
+            } else {
+              /*  $events.= '     <div class="timeline-item-content rounded-s shadow-l">
+                                    <h5 class="font-300 text-center">
+                                        <i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'<br>
+                                    </h5>
+                                </div>
+                                ';
+*/
+
+
+
+                $durchschnittHTML = '<h6 class="cal-sub-title uppercase bold bg-red-dark color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h6>';
+
+                if ($durchschnitt < 1.5) {
+                    $durchschnittHTML = '<h6 class="cal-sub-title uppercase bold bg-yellow-dark color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h6>';
+                }
+
+                if ($durchschnitt < 1) {
+                    $durchschnittHTML = '<h6 class="cal-sub-title uppercase bold bg-green-dark color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($r['datum']).'</h6>';
+                }
+
+
+
+                $events .= $durchschnittHTML;
+
+
+
+                $events .= ' <div class="calendar bg-theme shadow-xl rounded-m">
+                                <div class="cal-footer">
+                                    '.$durchschnittHTML.'
+                                    <!--<span class="cal-message mt-3 mb-3">
+                                        <i class="fa fa-bell font-18 color-green-dark"></i>
+                                        <strong class="color-gray-dark">Reminder: Call the plumber for Kitchen Sink</strong>
+                                        <strong class="color-gray-dark">Reminder: Today is Karla Blacks Birthday.</strong>
+                                    </span>-->
+                                    <div class="divider mb-0"></div>
+                                    <div class="cal-schedule bg-'.$farbe.'-dark opacity-30">
+                                        <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr</em>
+                                        <strong class="d-block mb-n2 opacity-100"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
+                                        <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'
+                                        <i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                    </div>
+                                </div>
+                            </div>';
+
+/*
+                $events .= '<div class="card card-style mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-start">
+                                                <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                            </div>
+                                            <div class="align-self-start ms-auto ps-3">
+                                                <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
+                                                    '.$iconInformation.'
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider mt-2 mb-2"></div>
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <span class="font-12 color-theme opacity-70 font-500">'.$beschreibung.'</span>
+                                            </div>
+                                            <div class="align-self-center ms-auto">
+                                                <span class="font-12 color-theme opacity-30 font-500"><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-overlay bg-'.$farbe.'-dark opacity-30"></div>
+                                </div>';*/
+            }
+
+
+            $letztesDatum = substr($r['datum'],0,10);
+
+        }
+
+
+        return ['success'=>'','events'=>$events];
+    }
+
+
 }
