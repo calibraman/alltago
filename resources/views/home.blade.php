@@ -53,25 +53,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div class="page-content header-clear-medium">
 
-        <!--
-        <div class="timeline-cover timeline-cover-center">
-            <div data-card-height="230" class="card preload-img" data-src="images/pictures/21.jpg">
-                <div class="card-center text-center">
-                    <h1 class="color-white fa-3x">Karla Black</h1>
-                    <p class="color-white opacity-90 mb-0">
-                        Professional Photographer, Europe
-                    </p>
+        <div class="card card-style">
+            <div class="content">
+                <h2 class="text-center">Kalenderwoche 34</h2>
+                <p class="text-center mt-n2 mb-1 font-11 color-highlight">01.01.2023 bis 07.01.2023</p>
+                <div class="chart-container" style="width:100%; height:300px;">
+                    <canvas class="graph" id="line-chart"/></canvas>
                 </div>
-                <div class="card-overlay bg-black opacity-80"></div>
-            </div>
-        </div>
--->
-
-
-
-        <div class=" timeline-body-center">
-            <div id="eventContainer">
-                <!-- Hier werden die Events dynamisch hinzugefügt -->
             </div>
         </div>
 
@@ -260,6 +248,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.js') }}"></script>
+<script src="{{ URL::asset('mobile-ios/assets/libs/chart/chart.js') }}"></script>
 
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
@@ -276,6 +265,71 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         // Lade die ersten Events beim Start der Seite
         $('#eventContainer').html('');
         loadMoreEvents();
+
+        //Color Variables
+        var redFull = '#BF263C';
+        var redFade = 'rgba(191, 38, 60, 0.2)';
+        var yellowFull = '#F6BB42';
+        var yellowFade = 'rgba(246, 187, 66, 0.2)';
+        var greenFull = '#8CC152';
+        var greenFade = 'rgba(140, 193, 82, 0.1)';
+        var greenFade2 = 'rgba(140, 193, 82, 0.7)';
+        var blueFull = '#5D9CEC';
+        var blueFade = 'rgba(93, 156, 236, 0.2)';
+        var blueFade2 = 'rgba(93, 156, 236, 0.7)';
+        var magentaFull = '#AC92EC';
+        var magentaFade = 'rgba(172, 146, 236, 0.2)';
+        var grayFull = '#CCD1D9';
+        var grayFade = 'rgba(204, 209, 217, 0.2)';
+        var orangeFull = '#E9573F';
+        var orangeFade = 'rgba(233, 87, 63, 0.2)'
+        var facebookColor = 'rgba(66,103,178, 0.8)';
+        var twitterColor = 'rgba(29,161,242, 0.8)';
+        var whatsappColor = 'rgba(37,211,102,0.8)';
+
+
+        var lineChart = document.getElementById('line-chart');
+        var lineDemoChart = new Chart(lineChart, {
+            type: 'line',
+            data: {
+                labels: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+                datasets: [{
+                    data: [120, 140, 120, 110, 123, 140, 120],
+                    label: "SYStolischer",
+                    fill:true,
+                    backgroundColor:blueFade,
+                    borderColor: blueFull,
+                    lineTension: 0.3,
+                    pointRadius: 0,
+                }, {
+                    data: [62, 64, 65, 66, 73, 75, 80],
+                    label: "DIAstolischer",
+                    fill:true,
+                    backgroundColor:greenFade,
+                    borderColor: greenFull,
+                    lineTension: 0.3,
+                    pointRadius: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            fontSize: 13,
+                            padding: 15,
+                            boxWidth: 12
+                        },
+                    },
+                },
+                title: {
+                    display: false
+                }
+            }
+        });
     })
 
 
