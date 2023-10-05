@@ -292,7 +292,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         var lineDemoChart = new Chart(lineChart, {
             type: 'line',
             data: {
-                labels: ['Mo','','','Di','','','Mi','','','Do','','','Fr','','','Sa','','','So'],
+                labels: ['Mo','','','Di','','','Mi','','','Do','','','Fr','','','Sa','','','So','',''],
                 datasets: [{
                     data: [120, 140, 110, 123, 140, 120, 110, 123, 140, 120,123, 120, 140, 110, 123, 140, 120, 110, 123, 140, 120],
                     label: "SYStolischer",
