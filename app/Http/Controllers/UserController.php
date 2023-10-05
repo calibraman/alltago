@@ -1070,7 +1070,7 @@ class UserController extends Controller
                     }
 
                     $events .= ' <div class="cal-schedule " style="background-color:'.$farbe.'">
-                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</em>
+                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><div onclick="zeigeMessungBearbeitenModal(\''.$r['messungID'].'\',\''.$r['datum'].'\',\''.$r['sys'].'\',\''.$r['dia'].'\',\''.$r['puls'].'\')"><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</div></em>
 
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
                                 <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>

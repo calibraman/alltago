@@ -218,7 +218,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 </div>
 
 
-<!-- Neue Messgung Eintragen -->
+<!-- Neue Messung Eintragen -->
 <div id="modalNeueMessungEintragen" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -234,34 +234,96 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         id="txtNeueMessungDatum"
                         name="txtNeueMessungDatum"
                         value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
-                        min="2018-06-07T00:00"
-                        max="2018-06-14T00:00"
+                        min="2022-06-07T00:00"
+                        max="2024-06-14T00:00"
                     />
                 </div>
-
-                Messwerte:
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
-                    <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
-                    <em>(erforderlich)</em>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        SYS:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        DIA:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        Puls:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
-                    <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
-                    <em>(erforderlich)</em>
-                </div>
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
-                    <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
-                    <em>(erforderlich)</em>
-                </div>
-
-
             </div>
 
             <div class="modal-footer">
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- Messung Bearbeiten -->
+<div id="modalNeueMessungBearbeiten" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Messung bearbeiten</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                Zeitpunkt:
+                <div class="input-style has-borders no-icon mb-5">
+                    <input
+                        type="datetime-local"
+                        id="txtMessungBearbeitenDatum"
+                        name="txtMessungBearbeitenDatum"
+                        value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
+                        min="2022-06-07T00:00"
+                        max="2024-06-14T00:00"
+                    />
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        SYS:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenSys" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        DIA:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenDia" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        Puls:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenPuls" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungBearbeiten()">Speichern</a>
             </div>
 
         </div><!-- /.modal-content -->
@@ -309,6 +371,47 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
            }*/
         }
     })
+
+    // Funktion zum Abrufen und Anzeigen der Events
+    function loadMoreEvents() {
+        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.holeFeed2') }}",
+            data: {'letztesDatum':letztesDatum},
+            success: function (response) {
+                // Wenn Daten erfolgreich abgerufen wurden
+                if (response.events.trim() !== "") {
+                    $('#eventContainer').append(response.events);
+                    letztesDatum = response.letztesDatum; // Inkrementiere den Offset für die nächste Ladung
+                } else {
+                    // Keine weiteren Events gefunden
+                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                }
+            },
+            error: function () {
+                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
+                console.log('Fehler beim Abrufen der Events.');
+            }
+        });
+    }
+
+    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
+    function checkScroll() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            loadMoreEvents();
+        }
+    }
+
+    // Überwache das Scrollen des Benutzers
+    $(window).on('scroll', checkScroll);
+
+
+</script>
+
+
+<script>
 
     function zeigeNeueMessungModal(){
         $('#txtNeueMessungDatum').val('');
@@ -402,44 +505,24 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         });
     }
 
+</script>
 
 
+<script>
 
-    // Funktion zum Abrufen und Anzeigen der Events
-    function loadMoreEvents() {
-        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url:"{{ route('user.holeFeed2') }}",
-            data: {'letztesDatum':letztesDatum},
-            success: function (response) {
-                // Wenn Daten erfolgreich abgerufen wurden
-                if (response.events.trim() !== "") {
-                    $('#eventContainer').append(response.events);
-                    letztesDatum = response.letztesDatum; // Inkrementiere den Offset für die nächste Ladung
-                } else {
-                    // Keine weiteren Events gefunden
-                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
-                }
-            },
-            error: function () {
-                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
-                console.log('Fehler beim Abrufen der Events.');
-            }
-        });
+    function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){ 
+        $('#txtMessungBearbeitenDatum').val(datum);
+        $('#txtMessungBearbeitenSys').val(sys);
+        $('#txtMessungBearbeitenDia').val(dia);
+        $('#txtMessungBearbeitenPuls').val(puls);
+        $('#modalNeueMessungBearbeiten').modal('toggle');
+
     }
-
-    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
-    function checkScroll() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            loadMoreEvents();
-        }
-    }
-
-    // Überwache das Scrollen des Benutzers
-    $(window).on('scroll', checkScroll);
 
 
 </script>
+
+
+
+
 </body>
