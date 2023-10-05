@@ -283,7 +283,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             </div>
 
             <div class="modal-footer">
-                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" onclick="messungLoeschen()">Löschen</a>
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="messungBearbeitenEintragen()">Speichern</a>
             </div>
 
@@ -569,6 +569,65 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 </script>
 
+<script>
+    function messungLoeschen() {
+        Swal.fire({
+            icon: 'question',
+            title: "",
+            text: "Möchten Sie den diese Messung wirklich löschen?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Ja, Messung löschen',
+            cancelButtonText: 'Abbrechen',
+            confirmButtonColor: '#6ADA7D',
+            cancelButtonColor: '#FA896B',
+        }).then(function(result) {
+            if(result.value) { 
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url:"{{ route('user.messungLoeschen') }}",
+                    data: {'aktuelleMessungID':aktuelleMessungID},
+                    success:function(response) {
+                        $("#divKostenstellenImportieren").LoadingOverlay("hide");
+                        if (response.ergebnis == "fehler") {
+                            Swal.fire({
+                                title: 'Import abgebrochen',
+                                html: response.text2,
+                                type: 'error',
+                                icon: 'error',
+                                confirmButtonColor: '#6ADA7D'
+                            });
+                        } else {
+                            ladeKostenstellen();
+                            Swal.fire({
+                                title: 'Die Daten wurden erfolgreich importiert:',
+                                html: response.text1,
+                                type: 'success',
+                                icon: 'success',
+                                confirmButtonColor: '#6ADA7D'
+                            });
+                            $("#divKostenstellenImportieren").animate({
+                                height: 'toggle'
+                            });
+                        }
+                    },
+                    error: function(response) {
+                        $("#divKostenstellenImportieren").LoadingOverlay("hide");
+                        Swal.fire({
+                            title: 'Import abgebrochen',
+                            html: response.beschreibung,
+                            type: 'error',
+                            icon: 'error',
+                            confirmButtonColor: '#6ADA7D'
+                        });
+                    }
+                });
+
+            }
+        })
+    }
+</script>
 
 
 
