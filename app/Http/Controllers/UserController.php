@@ -1014,9 +1014,12 @@ class UserController extends Controller
                 }
 
 
+                setlocale(LC_TIME, 'de_DE');
+                $timestamp = strtotime($tag);
+                $wochentag = strftime("%A", $timestamp);
                 $events .= '<div class="calendar bg-theme shadow-xl rounded-m">
                                 <div class="cal-footer">
-                                    <h6 class="cal-sub-title uppercase bold bg-'.$farbeHeader.' color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$objAllgemein->sqldate2date($tag).'</h6>
+                                    <h6 class="cal-sub-title uppercase bold bg-'.$farbeHeader.' color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$wochentag.', '.$objAllgemein->sqldate2date($tag).'</h6>
                                     <span class="cal-message mt-3 mb-3">
                                         <strong class="">'.$beschreibung.'</strong>
                                     </span>
@@ -1044,23 +1047,24 @@ class UserController extends Controller
                     $farbe = '';
                     $beschreibung = '';
                     if ($r['hypertonie'] == 0) {
-                        $farbe = 'green';
+                        $farbe = '#DCEDCC';
                         $iconInformation = '<i class="fa fa-check color-'.$farbe.'-dark font-11"></i>';
                         $beschreibung = 'Optimaler Blutdruck';
                     }
                     if ($r['hypertonie'] == 1) {
-                        $farbe = 'yellow';
+                        $farbe = '#FCEBCA';
                         $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbe.'-dark font-11"></i>';
                         $beschreibung = 'Milde Hypertonie (Grad 1)';
                     }
                     if ($r['hypertonie'] == 2) {
-                        $farbe = 'red';
+                        $farbe = '#FFC7BB';
                         $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbe.'-dark font-11"></i>';
                         $beschreibung = 'Hypertonie (Grad 2)';
                     }
 
-                    $events .= ' <div class="cal-schedule bg-'.$farbe.'-light ">
-                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr</em>
+                    $events .= ' <div class="cal-schedule " style="background-color:'.$farbe.'">
+                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</em>
+
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
                                 <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</strong>

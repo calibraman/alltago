@@ -477,7 +477,7 @@ body {
   left: 0px;
   right: 0px;
   z-index: 98;
-  background-color: rgba(249, 249, 249, 0.98);
+  background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 -5px 10px 0 rgba(0, 0, 0, 0.06);
   min-height: 75px;
   height: calc(62px + constant(safe-area-inset-bottom) * 1.1);

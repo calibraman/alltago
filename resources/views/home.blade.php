@@ -198,7 +198,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 </div>
 
 
-<!-- Neue Messgung Eintragen -->
+<!-- Neue Messung Eintragen -->
 <div id="modalNeueMessungEintragen" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -218,25 +218,30 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         max="2024-06-14T00:00"
                     />
                 </div>
-
-                Messwerte:
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
-                    <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
-                    <em>(erforderlich)</em>
+<br>
+                <div class="row">
+                    <div class="col">
+                        SYS:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        DIA:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        Puls:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
+                            <em>(erforderlich)</em>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
-                    <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
-                    <em>(erforderlich)</em>
-                </div>
-                <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
-                    <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
-                    <em>(erforderlich)</em>
-                </div>
-
-
             </div>
 
             <div class="modal-footer">
