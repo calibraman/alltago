@@ -292,9 +292,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         var lineDemoChart = new Chart(lineChart, {
             type: 'line',
             data: {
-                labels: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+                labels: ['Mo','','','Di','','','Mi','','','Do','','','Fr','','','Sa','','','So'],
                 datasets: [{
-                    data: [120, 140, 120, 110, 123, 140, 120],
+                    data: [120, 140, 110, 123, 140, 120, 110, 123, 140, 120,123, 120, 140, 110, 123, 140, 120, 110, 123, 140, 120],
                     label: "SYStolischer",
                     fill:true,
                     backgroundColor:blueFade,
@@ -302,7 +302,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     lineTension: 0.3,
                     pointRadius: 0,
                 }, {
-                    data: [62, 64, 65, 66, 73, 75, 80],
+                    data: [62, 64, 66, 66, 73, 75, 80,62, 64, 66, 66, 73, 75, 80,62, 64, 66, 66, 73, 75, 80],
                     label: "DIAstolischer",
                     fill:true,
                     backgroundColor:greenFade,
