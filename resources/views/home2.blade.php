@@ -244,21 +244,21 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         SYS:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         DIA:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         Puls:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                 </div>
@@ -301,21 +301,21 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         SYS:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenSys" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         DIA:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenDia" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         Puls:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenPuls" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                 </div>
@@ -510,7 +510,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 <script>
 
-    function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){ 
+    function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){
         $('#txtMessungBearbeitenDatum').val(datum);
         $('#txtMessungBearbeitenSys').val(sys);
         $('#txtMessungBearbeitenDia').val(dia);
