@@ -1001,18 +1001,17 @@ class UserController extends Controller
 
                 $farbeHeader = 'danger';
                 $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
-                $beschreibung = 'Hypertonie (Grad 2) an diesem Tag im Durchschnitt.';
+                $beschreibung = 'Hypertonie an diesem Tag im Durchschnitt.';
                 if ($durchschnitt < 1.5) {
                     $farbeHeader = 'warning';
                     $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
-                    $beschreibung = 'Milde Hypertonie (Grad 1) an diesem Tag im Durchschnitt.';
+                    $beschreibung = 'Milde Hypertonie an diesem Tag im Durchschnitt.';
                 }
                 if ($durchschnitt < 1) {
                     $farbeHeader = 'success';
                     $iconInformation = '<i class="fa fa-check color-'.$farbeHeader.'-dark font-11"></i>';
                     $beschreibung = 'Optimaler Blutdruck an diesem Tag im Durschnitt.';
                 }
-
 
                 $timestamp = strtotime($tag);
                 $wochentag = date("l", $timestamp);
