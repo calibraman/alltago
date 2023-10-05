@@ -60,6 +60,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <div class="chart-container" style="width:100%; height:300px;">
                     <canvas class="graph" id="line-chart"/></canvas>
                 </div>
+            </div><div class="cal-schedule " style="background-color:#DCEDCC">
+                <em>Durchschnittswerte<br>dieser der Woche</em>
+
+                <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: 120/33</strong>
+                <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: 76</span>
+                <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: 34</strong>
+                <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: 23</span>
             </div>
         </div>
 
