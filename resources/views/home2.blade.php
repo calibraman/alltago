@@ -382,8 +382,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         icon: 'error',
                         confirmButtonColor: '#6ADA7D'
                     });
-                } else {
-                    offset = 0;
+                } else { 
                     $('#eventContainer').html('');
                     loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
