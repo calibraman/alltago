@@ -78,45 +78,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
-    <div id="menu-neueMessung" class="menu menu-box-bottom menu-box-detached">
-        <div class="menu-title mt-0 pt-0"><h1>Neue Messung eintragen</h1><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
-        <div class="divider divider-margins mb-n2"></div>
-        <div class="content">
 
-            <!--
-            <div class="input-style has-borders no-icon mb-4">
-                <input type="date" value="<?php echo date('Y-m-d'); ?>" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="txtNeueMessungDatum" placeholder="Phone">
-                <label for="txtNeueMessungDatum" class="color-highlight">Datum:</label>
-                <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
-                <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
-            </div>
-            <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="Sys">
-                <label for="txtNeueMessungSys" class="color-highlight">SYS</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(erforderlich)</em>
-            </div>
-            <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="Dia">
-                <label for="txtNeueMessungDia" class="color-highlight">DIA</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(erforderlich)</em>
-            </div>
-            <div class="input-style has-borders no-icon validate-field mb-4">
-                <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="Puls">
-                <label for="txtNeueMessungPuls" class="color-highlight">Puls</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(erforderlich)</em>
-            </div>
-
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
--->
-
-        </div>
-    </div>
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">
         <div class="menu-title mt-0 pt-0"><h1>Settings</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>
@@ -252,8 +214,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         id="txtNeueMessungDatum"
                         name="txtNeueMessungDatum"
                         value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
-                        min="2018-06-07T00:00"
-                        max="2018-06-14T00:00"
+                        min="2022-06-07T00:00"
+                        max="2024-06-14T00:00"
                     />
                 </div>
 

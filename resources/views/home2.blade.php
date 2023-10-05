@@ -53,32 +53,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div class="page-content header-clear-medium">
 
-        <div class="calendar bg-theme shadow-xl rounded-m">
-            <div class="cal-footer">
-                <h6 class="cal-sub-title uppercase bold bg-highlight color-white">Schedule Box</h6>
-                <span class="cal-message mt-3 mb-3">
-                    <i class="fa fa-bell font-18 color-green-dark"></i>
-                    <strong class="color-gray-dark">Reminder: Call the plumber for Kitchen Sink</strong>
-                    <strong class="color-gray-dark">Reminder: Today is Karla Black's Birthday.</strong>
-                </span>
-                <div class="divider mb-0"></div>
-                <div class="cal-schedule">
-                    <em>08:00 PM<br>10:00 AM</em>
-                    <strong class="d-block mb-n2">Closing Hours</strong>
-                    <span><i class="fa fa-map-marker"></i>Envato Headquarters</span>
-                </div>
-                <div class="cal-schedule">
-                    <em>09:00 PM<br>10:00 PM</em>
-                    <strong class="d-block mb-n2">Call David</strong>
-                    <span><i class="fa fa-phone"></i>Call David's Office Number</span>
-                </div>
-            </div>
-        </div>
-
-        <div class=" timeline-body-center">
-            <div id="eventContainer">
-                <!-- Hier werden die Events dynamisch hinzugefügt -->
-            </div>
+        <div id="eventContainer">
+            <!-- Hier werden die Events dynamisch hinzugefügt -->
         </div>
 
     </div>
@@ -308,7 +284,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 
     // Variable, um den aktuellen Offset zu speichern
-    let offset = 0;
+    var letztesDatum = '';
 
     $(document).ready(function() {
         // Lade die ersten Events beim Start der Seite
@@ -436,13 +412,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             type: "POST",
             dataType: "json",
             url:"{{ route('user.holeFeed2') }}",
-            data: {'lim':8,
-                'offset':offset},
+            data: {'letztesDatum':letztesDatum},
             success: function (response) {
                 // Wenn Daten erfolgreich abgerufen wurden
                 if (response.events.trim() !== "") {
                     $('#eventContainer').append(response.events);
-                    offset += 8; // Inkrementiere den Offset für die nächste Ladung
+                    letztesDatum = response.letztesDatum; // Inkrementiere den Offset für die nächste Ladung
                 } else {
                     // Keine weiteren Events gefunden
                     //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
