@@ -382,7 +382,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         icon: 'error',
                         confirmButtonColor: '#6ADA7D'
                     });
-                } else { 
+                } else {
+                    letztesDatum = '';
                     $('#eventContainer').html('');
                     loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
