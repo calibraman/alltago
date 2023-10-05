@@ -528,6 +528,8 @@ class UserController extends Controller
         return ['success'=>''];
     }
 
+
+
     public function messungEintragen(Request $request)
     {
 
@@ -591,6 +593,83 @@ class UserController extends Controller
                                                     :tageszeit,
                                                     NOW()
                                           )");
+            $stmt->bindParam(":userID",$benutzerID);
+            $stmt->bindParam(":datum",$txtNeueMessungDatum);
+            $stmt->bindParam(":datumFeed",$datumFeed);
+            $stmt->bindParam(":sys",$txtNeueMessungSys);
+            $stmt->bindParam(":dia",$txtNeueMessungDia);
+            $stmt->bindParam(":mad",$mad);
+            $stmt->bindParam(":puls",$txtNeueMessungPuls);
+            $stmt->bindParam(":pulsdruck",$pulsdruck);
+            $stmt->bindParam(":tageszeit",$tageszeit);
+            $stmt->bindParam(":hypertonie",$hypertonie);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler', 'text1' => "Fehler", 'text2' => "Es ist ein Fehler beim Eintragen der Messung aufgetreten.<br><br>" . $e->getMessage()));
+        }
+
+
+        return json_encode(array('ergebnis' => 'erfolgreich', 'text1' => "Die Messung wurde erfolgreich eingetragen."));
+
+    }
+
+
+    public function messungBearbeiten(Request $request)
+    {
+
+        $pdo = DB::connection()->getPdo();
+
+        $messungID = trim($request->aktuelleMessungID);
+        $txtNeueMessungDatum = trim($request->txtMessungBearbeitenDatum);
+        $txtNeueMessungSys = trim($request->txtMessungBearbeitenSys);
+        $txtNeueMessungDia = trim($request->txtMessungBearbeitenDia);
+        $txtNeueMessungPuls = trim($request->txtMessungBearbeitenPuls);
+
+        $benutzerID =  Auth::user()->id;
+
+        $tageszeit = '';
+        $stunden = substr($txtNeueMessungDatum,11,2);
+
+        $tageszeit = 'morgen';
+        if ($stunden >= 5 ) $tageszeit = 'morgen';
+        if ($stunden >= 12 ) $tageszeit = 'mittag';
+        if ($stunden >= 17 ) $tageszeit = 'abend';
+
+        $hypertonie = 0;
+        if ($txtNeueMessungSys >= 130 && $txtNeueMessungSys <= 139) $hypertonie = 1;
+        if ($txtNeueMessungDia >= 80 && $txtNeueMessungDia <= 89) $hypertonie = 1;
+
+        if ($txtNeueMessungSys >= 140) $hypertonie = 2;
+        if ($txtNeueMessungDia >= 90) $hypertonie = 2;
+
+        $mad = $txtNeueMessungDia + 1/3 * ($txtNeueMessungSys - $txtNeueMessungDia);
+
+        $pulsdruck = $txtNeueMessungSys - $txtNeueMessungDia;
+
+
+        $datumFeed = substr($txtNeueMessungDatum,0,10);
+
+
+        try {
+            $stmt = $pdo->prepare("UPDATE `messungen` SET
+                                                    `datum` = :datum,
+                                                    `datumFeed` = :datumFeed,
+                                                    `sys` = :sys,
+                                                    `dia` = :dia,
+                                                    `mad` = :mad,
+                                                    `puls` = :puls,
+                                                    `pulsdruck` = :pulsdruck,
+                                                    `hypertonie` = :hypertonie,
+                                                    `tageszeit` = :tageszeit,
+                                                    `eingetragenAm` = NOW()
+                                          WHERE messungID = :messungID
+                                          AND userID = :userID");
+            $stmt->bindParam(":messungID",$messungID);
             $stmt->bindParam(":userID",$benutzerID);
             $stmt->bindParam(":datum",$txtNeueMessungDatum);
             $stmt->bindParam(":datumFeed",$datumFeed);
@@ -1069,7 +1148,7 @@ class UserController extends Controller
                     }
 
                     $events .= ' <div class="cal-schedule " style="background-color:'.$farbe.'">
-                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><div onclick="zeigeMessungBearbeitenModal(\''.$r['messungID'].'\',\''.$r['datum'].'\',\''.$r['sys'].'\',\''.$r['dia'].'\',\''.$r['puls'].'\')"><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</div></em>
+                                <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><div class="text-muted" onclick="zeigeMessungBearbeitenModal(\''.$r['messungID'].'\',\''.$r['datum'].'\',\''.$r['sys'].'\',\''.$r['dia'].'\',\''.$r['puls'].'\')"><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</div></em>
 
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
                                 <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>

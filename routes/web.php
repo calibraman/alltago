@@ -49,6 +49,7 @@ Route::get('splash', function () {
 ///////////////////
 Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
 Route::post('user.messungEintragen', [UserController::class, 'messungEintragen'])->name('user.messungEintragen')->middleware(['auth', 'verified']);
+Route::post('user.messungBearbeiten', [UserController::class, 'messungBearbeiten'])->name('user.messungBearbeiten')->middleware(['auth', 'verified']);
 Route::post('user.holeFeed', [UserController::class, 'holeFeed'])->name('user.holeFeed')->middleware(['auth', 'verified']);
 Route::post('user.holeFeed2', [UserController::class, 'holeFeed2'])->name('user.holeFeed2')->middleware(['auth', 'verified']);
 

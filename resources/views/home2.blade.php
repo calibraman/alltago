@@ -38,7 +38,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div class="header header-fixed header-logo-center">
         <a href="index.html" class="header-title"><?php echo($anrede); ?>, {{ Auth::user()->vorname }}</a>
         <!--<a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>-->
-        <a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>
+        <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
     </div>
 
     <div id="footer-bar" class="footer-bar-1">
@@ -323,7 +323,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
             <div class="modal-footer">
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
-                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungBearbeiten()">Speichern</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="messungBearbeitenEintragen()">Speichern</a>
             </div>
 
         </div><!-- /.modal-content -->
@@ -347,6 +347,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     // Variable, um den aktuellen Offset zu speichern
     var letztesDatum = '';
+    var aktuelleMessungID = 0;
 
     $(document).ready(function() {
         // Lade die ersten Events beim Start der Seite
@@ -511,12 +512,97 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script>
 
     function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){
+        aktuelleMessungID = messungID;
         $('#txtMessungBearbeitenDatum').val(datum);
         $('#txtMessungBearbeitenSys').val(sys);
         $('#txtMessungBearbeitenDia').val(dia);
         $('#txtMessungBearbeitenPuls').val(puls);
         $('#modalNeueMessungBearbeiten').modal('toggle');
+    }
 
+
+    function messungBearbeitenEintragen() {
+        var txtMessungBearbeitenDatum = $('#txtMessungBearbeitenDatum').val().trim();
+        var txtMessungBearbeitenSys = $('#txtMessungBearbeitenSys').val().trim();
+        var txtMessungBearbeitenDia = $('#txtMessungBearbeitenDia').val().trim();
+        var txtMessungBearbeitenPuls = $('#txtMessungBearbeitenPuls').val().trim();
+
+        if (txtMessungBearbeitenDatum == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein Datum aus.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenSys == "") {
+            Toastify({
+                text: "Bitte geben Sie den Systolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenDia == "") {
+            Toastify({
+                text: "Bitte geben Sie den Diastolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenPuls == "") {
+            Toastify({
+                text: "Bitte geben Sie den Puls an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.messungBearbeiten') }}",
+            data: { 'aktuelleMessungID': aktuelleMessungID,
+                    'txtMessungBearbeitenDatum': txtMessungBearbeitenDatum,
+                    'txtMessungBearbeitenSys': txtMessungBearbeitenSys,
+                    'txtMessungBearbeitenDia': txtMessungBearbeitenDia ,
+                    'txtMessungBearbeitenPuls': txtMessungBearbeitenPuls },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    letztesDatum = '';
+                    $('#eventContainer').html('');
+                    loadMoreEvents();
+                    $('#modalNeueMessungBearbeiten').modal('toggle');
+                    Toastify({
+                        text: "Die Messung wurde erfolgreich bearbeitet.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
     }
 
 
