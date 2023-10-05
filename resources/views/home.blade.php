@@ -299,16 +299,23 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     fill:true,
                     backgroundColor:blueFade,
                     borderColor: blueFull,
-                    lineTension: 0.3,
-                    pointRadius: 0,
+                    lineTension: 0.1,
+                    pointRadius: 2,
                 }, {
                     data: [62, 64, 66, 66, 73, 75, 80,62, 64, 66, 66, 73, 75, 80,62, 64, 66, 66, 73, 75, 80],
                     label: "DIAstolischer",
                     fill:true,
                     backgroundColor:greenFade,
                     borderColor: greenFull,
+                    lineTension: 0.2,
+                    pointRadius: 2,
+                }, {
+                    data: [62, 64, 66, 44, 55, 66, 80,62, 64, 66, 66, 73, 75, 80,62, 64, 66, 66, 73, 75, 80],
+                    label: "Puls",
+                    fill:false,
+                    borderColor: redFull,
                     lineTension: 0.3,
-                    pointRadius: 0,
+                    pointRadius: 3,
                 }]
             },
             options: {
@@ -319,7 +326,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         display: true,
                         position: 'bottom',
                         labels: {
-                            fontSize: 13,
+                            fontSize: 10,
                             padding: 15,
                             boxWidth: 12
                         },
