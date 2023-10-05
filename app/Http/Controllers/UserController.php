@@ -925,7 +925,7 @@ class UserController extends Controller
 
         $benutzerID = Auth::user()->id;
 
-        $limitTage = 3;
+        $limitTage = 4;
         $events = '';
 
         $objAllgemein = new AllgemeinController();
@@ -1014,9 +1014,16 @@ class UserController extends Controller
                 }
 
 
-                setlocale(LC_TIME, 'de_DE');
                 $timestamp = strtotime($tag);
-                $wochentag = strftime("%A", $timestamp);
+                $wochentag = date("l", $timestamp);
+                if ($wochentag == 'Monday') $wochentag = 'Montag';
+                if ($wochentag == 'Tuesday') $wochentag = 'Dienstag';
+                if ($wochentag == 'Wednesday') $wochentag = 'Mittwoch';
+                if ($wochentag == 'Thursday') $wochentag = 'Donnerstag';
+                if ($wochentag == 'Friday') $wochentag = 'Freitag';
+                if ($wochentag == 'Saturday') $wochentag = 'Samstag';
+                if ($wochentag == 'Sunday') $wochentag = 'Sonntag';
+
                 $events .= '<div class="calendar bg-theme shadow-xl rounded-m">
                                 <div class="cal-footer">
                                     <h6 class="cal-sub-title uppercase bold bg-'.$farbeHeader.' color-white"><i class="fa-solid fa-calendar-days"></i>&nbsp;&nbsp;'.$wochentag.', '.$objAllgemein->sqldate2date($tag).'</h6>
@@ -1054,12 +1061,12 @@ class UserController extends Controller
                     if ($r['hypertonie'] == 1) {
                         $farbe = '#FCEBCA';
                         $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbe.'-dark font-11"></i>';
-                        $beschreibung = 'Milde Hypertonie (Grad 1)';
+                        $beschreibung = 'Milde Hypertonie';
                     }
                     if ($r['hypertonie'] == 2) {
                         $farbe = '#FFC7BB';
                         $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbe.'-dark font-11"></i>';
-                        $beschreibung = 'Hypertonie (Grad 2)';
+                        $beschreibung = 'Hypertonie';
                     }
 
                     $events .= ' <div class="cal-schedule " style="background-color:'.$farbe.'">

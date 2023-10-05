@@ -265,11 +265,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
 
 
+
 <script>
 
 
     // Variable, um den aktuellen Offset zu speichern
-    let offset = 0;
+    let letztesDatum = '';
 
     $(document).ready(function() {
         // Lade die ersten Events beim Start der Seite
@@ -294,6 +295,49 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
            }*/
         }
     })
+
+
+
+    // Funktion zum Abrufen und Anzeigen der Events
+    function loadMoreEvents() {
+        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.holeFeed') }}",
+            data: {'letztesDatum':letztesDatum},
+            success: function (response) {
+                // Wenn Daten erfolgreich abgerufen wurden
+                if (response.events.trim() !== "") {
+                    $('#eventContainer').append(response.events);
+                    letztesDatum = response.letztesDatum; // Inkrementiere den Offset für die nächste Ladung
+                } else {
+                    // Keine weiteren Events gefunden
+                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                }
+            },
+            error: function () {
+                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
+                console.log('Fehler beim Abrufen der Events.');
+            }
+        });
+    }
+
+    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
+    function checkScroll() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            loadMoreEvents();
+        }
+    }
+
+    // Überwache das Scrollen des Benutzers
+    $(window).on('scroll', checkScroll);
+
+
+</script>
+
+
+<script>
 
     function zeigeNeueMessungModal(){
         $('#txtNeueMessungDatum').val('');
@@ -368,7 +412,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
-                    offset = 0;
+                    letztesDatum = '';
                     $('#eventContainer').html('');
                     loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
@@ -387,45 +431,6 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         });
     }
 
-
-
-
-    // Funktion zum Abrufen und Anzeigen der Events
-    function loadMoreEvents() {
-        // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url:"{{ route('user.holeFeed') }}",
-            data: {'lim':8,
-                'offset':offset},
-            success: function (response) {
-                // Wenn Daten erfolgreich abgerufen wurden
-                if (response.events.trim() !== "") {
-                    $('#eventContainer').append(response.events);
-                    offset += 8; // Inkrementiere den Offset für die nächste Ladung
-                } else {
-                    // Keine weiteren Events gefunden
-                    //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
-                }
-            },
-            error: function () {
-                // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
-                console.log('Fehler beim Abrufen der Events.');
-            }
-        });
-    }
-
-    // Funktion zum Überprüfen, ob der Benutzer ans Ende der Seite gescrollt hat
-    function checkScroll() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            loadMoreEvents();
-        }
-    }
-
-    // Überwache das Scrollen des Benutzers
-    $(window).on('scroll', checkScroll);
-
-
 </script>
+
 </body>
