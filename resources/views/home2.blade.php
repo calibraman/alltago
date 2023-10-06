@@ -574,7 +574,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         Swal.fire({
             icon: 'question',
             title: "",
-            text: "Möchten Sie den diese Messung wirklich löschen?",
+            text: "Möchten Sie diese Messung wirklich löschen?",
             type: "warning",
             showCancelButton: true,
             confirmButtonText: 'Ja, Messung löschen',
@@ -582,7 +582,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             confirmButtonColor: '#6ADA7D',
             cancelButtonColor: '#FA896B',
         }).then(function(result) {
-            if(result.value) { 
+            if(result.value) {
                 $.ajax({
                     type: "POST",
                     dataType: "json",

@@ -68,7 +68,24 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: 34</strong>
                 <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: 23</span>
             </div>
+            <div class="mb-0">
+                <button class="btn accordion-btn no-effect"  data-bs-toggle="collapse" data-bs-target="#collapse2">
+                    <i class="fa fa-chevron-down font-10 accordion-icon"></i>
+                    Details&nbsp;&nbsp;
+                </button>
+                <div id="collapse2" class="collapse"  data-bs-parent="#accordion-1">
+                    <div class="cal-schedule " style="background-color:#FCEBCA">
+                        <em><i class="fa-solid fa-cloud-sun"></i>&nbsp;&nbsp;Mittags<br>12:12 Uhr</em>
+
+                        <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: 130/70</strong>
+                        <span><i class="fa-solid fa-rotate-right"></i>&nbsp;Mittlerer arterieller Durck: 90</span>
+                        <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: 66</strong>
+                        <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: 60</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     </div>
     <!-- End of Page Content-->
