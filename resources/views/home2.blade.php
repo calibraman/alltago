@@ -283,7 +283,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             </div>
 
             <div class="modal-footer">
-                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" onclick="messungLoeschen()">Löschen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" onclick="messungLoeschen()">Messung Löschen</a>
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="messungBearbeitenEintragen()">Speichern</a>
             </div>
 
@@ -589,38 +589,27 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     url:"{{ route('user.messungLoeschen') }}",
                     data: {'aktuelleMessungID':aktuelleMessungID},
                     success:function(response) {
-                        $("#divKostenstellenImportieren").LoadingOverlay("hide");
+                        $('#modalNeueMessungBearbeiten').modal('toggle');
                         if (response.ergebnis == "fehler") {
                             Swal.fire({
-                                title: 'Import abgebrochen',
+                                title: 'Fehler',
                                 html: response.text2,
                                 type: 'error',
                                 icon: 'error',
                                 confirmButtonColor: '#6ADA7D'
                             });
                         } else {
-                            ladeKostenstellen();
+                            letztesDatum = '';
+                            $('#eventContainer').html('');
+                            loadMoreEvents();
                             Swal.fire({
-                                title: 'Die Daten wurden erfolgreich importiert:',
+                                title: '',
                                 html: response.text1,
                                 type: 'success',
                                 icon: 'success',
                                 confirmButtonColor: '#6ADA7D'
                             });
-                            $("#divKostenstellenImportieren").animate({
-                                height: 'toggle'
-                            });
                         }
-                    },
-                    error: function(response) {
-                        $("#divKostenstellenImportieren").LoadingOverlay("hide");
-                        Swal.fire({
-                            title: 'Import abgebrochen',
-                            html: response.beschreibung,
-                            type: 'error',
-                            icon: 'error',
-                            confirmButtonColor: '#6ADA7D'
-                        });
                     }
                 });
 

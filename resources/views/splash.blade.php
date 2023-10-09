@@ -40,8 +40,16 @@
                         Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
                     </p>
                 </div>
-                <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
-                <a href="#" data-menu="menu-signin" class="color-theme font-500 opacity-50">Sie haben bereits einen Zugang? Hier anmelden</a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-success text-white">Sie haben einen Zugang?<br>Bitte hier klicken um sich einzuloggen</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
             <div class="card-overlay-infinite preload-img" data-src="{{ URL::asset('mobile-ios/images/pictures/_bg-infinite.jpg') }}"></div>
@@ -90,11 +98,10 @@
 
 
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value=""
-                        id="auth-remember-check">
-                    <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                    <label for="remember_me" class="inline-flex items-center">
-                        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                  <input class="form-check-input" type="checkbox" value="" checked  id="auth-remember-check" style="visibility: hidden">
+                    <label class="form-check-label" for="auth-remember-check" style="visibility: hidden">Remember me</label>
+                    <label for="remember_me" class="inline-flex items-center" style="visibility: hidden">
+                        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember" checked>
                         <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                     </label>
                     <!--

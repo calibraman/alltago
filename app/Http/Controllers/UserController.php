@@ -696,6 +696,38 @@ class UserController extends Controller
     }
 
 
+
+    public function messungLoeschen(Request $request)
+    {
+
+        $pdo = DB::connection()->getPdo();
+
+        $messungID = trim($request->aktuelleMessungID);
+
+        $benutzerID =  Auth::user()->id;
+
+        try {
+            $stmt = $pdo->prepare("DELETE FROM `messungen`
+                                          WHERE messungID = :messungID
+                                          AND userID = :userID");
+            $stmt->bindParam(":messungID",$messungID);
+            $stmt->bindParam(":userID",$benutzerID);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler', 'text1' => "Fehler", 'text2' => "Es ist ein Fehler beim Löschen der Messung aufgetreten.<br><br>" . $e->getMessage()));
+        }
+
+
+        return json_encode(array('ergebnis' => 'erfolgreich', 'text1' => "Die Messung wurde erfolgreich gelöscht."));
+
+    }
+
+
     function holeFeed(Request $request) {
         $pdo = DB::connection()->getPdo();
 
