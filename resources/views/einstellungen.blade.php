@@ -86,7 +86,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             <div class="content">
                 <h3>Profilfoto</h3>
                 <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle">
-                <p class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</p>
+                <span class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</span><br>
                 <input type="file" name="image" class="image">
             </div>
         </div>
@@ -104,14 +104,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         <input type="text" name="contactEmailField" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="contactEmailField" />
                     </div>
                     <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
-                    <div class="input-style has-borders no-icon mb-5">
-                        <input
-                            type="date"
-                            id="txtNeueMessungDatum"
-                            name="txtNeueMessungDatum"
-                            value=""
-                        />
-                    </div>
+                    <input  class="round-small"
+                        type="date"
+                        id="txtNeueMessungDatum"
+                        name="txtNeueMessungDatum"
+                        value=""
+                    /><br>
                     Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
                     <br><br>
                     <div class="form-button">
