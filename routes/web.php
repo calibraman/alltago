@@ -21,9 +21,6 @@ use App\Http\Controllers\UserController;
 // Display all GET parameters
 //dd($parameters);
 
-Route::get('/', function () {
-    return redirect('https://www.alltago.app');
-});
 /*
 Route::get('/', function () {
     return view('home2');
@@ -73,10 +70,18 @@ Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropIma
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
 
 
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Geschützte Routen, die eine authentifizierte und verifizierte Session erfordern
+    return view('home2');
+});
+
+Route::get('/', function () {
+    return redirect('https://www.alltago.app');
+});
 
 
 
