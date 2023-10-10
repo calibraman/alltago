@@ -1530,7 +1530,7 @@ class UserController extends Controller
         $events = '<div class="card card-style">
             <div class="content">
                 <h2 class="text-center">Kalenderwoche '.$kalenderwoche.'</h2>
-                <p class="text-center mt-n2 mb-1 font-11 color-highlight">'.$objAllgemein->sqldate2date($erstesDatum).' bis '.$objAllgemein->sqldate2date($letztesDatum).'</p>
+                <p class="text-center mt-n2 mb-1 font-11 color-highlight">Messungen von '.$objAllgemein->sqldate2date($erstesDatum).' bis '.$objAllgemein->sqldate2date($letztesDatum).'</p>
                 <div class="chart-container" style="width:100%; height:300px;">
                     <canvas class="graph" id="line-chart'.$kalenderwoche.'"/></canvas>
                 </div>
