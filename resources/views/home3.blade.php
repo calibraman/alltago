@@ -39,6 +39,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <a href="index.html" class="header-title"><?php echo($anrede); ?>, {{ Auth::user()->vorname }}</a>
         <!--<a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>-->
         <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
+        <?php
+        if (empty(Auth::user()->profilbild)) {
+            echo ('d');
+        } else {
+            echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle" >');
+        }
+        ?>
     </div>
 
     <div id="footer-bar" class="footer-bar-1">

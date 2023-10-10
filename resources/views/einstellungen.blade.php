@@ -51,6 +51,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         .modal-lg{
             max-width: 1000px !important;
         }
+
+        .img-thumbnail{max-width:100%;width:40px;height:auto;padding:.25rem;background-color:var(--vz-body-bg);border:1px solid var(--vz-border-color);border-radius:.25rem}
     </style>
 
 </head>
@@ -66,6 +68,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <a href="index.html" class="header-title"><?php echo($anrede); ?> {{ Auth::user()->vorname }}</a>
         <!--<a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>-->
         <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
+        <?php
+            if (empty(Auth::user()->profilbild)) {
+                echo ('d');
+            } else {
+                echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle" >');
+            }
+        ?>
     </div>
 
 
@@ -104,12 +113,14 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         <input type="text" name="contactEmailField" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="contactEmailField" />
                     </div>
                     <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
-                    <input  class="round-small"
-                        type="date"
-                        id="txtNeueMessungDatum"
-                        name="txtNeueMessungDatum"
-                        value=""
-                    /><br>
+                    <div class="input-style has-borders no-icon mb-5">
+                        <input
+                            type="date"
+                            id="txtNeueMessungDatum"
+                            name="txtNeueMessungDatum"
+                            value=""
+                        />
+                    </div>
                     Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
                     <br><br>
                     <div class="form-button">
