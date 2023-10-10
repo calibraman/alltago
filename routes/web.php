@@ -74,12 +74,14 @@ Auth::routes();
 
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Geschützte Routen, die eine authentifizierte und verifizierte Session erfordern
-    return view('home2');
-});
+
 
 Route::get('/', function () {
+
+    Route::middleware(['auth', 'verified'])->group(function () {
+        return view('home2');
+    });
+    
     return redirect('https://www.alltago.app');
 });
 
