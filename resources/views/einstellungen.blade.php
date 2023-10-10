@@ -66,11 +66,11 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         <div class="form-field form-email">
                             <label class="contactEmailField color-theme" for="contactEmailField">Nachname:</label>
                             <input type="text" name="contactEmailField" value="" class="round-small" id="contactEmailField" />
-                        </div> 
+                        </div>
                         <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
                         <div class="input-style has-borders no-icon mb-5">
                             <input
-                                type="datetime-local"
+                                type="date"
                                 id="txtNeueMessungDatum"
                                 name="txtNeueMessungDatum"
                                 value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
