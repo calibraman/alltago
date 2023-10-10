@@ -55,7 +55,38 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div class="page-content header-clear-medium">
 
-        Inhalt
+        <div class="card card-style contact-form">
+            <div class="content">
+                <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
+                    <fieldset>
+                        <div class="form-field form-name">
+                            <label class="contactNameField color-theme" for="contactNameField">Vorname:</label>
+                            <input type="text" name="contactNameField" value="" class="round-small" id="contactNameField" />
+                        </div>
+                        <div class="form-field form-email">
+                            <label class="contactEmailField color-theme" for="contactEmailField">Nachname:</label>
+                            <input type="text" name="contactEmailField" value="" class="round-small" id="contactEmailField" />
+                        </div> 
+                        <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
+                        <div class="input-style has-borders no-icon mb-5">
+                            <input
+                                type="datetime-local"
+                                id="txtNeueMessungDatum"
+                                name="txtNeueMessungDatum"
+                                value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
+                                min="2022-06-07T00:00"
+                                max="2024-06-14T00:00"
+                            />
+                        </div>
+                        Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
+                        <br><br>
+                        <div class="form-button">
+                            <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" data-formId="contactForm" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
 
 
     </div>
@@ -273,7 +304,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
            }*/
         }
     })
- 
+
 </script>
 
 

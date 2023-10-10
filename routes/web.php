@@ -22,9 +22,13 @@ use App\Http\Controllers\UserController;
 //dd($parameters);
 
 Route::get('/', function () {
+    return redirect('https://www.alltago.app');
+});
+/*
+Route::get('/', function () {
     return view('home2');
 })->name('home2')->middleware(['auth', 'verified']);
-
+*/
 Route::get('/home2', function () {
     return view('home2');
 })->name('home2')->middleware(['auth', 'verified']);
