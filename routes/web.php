@@ -33,6 +33,10 @@ Route::get('/home3', function () {
     return view('home3');
 })->name('home3')->middleware(['auth', 'verified']);
 
+Route::get('/einstellungen', function () {
+    return view('/einstellungen');
+})->name('/einstellungen')->middleware(['auth', 'verified']);
+
 Route::get('/mobile-ios/inAppSuccess', function () {
     return view('mobile-ios/inAppSuccess');
 });

@@ -48,7 +48,8 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <a href="home3" class="active-nav"><i class="fa-solid fa-book"></i><span>Wochenbuch</span></a>
         <a href="home2"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
         <a href="#" onclick="zeigeNeueMessungModal()"><i class="fa-solid fa-plus"></i><span>Neue Messung</span></a>
-        <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellungen</span></a>
+        <a href="einstellungen"><i class="fa fa-cog"></i><span>Einstellungen</span></a>
+        <!--<a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Einstellungen</span></a>-->
     </div>
 
     <div class="page-content header-clear-medium">
