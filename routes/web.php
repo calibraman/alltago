@@ -66,6 +66,7 @@ Route::post('user.messungLoeschen', [UserController::class, 'messungLoeschen'])-
 Route::post('user.holeFeed', [UserController::class, 'holeFeed'])->name('user.holeFeed')->middleware(['auth', 'verified']);
 Route::post('user.holeFeed2', [UserController::class, 'holeFeed2'])->name('user.holeFeed2')->middleware(['auth', 'verified']);
 Route::post('user.holeFeedWochenbuch', [UserController::class, 'holeFeedWochenbuch'])->name('user.holeFeedWochenbuch')->middleware(['auth', 'verified']);
+Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropImage'])->name('user.crop-userimage-upload')->middleware(['auth', 'verified']);
 
 
 

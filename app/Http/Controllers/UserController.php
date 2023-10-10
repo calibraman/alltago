@@ -1561,4 +1561,44 @@ class UserController extends Controller
     }
 
 
+
+    public function uploadCropImage(Request $request)
+    {
+
+       // $objEvent = new EventController();
+
+        $pdo = DB::connection()->getPdo();
+
+        $userID = Auth::user()->id;
+
+        $folderPath = public_path('intern/pictures/users/');
+
+        $image_parts = explode(";base64,", $request->image);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+
+        $zufallszahl = mt_rand(100000,999999);
+        $imageName = uniqid().$zufallszahl.'.'. $image_type;
+
+        $imageFullPath = $folderPath.$imageName;
+
+        file_put_contents($imageFullPath, $image_base64);
+        try {
+            $query=$pdo->prepare("UPDATE users set profilbild = :imageName where id = :benutzerID");
+            $query->bindParam(":imageName", $imageName);
+            $query->bindParam(":benutzerID", $userID);
+            $query->execute();
+        } catch (\PDOException $e) {
+            return json_encode(['error'=>'Das Bild konnte nicht in die Datenbank geschrieben werden.']);
+        } catch (Exception $e) {
+            return json_encode(['error'=>'Das Bild konnte nicht in die Datenbank geschrieben werden.']);
+        }
+
+       // $arrEvent = $objEvent->eventEintragen('Benutzer','Das Profilfoto von "'.$benutzerName.'" wurde geändert.',$kundeID);
+
+
+        return json_encode(['success'=>'']);
+    }
+
 }

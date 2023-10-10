@@ -23,9 +23,36 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/fonts/css/fontawesome-all.min.css') }}">
     <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
     <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
-    <style>
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
+
+    <style type="text/css">
+        img {
+            display: block;
+            max-width: 100%;
+        }
+        .preview {
+            text-align: center;
+            overflow: hidden;
+            width: 160px;
+            height: 160px;
+            margin: 10px;
+            border: 1px solid red;
+        }
+        input{
+            margin-top:40px;
+        }
+        .section{
+            margin-top:150px;
+            background:#fff;
+            padding:50px 30px;
+        }
+        .modal-lg{
+            max-width: 1000px !important;
+        }
     </style>
+
 </head>
 
 
@@ -36,7 +63,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title"><?php echo($anrede); ?>, {{ Auth::user()->vorname }}</a>
+        <a href="index.html" class="header-title"><?php echo($anrede); ?> {{ Auth::user()->vorname }}</a>
         <!--<a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>-->
         <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
     </div>
@@ -57,34 +84,40 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
         <div class="card card-style contact-form">
             <div class="content">
-                <form action="php/contact.php" method="post" class="contactForm" id="contactForm">
-                    <fieldset>
-                        <div class="form-field form-name">
-                            <label class="contactNameField color-theme" for="contactNameField">Vorname:</label>
-                            <input type="text" name="contactNameField" value="" class="round-small" id="contactNameField" />
-                        </div>
-                        <div class="form-field form-email">
-                            <label class="contactEmailField color-theme" for="contactEmailField">Nachname:</label>
-                            <input type="text" name="contactEmailField" value="" class="round-small" id="contactEmailField" />
-                        </div>
-                        <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
-                        <div class="input-style has-borders no-icon mb-5">
-                            <input
-                                type="date"
-                                id="txtNeueMessungDatum"
-                                name="txtNeueMessungDatum"
-                                value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
-                                min="2022-06-07T00:00"
-                                max="2024-06-14T00:00"
-                            />
-                        </div>
-                        Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
-                        <br><br>
-                        <div class="form-button">
-                            <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" data-formId="contactForm" />
-                        </div>
-                    </fieldset>
-                </form>
+                <h3>Profilfoto</h3>
+                <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle">
+                <p class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</p>
+                <input type="file" name="image" class="image">
+            </div>
+        </div>
+
+        <div class="card card-style contact-form">
+            <div class="content">
+                <h3>Ihre Angaben</h3>
+                <fieldset>
+                    <div class="form-field form-name">
+                        <label class="contactNameField color-theme" for="contactNameField">Vorname:</label>
+                        <input type="text" name="contactNameField" value="<?php echo (Auth::user()->vorname); ?>" class="round-small" id="contactNameField" />
+                    </div>
+                    <div class="form-field form-email">
+                        <label class="contactEmailField color-theme" for="contactEmailField">Nachname:</label>
+                        <input type="text" name="contactEmailField" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="contactEmailField" />
+                    </div>
+                    <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
+                    <div class="input-style has-borders no-icon mb-5">
+                        <input
+                            type="date"
+                            id="txtNeueMessungDatum"
+                            name="txtNeueMessungDatum"
+                            value=""
+                        />
+                    </div>
+                    Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
+                    <br><br>
+                    <div class="form-button">
+                        <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" data-formId="contactForm" />
+                    </div>
+                </fieldset>
             </div>
         </div>
 
@@ -268,23 +301,47 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 
 
+<!-- Bildupload Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="img-container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="modal-title" id="modalLabel">Bitte wählen Sie den Bereich aus:</h5>
+                            <img id="image">
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="modal-title">Vorschau:</h5>
+                            <div class="preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"  data-dismiss="modal" aria-label="Close">Abbrechen</button>
+                <button type="button" class="btn btn-success" id="crop">Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ URL::asset('mobile-ios/assets/libs/toastify/toastify.js') }}"></script>
-<script src="{{ URL::asset('mobile-ios/assets/libs/chart/chart.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
 
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
 
 
 <script>
-
-
     $(document).ready(function() {
-
-
     })
 
 
@@ -304,9 +361,81 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
            }*/
         }
     })
-
 </script>
 
+
+<script>
+    var $modal = $('#modal');
+    var image = document.getElementById('image');
+    var cropper;
+
+    $("body").on("change", ".image", function(e){
+        var files = e.target.files;
+        var done = function (url) {
+            image.src = url;
+            $modal.modal('show');
+        };
+
+        var reader;
+        var file;
+        var url;
+
+        if (files && files.length > 0) {
+            file = files[0];
+            if ((files[0]['type'] != 'image/jpeg') && (files[0]['type'] != 'image/png')) {
+                alert("Keine gültige Bilddatei");
+                return false;
+            }
+            if (URL) {
+                done(URL.createObjectURL(file));
+            } else if (FileReader) {
+                reader = new FileReader();
+                reader.onload = function (e) {
+                    done(reader.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    $modal.on('shown.bs.modal', function () {
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 3,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+        cropper = null;
+    });
+
+    $("#crop").click(function(){
+        let canvas = cropper.getCroppedCanvas({
+            width: 420,
+            height: 420,
+        });
+
+        canvas.toBlob(function(blob) {
+            url = URL.createObjectURL(blob);
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+                var base64data = reader.result;
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url:"{{ route('user.crop-userimage-upload') }}",
+                    data: {'image': base64data},
+                    success: function(data){
+                        //$modal.modal('hide');
+                        location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--Picure Upload js-->
 
 
 </body>
