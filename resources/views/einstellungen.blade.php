@@ -52,7 +52,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             max-width: 1000px !important;
         }
 
-        .img-thumbnail{max-width:100%;width:40px;height:auto;padding:.25rem;background-color:var(--vz-body-bg);border:1px solid var(--vz-border-color);border-radius:.25rem}
+        .img-thumbnail{max-width:100%;height:auto;padding:.55rem;background-color:var(--vz-body-bg);border:1px solid var(--vz-border-color);border-radius:.25rem}
     </style>
 
 </head>
@@ -72,7 +72,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             if (empty(Auth::user()->profilbild)) {
                 echo ('d');
             } else {
-                echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle" >');
+                echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle">');
             }
         ?>
     </div>
@@ -94,7 +94,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <div class="card card-style contact-form">
             <div class="content">
                 <h3>Profilfoto</h3>
-                <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle">
+                <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle" style="width:100px">
                 <span class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</span><br>
                 <input type="file" name="image" class="image">
             </div>
@@ -109,20 +109,19 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         <input type="text" name="contactNameField" value="<?php echo (Auth::user()->vorname); ?>" class="round-small" id="contactNameField" />
                     </div>
                     <div class="form-field form-email">
-                        <label class="contactEmailField color-theme" for="contactEmailField">Nachname:</label>
+                        <label class="contactNameField color-theme" for="contactEmailField">Nachname:</label>
                         <input type="text" name="contactEmailField" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="contactEmailField" />
                     </div>
-                    <label class="contactEmailField color-theme" for="contactEmailField">Geburtstag:</label>
-                    <div class="input-style has-borders no-icon mb-5">
-                        <input
+                    Geburtstag:
+                    <div class="input-style has-borders ">
+                        <input class="round-small"
                             type="date"
                             id="txtNeueMessungDatum"
                             name="txtNeueMessungDatum"
                             value=""
                         />
                     </div>
-                    Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden.
-                    <br><br>
+                    Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden. <br>
                     <div class="form-button">
                         <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" data-formId="contactForm" />
                     </div>
