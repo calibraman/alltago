@@ -341,6 +341,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script>
     // Variable, um den aktuellen Offset zu speichern
     var letzteKalenderwoche = '';
+    var ersterAufruf = true;
     var aktuelleMessungID = 0;
 
     $(document).ready(function() {
@@ -422,9 +423,6 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         });
 
 
-        // Lade die ersten Events beim Start der Seite
-        $('#eventContainer').html('');
-        loadMoreEvents();
 
     })
 
@@ -462,6 +460,10 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 } else {
                     // Keine weiteren Events gefunden
                     //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
+                }
+                if (ersterAufruf == true) {
+                    ersterAufruf = false;
+                    loadMoreEvents();
                 }
             },
             error: function () {
