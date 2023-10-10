@@ -43,7 +43,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
     <div id="footer-bar" class="footer-bar-1">
         <!--<a href="index.html"><i class="fa fa-home"></i><span>Home</span></a>-->
-        <a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>
+        <!--<a href="index-components.html"><i class="fa-solid fa-chart-line"></i><span>Statistik</span></a>-->
         <!--<a href="home2"><i class="fa-solid fa-droplet"></i><span>Messungen</span></a>-->
         <a href="home3" class="active-nav"><i class="fa-solid fa-book"></i><span>Wochenbuch</span></a>
         <a href="home2"><i class="fa-solid fa-book"></i><span>Tagebuch</span></a>
