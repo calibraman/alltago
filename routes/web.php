@@ -81,8 +81,9 @@ Route::get('/', function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         return view('home2');
     });
-    
-    return redirect('https://www.alltago.app');
+
+    return view('home2');
+   // return redirect('https://www.alltago.app');
 });
 
 
