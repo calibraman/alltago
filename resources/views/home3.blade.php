@@ -38,7 +38,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <div class="header header-fixed header-logo-center">
         <a href="index.html" class="header-title"><?php echo($anrede); ?>, {{ Auth::user()->vorname }}</a>
         <!--<a href="#" data-back-button class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>-->
-        <a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>
+        <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
     </div>
 
     <div id="footer-bar" class="footer-bar-1">
@@ -52,7 +52,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     </div>
 
     <div class="page-content header-clear-medium">
-
+<!--
         <div class="card card-style">
             <div class="content">
                 <h2 class="text-center">Kalenderwoche 34</h2>
@@ -85,12 +85,15 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 </div>
             </div>
         </div>
+-->
 
+        <div id="eventContainer">
+            <!-- Hier werden die Events dynamisch hinzugefügt -->
+        </div>
 
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
-
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">
         <div class="menu-title mt-0 pt-0"><h1>Settings</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>
@@ -230,27 +233,27 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         max="2024-06-14T00:00"
                     />
                 </div>
-<br>
+                <br>
                 <div class="row">
                     <div class="col">
                         SYS:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungSys" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         DIA:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungDia" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                     <div class="col">
                         Puls:
                         <div class="input-style has-borders no-icon validate-field mb-4">
                             <input type="tel" class="form-control validate-text" id="txtNeueMessungPuls" placeholder="">
-                            <em>(erforderlich)</em>
+                            <em>*</em>
                         </div>
                     </div>
                 </div>
@@ -259,6 +262,63 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             <div class="modal-footer">
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" data-bs-dismiss="modal">Abbrechen</a>
                 <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="neueMessungEintragen()">Messung eintragen</a>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- Messung Bearbeiten -->
+<div id="modalNeueMessungBearbeiten" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Messung bearbeiten</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                Zeitpunkt:
+                <div class="input-style has-borders no-icon mb-5">
+                    <input
+                        type="datetime-local"
+                        id="txtMessungBearbeitenDatum"
+                        name="txtMessungBearbeitenDatum"
+                        value="<?php echo date('Y-m-d'); ?>T<?php echo date('H:i'); ?>"
+                        min="2022-06-07T00:00"
+                        max="2024-06-14T00:00"
+                    />
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        SYS:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenSys" placeholder="">
+                            <em>*</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        DIA:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenDia" placeholder="">
+                            <em>*</em>
+                        </div>
+                    </div>
+                    <div class="col">
+                        Puls:
+                        <div class="input-style has-borders no-icon validate-field mb-4">
+                            <input type="tel" class="form-control validate-text" id="txtMessungBearbeitenPuls" placeholder="">
+                            <em>*</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-red-light mt-4 mb-3" onclick="messungLoeschen()">Messung Löschen</a>
+                <a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="messungBearbeitenEintragen()">Speichern</a>
             </div>
 
         </div><!-- /.modal-content -->
@@ -278,14 +338,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
 
 
-
 <script>
-
-
     // Variable, um den aktuellen Offset zu speichern
-    let letztesDatum = '';
+    var letzteKalenderwoche = '';
+    var aktuelleMessungID = 0;
 
     $(document).ready(function() {
+
         // Lade die ersten Events beim Start der Seite
         $('#eventContainer').html('');
         loadMoreEvents();
@@ -361,6 +420,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 }
             }
         });
+
+
+        // Lade die ersten Events beim Start der Seite
+        $('#eventContainer').html('');
+        loadMoreEvents();
+
     })
 
 
@@ -381,21 +446,19 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         }
     })
 
-
-
     // Funktion zum Abrufen und Anzeigen der Events
     function loadMoreEvents() {
         // AJAX-Aufruf, um Daten vom PHP-Skript abzurufen
         $.ajax({
             type: "POST",
             dataType: "json",
-            url:"{{ route('user.holeFeed') }}",
-            data: {'letztesDatum':letztesDatum},
+            url:"{{ route('user.holeFeedWochenbuch') }}",
+            data: {'letzteKalenderwoche':letzteKalenderwoche},
             success: function (response) {
                 // Wenn Daten erfolgreich abgerufen wurden
                 if (response.events.trim() !== "") {
                     $('#eventContainer').append(response.events);
-                    letztesDatum = response.letztesDatum; // Inkrementiere den Offset für die nächste Ladung
+                    letzteKalenderwoche = response.kalenderwoche; // Inkrementiere den Offset für die nächste Ladung
                 } else {
                     // Keine weiteren Events gefunden
                     //$('#eventContainer').append('<p>Keine weiteren Events gefunden.</p>');
@@ -497,7 +560,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
-                    letztesDatum = '';
+                    letzteKalenderwoche = '';
                     $('#eventContainer').html('');
                     loadMoreEvents();
                     $('#modalNeueMessungEintragen').modal('toggle');
@@ -517,5 +580,156 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     }
 
 </script>
+
+
+<script>
+
+    function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){
+        aktuelleMessungID = messungID;
+        $('#txtMessungBearbeitenDatum').val(datum);
+        $('#txtMessungBearbeitenSys').val(sys);
+        $('#txtMessungBearbeitenDia').val(dia);
+        $('#txtMessungBearbeitenPuls').val(puls);
+        $('#modalNeueMessungBearbeiten').modal('toggle');
+    }
+
+
+    function messungBearbeitenEintragen() {
+        var txtMessungBearbeitenDatum = $('#txtMessungBearbeitenDatum').val().trim();
+        var txtMessungBearbeitenSys = $('#txtMessungBearbeitenSys').val().trim();
+        var txtMessungBearbeitenDia = $('#txtMessungBearbeitenDia').val().trim();
+        var txtMessungBearbeitenPuls = $('#txtMessungBearbeitenPuls').val().trim();
+
+        if (txtMessungBearbeitenDatum == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein Datum aus.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenSys == "") {
+            Toastify({
+                text: "Bitte geben Sie den Systolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenDia == "") {
+            Toastify({
+                text: "Bitte geben Sie den Diastolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtMessungBearbeitenPuls == "") {
+            Toastify({
+                text: "Bitte geben Sie den Puls an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.messungBearbeiten') }}",
+            data: { 'aktuelleMessungID': aktuelleMessungID,
+                'txtMessungBearbeitenDatum': txtMessungBearbeitenDatum,
+                'txtMessungBearbeitenSys': txtMessungBearbeitenSys,
+                'txtMessungBearbeitenDia': txtMessungBearbeitenDia ,
+                'txtMessungBearbeitenPuls': txtMessungBearbeitenPuls },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    letzteKalenderwoche = '';
+                    $('#eventContainer').html('');
+                    loadMoreEvents();
+                    $('#modalNeueMessungBearbeiten').modal('toggle');
+                    Toastify({
+                        text: "Die Messung wurde erfolgreich bearbeitet.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+
+</script>
+
+<script>
+    function messungLoeschen() {
+        Swal.fire({
+            icon: 'question',
+            title: "",
+            text: "Möchten Sie diese Messung wirklich löschen?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Ja, Messung löschen',
+            cancelButtonText: 'Abbrechen',
+            confirmButtonColor: '#6ADA7D',
+            cancelButtonColor: '#FA896B',
+        }).then(function(result) {
+            if(result.value) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url:"{{ route('user.messungLoeschen') }}",
+                    data: {'aktuelleMessungID':aktuelleMessungID},
+                    success:function(response) {
+                        $('#modalNeueMessungBearbeiten').modal('toggle');
+                        if (response.ergebnis == "fehler") {
+                            Swal.fire({
+                                title: 'Fehler',
+                                html: response.text2,
+                                type: 'error',
+                                icon: 'error',
+                                confirmButtonColor: '#6ADA7D'
+                            });
+                        } else {
+                            letzteKalenderwoche = '';
+                            $('#eventContainer').html('');
+                            loadMoreEvents();
+                            Swal.fire({
+                                title: '',
+                                html: response.text1,
+                                type: 'success',
+                                icon: 'success',
+                                confirmButtonColor: '#6ADA7D'
+                            });
+                        }
+                    }
+                });
+
+            }
+        })
+    }
+</script>
+
+
 
 </body>

@@ -565,6 +565,11 @@ class UserController extends Controller
         $datumFeed = substr($txtNeueMessungDatum,0,10);
 
 
+        setlocale(LC_TIME, 'de_DE');
+        date_default_timezone_set('Europe/Berlin');
+        $kalenderwoche = strftime("%V", strtotime($datumFeed));
+
+
         try {
             $stmt = $pdo->prepare("INSERT INTO `messungen` (
                                                     `messungID` ,
@@ -578,6 +583,7 @@ class UserController extends Controller
                                                     `pulsdruck`,
                                                     `hypertonie`,
                                                     `tageszeit`,
+                                                    `kalenderwoche`,
                                                     `eingetragenAm`
                                                   ) VALUES (
                                                     NULL ,
@@ -591,6 +597,7 @@ class UserController extends Controller
                                                     :pulsdruck,
                                                     :hypertonie,
                                                     :tageszeit,
+                                                    :kalenderwoche,
                                                     NOW()
                                           )");
             $stmt->bindParam(":userID",$benutzerID);
@@ -602,6 +609,7 @@ class UserController extends Controller
             $stmt->bindParam(":puls",$txtNeueMessungPuls);
             $stmt->bindParam(":pulsdruck",$pulsdruck);
             $stmt->bindParam(":tageszeit",$tageszeit);
+            $stmt->bindParam(":kalenderwoche",$kalenderwoche);
             $stmt->bindParam(":hypertonie",$hypertonie);
             $stmt->execute();
             //$objEvent = new event();
@@ -888,7 +896,7 @@ class UserController extends Controller
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
@@ -928,7 +936,7 @@ class UserController extends Controller
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
@@ -998,7 +1006,7 @@ class UserController extends Controller
                                                 <h4 class="mb-0 font-18">'.$iconTageszeit. substr($r['datum'],11,5).' Uhr<br></h4>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</span><br>
                                                 <span class="font-12 color-theme font-500"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</span><br>
-                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                                <span class="font-12 color-theme font-500"><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$r['mad'].'</span>
                                             </div>
                                             <div class="align-self-start ms-auto ps-3">
                                                 <span class="icon icon-xxs rounded-xl bg-white color-brown-dark">
@@ -1058,15 +1066,6 @@ class UserController extends Controller
             array_push($arrTage,$r['datumFeed']);
         }
 
-
-        $info = "SELECT
-                                    DISTINCT(datumFeed)
-                                FROM
-                                    messungen
-                                 WHERE
-                                     messungen.userID = ".$benutzerID."
-                                ".$sqlWHERE."
-                                 ORDER BY messungen.datumFeed DESC LIMIT ".$limitTage;
 
        // var_dump($arrTage);
         $letztesDatum = end($arrTage);
@@ -1183,7 +1182,7 @@ class UserController extends Controller
                                 <em>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br><div class="text-muted" onclick="zeigeMessungBearbeitenModal(\''.$r['messungID'].'\',\''.$r['datum'].'\',\''.$r['sys'].'\',\''.$r['dia'].'\',\''.$r['puls'].'\')"><i class="fa-regular fa-pen-to-square mt-4"></i>&nbsp;&nbsp;Bearbeiten</div></em>
 
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
-                                <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Durck: '.$r['mad'].'</span>
+                                <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$r['mad'].'</span>
                                 <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</strong>
                                 <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: '.$r['pulsdruck'].'</span>
                             </div>';
@@ -1200,7 +1199,338 @@ class UserController extends Controller
         }
 
 
-        return ['success'=>'','events'=>$events,'letztesDatum'=>$letztesDatum ,'info' => $info];
+        return ['success'=>'','events'=>$events,'letztesDatum'=>$letztesDatum ];
+    }
+
+
+    function holeFeedWochenbuch(Request $request) {
+        $pdo = DB::connection()->getPdo();
+
+        $benutzerID = Auth::user()->id;
+
+        $limitTage = 60;
+        $events = '';
+        $erstesDatum = '';
+        $letztesDatum = '';
+        $letzteKalenderwoche = '';
+        $info = '';
+        $detailTagesEintraege = '';
+
+        $objAllgemein = new AllgemeinController();
+
+        setlocale(LC_TIME, 'de_DE');
+        date_default_timezone_set('Europe/Berlin');
+
+
+        $sqlWHERE = '';
+        if (!empty($request->letzteKalenderwoche)) $sqlWHERE =' AND kalenderwoche < \''.$request->letzteKalenderwoche.'\' ';
+
+
+        // Tage ermitteln
+        $arrTage = array();
+        $kalenderwoche = '';
+        $query=$pdo->prepare("SELECT
+                                    DISTINCT(datumFeed)
+                                FROM
+                                    messungen
+                                 WHERE
+                                     messungen.userID = ".$benutzerID."
+                                ".$sqlWHERE."
+                                 ORDER BY messungen.datumFeed DESC LIMIT ".$limitTage);
+        $query->execute();
+        while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+            if (empty($kalenderwoche)) {
+                // Erster Aufruf
+                $kalenderwoche = strftime("%V", strtotime($r['datumFeed']));
+                array_push($arrTage,$r['datumFeed']);
+            } else {
+                if ($kalenderwoche == strftime("%V", strtotime($r['datumFeed']))) {
+                    // Gleiche Kalenderwoche
+                    array_push($arrTage,$r['datumFeed']);
+                } else {
+                   // Andere Kalendewoche
+                }
+            }
+        }
+        //print_r($arrTage);
+        /////////////////////////////
+
+        if (count($arrTage) == 0) return ['success'=>'','events'=>$events,'kalenderwoche'=>$kalenderwoche];
+
+        // Datum-Array sortieren
+        $arrTage = array_reverse($arrTage);
+        reset($arrTage);
+        $erstesDatum = (current($arrTage)!==false) ? current($arrTage) : null;
+        end($arrTage);
+        $letztesDatum = (current($arrTage)!==false) ? current($arrTage) : null;
+
+        $sqlDatum = '';
+        foreach ($arrTage as $datum) {
+            $sqlDatum .= "'".$datum."',";
+        }
+        $sqlDatum = substr($sqlDatum, 0, -1);
+
+        // Durschnittswerte selektieren
+        $query=$pdo->prepare("SELECT
+                                    AVG(sys) AS sys,
+                                    AVG(dia) AS dia,
+                                    AVG(mad) AS mad,
+                                    AVG(pulsdruck) AS pulsdruck,
+                                    AVG(puls) AS puls
+                                FROM messungen
+                                WHERE
+                                     messungen.userID = ".$benutzerID."
+                                     AND datumFeed IN (".$sqlDatum.")
+                                     ");
+        $query->execute();
+        while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+            $durchschnittSys = (int) $r['sys'];
+            $durchschnittDia = (int) $r['dia'];
+            $durchschnittMAD = (int) $r['mad'];
+            $durchschnittPuls = (int) $r['puls'];
+            $durchschnittPulsdruck = (int) $r['pulsdruck'];
+        }
+
+
+
+        // Summe von Hypertonie errechnen
+        $summeHypertonie = 0;
+        $query_summe=$pdo->prepare("SELECT
+                                        sum(messungen.hypertonie) as summe
+                                    FROM
+                                        messungen
+                                     WHERE
+                                         messungen.userID = ".$benutzerID."
+                                         AND datumFeed IN (".$sqlDatum.")");
+        $query_summe->execute();
+        while($r_summe=$query_summe->fetch(\PDO::FETCH_BOTH)) {
+            $summeHypertonie = $r_summe['summe'];
+        }
+
+        // Anzahl der Messungen ermitteln
+        $anzahlMessungen = 0;
+        $query_anzahl=$pdo->prepare("SELECT
+                                            count(messungen.messungID) as anzahl
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                         AND datumFeed IN (".$sqlDatum.")");
+        $query_anzahl->execute();
+        while($r_anzahl=$query_anzahl->fetch(\PDO::FETCH_BOTH)) {
+            $anzahlMessungen = $r_anzahl['anzahl'];
+        }
+
+        // Berechnung des Durchschnitts
+        $durchschnitt = $summeHypertonie / $anzahlMessungen;
+
+
+
+
+
+
+        // Festlegen der Werte
+        $farbeHeader = 'danger';
+        $farbwert = '#FFC7BB';
+        $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
+        $beschreibung = 'Hypertonie in dieser Woche im Durchschnitt.';
+        if ($durchschnitt < 1.5) {
+            $farbeHeader = 'warning';
+            $farbwert = '#FAE236';
+            $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
+            $beschreibung = 'Milde Hypertonie in dieser Woche im Durchschnitt.';
+        }
+        if ($durchschnitt < 1) {
+            $farbeHeader = 'success';
+            $farbwert = '#DCEDCC';
+            $iconInformation = '<i class="fa fa-check color-'.$farbeHeader.'-dark font-11"></i>';
+            $beschreibung = 'Optimaler Blutdruck in dieser Woche im Durschnitt.';
+        }
+        //////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+        // Start Detail-Einträge
+
+        $detailTagesEintraege = '
+            <div class="mb-0">
+                <button class="btn accordion-btn no-effect"  data-bs-toggle="collapse" data-bs-target="#kw'.$kalenderwoche.'">
+                    <i class="fa fa-chevron-down font-10 accordion-icon"></i>
+                    Details&nbsp;&nbsp;
+                </button>
+
+                <div id="kw'.$kalenderwoche.'" class="collapse"  data-bs-parent="#accordion-1">';
+
+        foreach ($arrTage as $tag) {
+
+
+            // Anzahl der Messungen ermitteln
+            $anzahlMessungen = 0;
+            $query_anzahl=$pdo->prepare("SELECT
+                                            count(messungen.messungID) as anzahl
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".$tag."%'");
+            $query_anzahl->execute();
+            while($r_anzahl=$query_anzahl->fetch(\PDO::FETCH_BOTH)) {
+                $anzahlMessungen = $r_anzahl['anzahl'];
+            }
+
+
+            // Summe von Hypertonie errechnen
+            $summeHypertonie = 0;
+            $query_summe=$pdo->prepare("SELECT
+                                            sum(messungen.hypertonie) as summe
+                                        FROM
+                                            messungen
+                                         WHERE
+                                             messungen.userID = ".$benutzerID."
+                                             AND messungen.datum like '".$tag."%'");
+            $query_summe->execute();
+            while($r_summe=$query_summe->fetch(\PDO::FETCH_BOTH)) {
+                $summeHypertonie = $r_summe['summe'];
+            }
+
+            // Berechnung des Durchschnitts
+            $durchschnitt = $summeHypertonie / $anzahlMessungen;
+
+
+            $farbeHeader = 'danger';
+            $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
+            $beschreibung = 'Hypertonie an diesem Tag im Durchschnitt.';
+            if ($durchschnitt < 1.5) {
+                $farbeHeader = 'warning';
+                $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
+                $beschreibung = 'Milde Hypertonie an diesem Tag im Durchschnitt.';
+            }
+            if ($durchschnitt < 1) {
+                $farbeHeader = 'success';
+                $iconInformation = '<i class="fa fa-check color-'.$farbeHeader.'-dark font-11"></i>';
+                $beschreibung = 'Optimaler Blutdruck an diesem Tag im Durschnitt.';
+            }
+
+            $timestamp = strtotime($tag);
+            $wochentag = date("l", $timestamp);
+            if ($wochentag == 'Monday') $wochentag = 'Montag';
+            if ($wochentag == 'Tuesday') $wochentag = 'Dienstag';
+            if ($wochentag == 'Wednesday') $wochentag = 'Mittwoch';
+            if ($wochentag == 'Thursday') $wochentag = 'Donnerstag';
+            if ($wochentag == 'Friday') $wochentag = 'Freitag';
+            if ($wochentag == 'Saturday') $wochentag = 'Samstag';
+            if ($wochentag == 'Sunday') $wochentag = 'Sonntag';
+
+
+
+            // Messungen selektieren
+            $query=$pdo->prepare("SELECT
+                                    *
+                                FROM
+                                    messungen
+                                 WHERE
+                                     datumFeed = '".$tag."' AND
+                                     messungen.userID = ".$benutzerID." ORDER BY messungen.datum DESC");
+            $query->execute();
+            while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+                $iconTageszeit = '';
+                if ($r['tageszeit'] == 'morgen') $iconTageszeit = '<i class="fa-solid fa-mug-saucer"></i>&nbsp;&nbsp;Morgens';
+                if ($r['tageszeit'] == 'mittag') $iconTageszeit = '<i class="fa-solid fa-cloud-sun"></i></i>&nbsp;&nbsp;Mittags';
+                if ($r['tageszeit'] == 'abend') $iconTageszeit = '<i class="fa-solid fa-bed"></i>&nbsp;&nbsp;Abends';
+
+
+
+                $iconInformation = '';
+                $farbe = '';
+                $beschreibung = '';
+                if ($r['hypertonie'] == 0) {
+                    $farbe = '#DCEDCC';
+                    $iconInformation = '<i class="fa fa-check color-'.$farbe.'-dark font-11"></i>';
+                    $beschreibung = 'Optimaler Blutdruck';
+                }
+                if ($r['hypertonie'] == 1) {
+                    $farbe = '#FCEBCA';
+                    $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbe.'-dark font-11"></i>';
+                    $beschreibung = 'Milde Hypertonie';
+                }
+                if ($r['hypertonie'] == 2) {
+                    $farbe = '#FFC7BB';
+                    $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbe.'-dark font-11"></i>';
+                    $beschreibung = 'Hypertonie';
+                }
+
+                $detailTagesEintraege .= ' <div class="cal-schedule " style="background-color:'.$farbe.'">
+                                <em>'.$wochentag.'<br>'.$iconTageszeit.'<br>'.substr($r['datum'],11,5).' Uhr<br></em>
+
+                                <strong class="d-block mb-n2"><i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$r['sys'].'/'.$r['dia'].'</strong>
+                                <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$r['mad'].'</span>
+                                <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$r['puls'].'</strong>
+                                <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: '.$r['pulsdruck'].'</span>
+                            </div>';
+            }
+        }
+        $detailTagesEintraege .= '
+                        </div>
+                    </div>';
+        /////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $events = '<div class="card card-style">
+            <div class="content">
+                <h2 class="text-center">Kalenderwoche '.$kalenderwoche.'</h2>
+                <p class="text-center mt-n2 mb-1 font-11 color-highlight">'.$objAllgemein->sqldate2date($erstesDatum).' bis '.$objAllgemein->sqldate2date($letztesDatum).'</p>
+                <div class="chart-container" style="width:100%; height:300px;">
+                    <canvas class="graph" id="line-chart"/></canvas>
+                </div>
+            </div><div class="cal-schedule " style="background-color:'.$farbwert.'">
+                <em>Durchschnittswerte<br>dieser der Woche</em>
+
+                <strong class="d-block mb-n2">
+                '.$beschreibung.'<br>
+                <i class="fa-solid fa-stethoscope"></i>&nbsp;Messung: '.$durchschnittSys.'/'.$durchschnittDia.'</strong>
+                <span><i class="fa-solid fa-rotate-right"></i></i>&nbsp;Mittlerer arterieller Druck: '.$durchschnittMAD.'</span>
+                <strong class="d-block mb-n2"><i class="fa-solid fa-heart-pulse"></i>&nbsp;Puls: '.$durchschnittPuls.'</strong>
+                <span><i class="fa-solid fa-heart-pulse"></i>&nbsp;Pulsdruck: '.$durchschnittPulsdruck.'</span>
+            </div>
+            '.$detailTagesEintraege.'
+        </div>';
+
+
+
+
+
+        return ['success'=>'','events'=>$events,'kalenderwoche'=>$kalenderwoche ,'info' => $info];
+
+
+
+
+
+
     }
 
 

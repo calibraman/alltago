@@ -29,6 +29,10 @@ Route::get('/home2', function () {
     return view('home2');
 })->name('home2')->middleware(['auth', 'verified']);
 
+Route::get('/home3', function () {
+    return view('home3');
+})->name('home3')->middleware(['auth', 'verified']);
+
 Route::get('/mobile-ios/inAppSuccess', function () {
     return view('mobile-ios/inAppSuccess');
 });
@@ -53,6 +57,7 @@ Route::post('user.messungBearbeiten', [UserController::class, 'messungBearbeiten
 Route::post('user.messungLoeschen', [UserController::class, 'messungLoeschen'])->name('user.messungLoeschen')->middleware(['auth', 'verified']);
 Route::post('user.holeFeed', [UserController::class, 'holeFeed'])->name('user.holeFeed')->middleware(['auth', 'verified']);
 Route::post('user.holeFeed2', [UserController::class, 'holeFeed2'])->name('user.holeFeed2')->middleware(['auth', 'verified']);
+Route::post('user.holeFeedWochenbuch', [UserController::class, 'holeFeedWochenbuch'])->name('user.holeFeedWochenbuch')->middleware(['auth', 'verified']);
 
 
 
