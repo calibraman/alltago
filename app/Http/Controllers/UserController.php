@@ -1333,18 +1333,18 @@ class UserController extends Controller
         $farbeHeader = 'danger';
         $farbwert = '#FFC7BB';
         $iconInformation = '<i class="fa-solid fa-triangle-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
-        $beschreibung = 'Hypertonie in dieser Woche im Durchschnitt.';
+        $beschreibung = 'Hypertonie';
         if ($durchschnitt < 1.5) {
             $farbeHeader = 'warning';
-            $farbwert = '#FAE236';
+            $farbwert = '#FCECCB';
             $iconInformation = '<i class="fa-solid fa-exclamation color-'.$farbeHeader.'-dark font-11"></i>';
-            $beschreibung = 'Milde Hypertonie in dieser Woche im Durchschnitt.';
+            $beschreibung = 'Milde Hypertonie';
         }
         if ($durchschnitt < 1) {
             $farbeHeader = 'success';
             $farbwert = '#DCEDCC';
             $iconInformation = '<i class="fa fa-check color-'.$farbeHeader.'-dark font-11"></i>';
-            $beschreibung = 'Optimaler Blutdruck in dieser Woche im Durschnitt.';
+            $beschreibung = 'Optimaler Blutdruck';
         }
         //////////////////////////////
 
