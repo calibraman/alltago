@@ -375,6 +375,27 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 <script>
 
+    $('#txtNeueMessungSys').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtNeueMessungDia').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtNeueMessungPuls').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+
+    $('#txtNeueMessungSys').on('input', function() {
+        var len = $('#txtNeueMessungSys').val().length;
+        if  (len == 3) $('#txtNeueMessungDia').focus();
+    })
+
     function zeigeNeueMessungModal(){
         $('#txtNeueMessungDatum').val('');
         $('#txtNeueMessungSys').val('');
@@ -471,6 +492,30 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
 
 <script>
+
+    $('#txtMessungBearbeitenSys').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtMessungBearbeitenDia').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtMessungBearbeitenPuls').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+
+
+
+    $('#txtMessungBearbeitenSys').on('input', function() {
+        var len = $('#txtMessungBearbeitenSys').val().length;
+        if  (len == 3) $('#txtMessungBearbeitenDia').focus();
+    })
+
 
     function zeigeMessungBearbeitenModal(messungID,datum,sys,dia,puls){
         aktuelleMessungID = messungID;
