@@ -1215,6 +1215,10 @@ class UserController extends Controller
         $letzteKalenderwoche = '';
         $info = '';
         $detailTagesEintraege = '';
+        $arrStatistikWochentage = array();
+        $arrStatistikSys = array();
+        $arrStatistikDia = array();
+        $arrStatistikPuls = array();
 
         $objAllgemein = new AllgemeinController();
 
@@ -1431,6 +1435,29 @@ class UserController extends Controller
 
 
 
+            // Durschnittswerte für Statistik errechnen für diesen Tag
+            // Durschnittswerte selektieren
+            $query=$pdo->prepare("SELECT
+                                    AVG(sys) AS sys,
+                                    AVG(dia) AS dia,
+                                    AVG(puls) AS puls
+                                FROM messungen
+                                WHERE
+                                     datumFeed = '".$tag."' AND
+                                     messungen.userID = ".$benutzerID);
+            $query->execute();
+            while($r=$query->fetch(\PDO::FETCH_BOTH)) {
+                $durchschnittSysStatistik = (int) $r['sys'];
+                $durchschnittDiaStatistik = (int) $r['dia'];
+                $durchschnittPulsStatistik = (int) $r['puls'];
+            }
+            array_push($arrStatistikWochentage,$wochentag);
+            array_push($arrStatistikSys,$durchschnittSysStatistik);
+            array_push($arrStatistikDia,$durchschnittDiaStatistik);
+            array_push($arrStatistikPuls,$durchschnittPulsStatistik);
+
+
+
             // Messungen selektieren
             $query=$pdo->prepare("SELECT
                                     *
@@ -1505,7 +1532,7 @@ class UserController extends Controller
                 <h2 class="text-center">Kalenderwoche '.$kalenderwoche.'</h2>
                 <p class="text-center mt-n2 mb-1 font-11 color-highlight">'.$objAllgemein->sqldate2date($erstesDatum).' bis '.$objAllgemein->sqldate2date($letztesDatum).'</p>
                 <div class="chart-container" style="width:100%; height:300px;">
-                    <canvas class="graph" id="line-chart"/></canvas>
+                    <canvas class="graph" id="line-chart'.$kalenderwoche.'"/></canvas>
                 </div>
             </div><div class="cal-schedule " style="background-color:'.$farbwert.'">
                 <em>Durchschnittswerte<br>dieser der Woche</em>
@@ -1524,7 +1551,7 @@ class UserController extends Controller
 
 
 
-        return ['success'=>'','events'=>$events,'kalenderwoche'=>$kalenderwoche ,'info' => $info];
+        return ['success'=>'','events'=>$events,'kalenderwoche'=>$kalenderwoche ,'info' => $info, 'arrStatistikSys' => $arrStatistikSys, 'arrStatistikDia' => $arrStatistikDia, 'arrStatistikPuls' => $arrStatistikPuls, 'arrStatistikWochentage' => $arrStatistikWochentage];
 
 
 

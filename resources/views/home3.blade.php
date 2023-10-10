@@ -344,32 +344,34 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     var ersterAufruf = true;
     var aktuelleMessungID = 0;
 
+
+    //Color Variables
+    var redFull = '#BF263C';
+    var redFade = 'rgba(191, 38, 60, 0.2)';
+    var yellowFull = '#F6BB42';
+    var yellowFade = 'rgba(246, 187, 66, 0.2)';
+    var greenFull = '#8CC152';
+    var greenFade = 'rgba(140, 193, 82, 0.1)';
+    var greenFade2 = 'rgba(140, 193, 82, 0.7)';
+    var blueFull = '#5D9CEC';
+    var blueFade = 'rgba(93, 156, 236, 0.2)';
+    var blueFade2 = 'rgba(93, 156, 236, 0.7)';
+    var magentaFull = '#AC92EC';
+    var magentaFade = 'rgba(172, 146, 236, 0.2)';
+    var grayFull = '#CCD1D9';
+    var grayFade = 'rgba(204, 209, 217, 0.2)';
+    var orangeFull = '#E9573F';
+    var orangeFade = 'rgba(233, 87, 63, 0.2)'
+    var facebookColor = 'rgba(66,103,178, 0.8)';
+    var twitterColor = 'rgba(29,161,242, 0.8)';
+    var whatsappColor = 'rgba(37,211,102,0.8)';
+
     $(document).ready(function() {
 
         // Lade die ersten Events beim Start der Seite
         $('#eventContainer').html('');
         loadMoreEvents();
 
-        //Color Variables
-        var redFull = '#BF263C';
-        var redFade = 'rgba(191, 38, 60, 0.2)';
-        var yellowFull = '#F6BB42';
-        var yellowFade = 'rgba(246, 187, 66, 0.2)';
-        var greenFull = '#8CC152';
-        var greenFade = 'rgba(140, 193, 82, 0.1)';
-        var greenFade2 = 'rgba(140, 193, 82, 0.7)';
-        var blueFull = '#5D9CEC';
-        var blueFade = 'rgba(93, 156, 236, 0.2)';
-        var blueFade2 = 'rgba(93, 156, 236, 0.7)';
-        var magentaFull = '#AC92EC';
-        var magentaFade = 'rgba(172, 146, 236, 0.2)';
-        var grayFull = '#CCD1D9';
-        var grayFade = 'rgba(204, 209, 217, 0.2)';
-        var orangeFull = '#E9573F';
-        var orangeFade = 'rgba(233, 87, 63, 0.2)'
-        var facebookColor = 'rgba(66,103,178, 0.8)';
-        var twitterColor = 'rgba(29,161,242, 0.8)';
-        var whatsappColor = 'rgba(37,211,102,0.8)';
 
 
         var lineChart = document.getElementById('line-chart');
@@ -456,6 +458,60 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 // Wenn Daten erfolgreich abgerufen wurden
                 if (response.events.trim() !== "") {
                     $('#eventContainer').append(response.events);
+
+
+
+                    var lineDemoChart = new Chart(document.getElementById('line-chart' + response.kalenderwoche), {
+                        type: 'line',
+                        data: {
+                            labels: response.arrStatistikWochentage,
+                            datasets: [{
+                                data: response.arrStatistikSys,
+                                label: "SYStolischer",
+                                fill:true,
+                                backgroundColor:blueFade,
+                                borderColor: blueFull,
+                                lineTension: 0.1,
+                                pointRadius: 2,
+                            }, {
+                                data: response.arrStatistikDia,
+                                label: "DIAstolischer",
+                                fill:true,
+                                backgroundColor:greenFade,
+                                borderColor: greenFull,
+                                lineTension: 0.2,
+                                pointRadius: 2,
+                            }, {
+                                data: response.arrStatistikPuls,
+                                label: "Puls",
+                                fill:false,
+                                borderColor: redFull,
+                                lineTension: 0.3,
+                                pointRadius: 3,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        fontSize: 10,
+                                        padding: 15,
+                                        boxWidth: 12
+                                    },
+                                },
+                            },
+                            title: {
+                                display: false
+                            }
+                        }
+                    });
+
+
+
                     letzteKalenderwoche = response.kalenderwoche; // Inkrementiere den Offset für die nächste Ladung
                 } else {
                     // Keine weiteren Events gefunden
