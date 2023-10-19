@@ -64,6 +64,8 @@ Route::post('user.holeFeed', [UserController::class, 'holeFeed'])->name('user.ho
 Route::post('user.holeFeed2', [UserController::class, 'holeFeed2'])->name('user.holeFeed2')->middleware(['auth', 'verified']);
 Route::post('user.holeFeedWochenbuch', [UserController::class, 'holeFeedWochenbuch'])->name('user.holeFeedWochenbuch')->middleware(['auth', 'verified']);
 Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropImage'])->name('user.crop-userimage-upload')->middleware(['auth', 'verified']);
+Route::post('user.einstellungenSpeichern', [UserController::class, 'einstellungenSpeichern'])->name('user.einstellungenSpeichern')->middleware(['auth', 'verified']);
+Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
 
 
 

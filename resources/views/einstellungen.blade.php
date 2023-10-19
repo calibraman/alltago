@@ -30,13 +30,13 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <style type="text/css">
         img {
             display: block;
-            max-width: 100%;
+            max-width: 80%;
         }
         .preview {
             text-align: center;
             overflow: hidden;
-            width: 160px;
-            height: 160px;
+            width: 130px;
+            height: 130px;
             margin: 10px;
             border: 1px solid red;
         }
@@ -96,7 +96,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <h3>Profilfoto</h3>
                 <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle" style="width:100px">
                 <span class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</span><br>
-                <input type="file" name="image" class="image">
+                <input type="file" name="image" class="image" style="margin-top:8px">
             </div>
         </div>
 
@@ -105,25 +105,38 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <h3>Ihre Angaben</h3>
                 <fieldset>
                     <div class="form-field form-name">
-                        <label class="contactNameField color-theme" for="contactNameField">Vorname:</label>
-                        <input type="text" name="contactNameField" value="<?php echo (Auth::user()->vorname); ?>" class="round-small" id="contactNameField" />
+                        <label class="contactNameField color-theme" for="txtVorname">Vorname:</label>
+                        <input type="text" name="txtVorname" value="<?php echo (Auth::user()->vorname); ?>" class="round-small" id="txtVorname" />
                     </div>
-                    <div class="form-field form-email">
-                        <label class="contactNameField color-theme" for="contactEmailField">Nachname:</label>
-                        <input type="text" name="contactEmailField" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="contactEmailField" />
+                    <div class="form-field form-name">
+                        <label class="contactNameField color-theme" for="txtNachname">Nachname:</label>
+                        <input type="text" name="txtNachname" value="<?php echo (Auth::user()->nachname); ?>" class="round-small" id="txtNachname" />
                     </div>
+                    <br>
                     Geburtstag:
-                    <div class="input-style has-borders ">
+                    <div class="input-style has-borders">
                         <input class="round-small"
                             type="date"
-                            id="txtNeueMessungDatum"
-                            name="txtNeueMessungDatum"
-                            value=""
+                            id="dateGeburtstag"
+                            name="dateGeburtstag"
+                            value="<?php echo (Auth::user()->geburtstag); ?>"
+                            style="margin-top:8px"
                         />
                     </div>
                     Wenn Sie ihr Geburtstdatum uns mitteilen, können genauere Berechnungen erstellt werden. <br>
                     <div class="form-button">
-                        <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" data-formId="contactForm" />
+                        <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Angaben speichern" onclick="speichereEinstellungen()" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="card card-style contact-form">
+            <div class="content">
+                <h3>Ausloggen</h3>
+                    Sie können sich sicher hier ausloggen und erst bei erneutem Einloggen haben Sie wieder Zugriff auf ALLTAGO.<br>
+                    <div class="form-button">
+                        <input type="submit" class="btn bg-warning text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Ausloggen" onclick="ausloggen()" />
                     </div>
                 </fieldset>
             </div>
@@ -371,6 +384,78 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     })
 </script>
 
+<script>
+
+    function speichereEinstellungen() {
+        var txtVorname = $('#txtVorname').val().trim();
+        var txtNachname = $('#txtNachname').val().trim();
+        var dateGeburtstag = $('#dateGeburtstag').val().trim();
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.einstellungenSpeichern') }}",
+            data: {'txtVorname': txtVorname,
+                   'txtNachname': txtNachname,
+                   'dateGeburtstag': dateGeburtstag },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    Toastify({
+                        text: "Die Daten wurde erfolgreich aktualisiert.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+</script>
+<script>
+
+    function ausloggen() {
+
+        Swal.fire({
+            icon: 'question',
+            title: "",
+            text: "Möchten Sie wirklich ausloggen?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Ja, ausloggen',
+            cancelButtonText: 'Abbrechen',
+            confirmButtonColor: '#6ADA7D',
+            cancelButtonColor: '#FA896B',
+        }).then(function(result) {
+            if(result.value) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url:"{{ route('user.logout') }}",
+                    data: {},
+                    success:function(response) {
+                        window.location.replace(response.url);
+
+                    }
+                });
+            }
+        })
+
+    }
+
+</script>
 
 <script>
     var $modal = $('#modal');

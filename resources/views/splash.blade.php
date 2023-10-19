@@ -33,8 +33,8 @@
             <div class="card-center text-center">
                 <!-- shows in light mode-->
                 <div class="show-on-theme-light">
-                    <h1 class="color-black font-30 font-700 mt-3">HERZlich willkommen</h1>
-                    <p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch<br>und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>
+                    <h1 class="color-black font-30 font-700 mt-3">HERZlich willkommen<br>zu Ihrem Blutdruck Tagebuch</h1><br>
+                    <!--<p class="color-black opacity-50">ALLTAGO ist ihr Blutdruck-Tagebuch<br>und Ratgeber rund um Ihre Gesundheit mit Hinblick auf ihr Herz.</p>-->
 
                     <p class="boxed-text-xl font-14 font-400 line-height-l opacity-70 color-black">
                         Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.

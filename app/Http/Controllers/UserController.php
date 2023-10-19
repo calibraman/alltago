@@ -10,6 +10,26 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    public function logout(Request $request)
+    {
+
+        if (Auth::check()) {
+            // Benutzer ausloggen
+            Auth::logout();
+        }
+
+        // Optional: Sitzungsinformationen löschen
+        session()->flush();
+
+        // Weiterleitung zu einer anderen Seite, z.B. zur Startseite
+        $zielUrl = route('splash');
+
+        // Geben Sie die URL zurück
+        return response()->json(['url' => $zielUrl]);
+
+    }
+
+
     public function userAnlegen(Request $request)
     {
 
@@ -528,6 +548,45 @@ class UserController extends Controller
         return ['success'=>''];
     }
 
+
+
+    public function einstellungenSpeichern(Request $request)
+    {
+
+        $pdo = DB::connection()->getPdo();
+
+        $txtVorname = trim($request->txtVorname);
+        $txtNachname = trim($request->txtNachname);
+        $dateGeburtstag = trim($request->dateGeburtstag);
+
+        if (empty($dateGeburtstag)) $dateGeburtstag = null;
+
+        $benutzerID =  Auth::user()->id;
+
+        try {
+            $stmt = $pdo->prepare("UPDATE `users` SET
+                                        `vorname` = :vorname,
+                                        `nachname` = :nachname,
+                                        `geburtstag` = :geburtstag
+                                   WHERE id = :benutzerID");
+            $stmt->bindParam(":vorname",$txtVorname);
+            $stmt->bindParam(":nachname",$txtNachname);
+            $stmt->bindParam(":geburtstag",$dateGeburtstag);
+            $stmt->bindParam(":benutzerID",$benutzerID);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler', 'text1' => "Fehler", 'text2' => "Es ist ein Fehler beim Eintragen der Einstellungen aufgetreten.<br><br>" . $e->getMessage()));
+        }
+
+
+        return json_encode(array('ergebnis' => 'erfolgreich', 'text1' => "Die Einstellungen wurde erfolgreich aktualisiert."));
+
+    }
 
 
     public function messungEintragen(Request $request)
