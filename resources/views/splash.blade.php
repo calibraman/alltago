@@ -86,7 +86,7 @@
 
                 <p id="error-message" style="color: red;"></p>
 
-
+                <a href="#" data-menu="menu-forgot" class="font-10">Haben Sie Ihr Passwort vergessen?</a>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" checked  id="auth-remember-check" style="visibility: hidden">
                     <label class="form-check-label" for="auth-remember-check" style="visibility: hidden">Remember me</label>
@@ -101,18 +101,6 @@
                                             </label>-->
                 </div>
 
-
-
-                <div class="row">
-                    <div class="col-6">
-                        <a href="#" data-menu="menu-forgot" class="font-10">Passwort vergessen?</a>
-                    </div>
-                    <div class="col-6">
-                        <!--<a data-menu="menu-signup" href="#" class="float-end font-10">Create Account</a>
-                        <div class="clearfix"></div>-->
-                    </div>
-                </div>
-                <!--<a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>-->
 
 
 
