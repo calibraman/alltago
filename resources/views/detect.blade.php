@@ -21,16 +21,10 @@
 </head>
 
 
-<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
-
-    <div id="page">
-
-        Einen Moment bitte...
-    </div>
+<body>
+ 
 
     <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
 
 
 
@@ -47,11 +41,14 @@
             } else if (/Android/.test(userAgent)) {
                 // Der Benutzer verwendet ein Android-Gerät
                 // window.location.href = "/home";
+            }  else if (userAgent == "webviewgold") {
+                // Der Benutzer verwendet die App
+                window.location.href = "/splash";
             } else {
                 // Der Benutzer verwendet weder iOS noch Android
-                //window.location.href = "https://www.google.de";
+                window.location.href = "https://www.alltago.app";
             }
-            alert (userAgent);
+           // alert (userAgent);
         })
 
 
