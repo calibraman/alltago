@@ -22,7 +22,7 @@
 
 
 <body>
- 
+
 
     <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 
@@ -37,7 +37,7 @@
             // Prüfen, ob der Benutzer ein iOS-Gerät verwendet
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 // Der Benutzer verwendet ein iOS-Gerät
-                // window.location.href = "/home";
+                window.location.href = "https://www.alltago.app";
             } else if (/Android/.test(userAgent)) {
                 // Der Benutzer verwendet ein Android-Gerät
                 // window.location.href = "/home";
