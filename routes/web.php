@@ -70,8 +70,7 @@ Route::post('user.holeFeedWochenbuch', [UserController::class, 'holeFeedWochenbu
 Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropImage'])->name('user.crop-userimage-upload')->middleware(['auth', 'verified']);
 Route::post('user.einstellungenSpeichern', [UserController::class, 'einstellungenSpeichern'])->name('user.einstellungenSpeichern')->middleware(['auth', 'verified']);
 Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
-
-
+Route::post('loginKai', [\App\Http\Controllers\Auth\LoginController::class, 'loginKai'])->name('loginKai');
 
 
 Auth::routes();

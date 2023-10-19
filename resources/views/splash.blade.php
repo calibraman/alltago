@@ -43,7 +43,7 @@
                 <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
 <br>
                 <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-success text-white">Sie haben einen Zugang?<br>Bitte hier klicken um sich einzuloggen</a>
-                
+
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
             <div class="card-overlay-infinite preload-img" data-src="{{ URL::asset('mobile-ios/images/pictures/_bg-infinite.jpg') }}"></div>
@@ -53,42 +53,38 @@
 
     <div id="menu-signin" class="menu menu-box-bottom menu-box-detached rounded-m"
          data-menu-effect="menu-parallax">
+
         <div class="me-3 ms-3 mt-4">
             <h1 class="text-uppercase font-900 mb-0">Einloggen</h1>
             <p class="font-11  mt-n1 mb-2">
                 Hallo und willkommen zurück, bitte loggen Sie sich ein.
             </p>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form id="login-form">
                 @csrf
                 <div class="row mb-3">
-                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-end">E-Maill Adresse:</label>
 
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                    <label for="password" class="col-md-4 col-form-label text-md-end">Passwort:</label>
 
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
                     </div>
                 </div>
 
+                <button type="submit" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">
+                    Login
+                </button>
+
+                <p id="error-message" style="color: red;"></p>
 
 
                 <div class="form-check">
@@ -118,9 +114,7 @@
                 </div>
                 <!--<a href="#" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3" onclick="login()">LOGIN</a>-->
 
-                <button type="submit" class="btn btn-full btn-m shadow-l rounded-s text-uppercase font-900 bg-green-dark mt-4 mb-3">
-                    {{ __('Login') }}
-                </button>
+
 
             </form>
         </div>
@@ -198,6 +192,54 @@
 
 
 <script type="text/javascript" src="{{ URL::asset('mobile-ios/scripts/custom.js') }}"></script>
+
+
+<script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        statusCode: {
+            /*   401: function(){
+                   location.href = "./";
+               },
+               419: function(){
+                   location.href = "./";
+               },
+           405: function(){
+               location.href = "./";
+           }*/
+        }
+    })
+
+
+    $("#login-form").submit(function(event) {
+        event.preventDefault();
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/loginKai", // Der Pfad zu Ihrer Laravel-Login-Route
+            data: {
+                email: email,
+                password: password,
+            },
+            success: function(data) {
+                // Erfolgreicher Login - Weiterleitung oder andere Aktionen
+                window.location.href = "/home"; // Beispiel: Weiterleitung zur Dashboard-Seite
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.responseText;
+                var jsonObj = JSON.parse(errorMessage);
+                $("#error-message").text(jsonObj.message);
+            }
+        });
+    });
+</script>
+
 
 
 <script>
