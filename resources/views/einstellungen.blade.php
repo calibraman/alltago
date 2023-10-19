@@ -94,7 +94,12 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <div class="card card-style contact-form">
             <div class="content">
                 <h3>Profilfoto</h3>
-                <img src="{{ URL::asset('intern/pictures/users/' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle" style="width:100px">
+                <?php
+                if (empty(Auth::user()->profilbild)) {
+                } else {
+                    echo ('<img src="{{ URL::asset(\'intern/pictures/users/\' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle" style="width:100px">');
+                }
+                ?>
                 <span class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</span><br>
                 <input type="file" name="image" class="image" style="margin-top:8px">
             </div>
