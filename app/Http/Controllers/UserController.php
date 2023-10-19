@@ -922,9 +922,9 @@ class UserController extends Controller
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" align="center" valign="top">
-                                                                        <a href="https://www.telefusion.de" style="display:block" target="_blank">
-                                                                            <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://dim.mcusercontent.com/cs/ce6b72c1c5d60036ec96a0f3b/images/86e8594c-f53f-22a6-39c7-f39291674310.png?w=161&dpr=2" class="">
-                                                                        </a>
+
+                                                                            <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://alltago.de/mobile-ios/images/pictures/logo.png" class="">
+                                                                      
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
