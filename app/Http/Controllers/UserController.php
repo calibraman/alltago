@@ -924,7 +924,7 @@ class UserController extends Controller
                                                                     <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" align="center" valign="top">
 
                                                                             <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://alltago.de/mobile-ios/images/pictures/logo.png" class="">
-                                                                      
+
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
