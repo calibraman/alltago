@@ -14,7 +14,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <title>StickyMobile BootStrap</title>
+    <title>ALLTAGO</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/style.css') }}">
     <link href="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -351,6 +351,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     var letzteKalenderwoche = '';
     var ersterAufruf = true;
     var aktuelleMessungID = 0;
+    var footerAngezeigt = false;
 
 
     //Color Variables
@@ -529,6 +530,27 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                     ersterAufruf = false;
                     loadMoreEvents();
                 }
+
+                if ($('#eventContainer').html() == "") {
+                    $('#eventContainer').append('<div class="card card-style" style="background-color: #7EB9AB;display: flex;justify-content: center; align-items: center;" onclick="zeigeNeueMessungModal()">' +
+                        '<img src="mobile-ios/images/pictures/herz_mit_stetoskop.jpg" alt="" style="max-width: 20%;height: auto">' +
+                        '<br>' +
+                        '<div class="text-center text-white mb-3">Tragen Sie den ersten Messwert ein.<br>' +
+                        'Klicken Sie hier oder unten im Menü auf "Neue Messung".</div>' +
+                        '<div class="clear"></div>' +
+                        '</div>');
+                } else {
+                    if (footerAngezeigt == false) {
+                        footerAngezeigt = true;
+                        $('#eventContainer').append('<div class="footer card card-style">' +
+                            '<a href="#" class="footer-title"><span class="color-highlight">ALLTAGO</span></a>' +
+                            '<p class="footer-text"><span>Entwickelt mit<i class="fa fa-heart color-highlight font-16 ps-2 pe-2"></i></span><br><br>ALLTAGO kann keine Erkrankungen erkennen, diagnostizieren oder behandlen.<br>Sprechen Sie immer mit Ihrem Arzt.</p>' +
+                            '<p class="footer-links"><a href="#" class="color-highlight">Privacy Policy</a> | <a href="#" class="color-highlight">Terms and Conditions</a> | <a href="#" class="back-to-top color-highlight"> Zurück nach oben</a></p>' +
+                            '<div class="clear"></div>' +
+                            '</div>');
+                    }
+                }
+
             },
             error: function () {
                 // Fehlerbehandlung, wenn Daten nicht abgerufen werden können

@@ -14,7 +14,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <title>StickyMobile BootStrap</title>
+    <title>ALLTAGO</title>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('mobile-ios/styles/style.css') }}">
     <link href="{{ URL::asset('mobile-ios/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -30,18 +30,18 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
     <style type="text/css">
         img {
             display: block;
-            max-width: 80%;
+            max-width: 60%;
         }
         .preview {
             text-align: center;
             overflow: hidden;
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             margin: 10px;
             border: 1px solid red;
         }
         input{
-            margin-top:40px;
+            margin-top:20px;
         }
         .section{
             margin-top:150px;
@@ -49,7 +49,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             padding:50px 30px;
         }
         .modal-lg{
-            max-width: 1000px !important;
+            max-width: 900px !important;
         }
 
         .img-thumbnail{max-width:100%;height:auto;padding:.55rem;background-color:var(--vz-body-bg);border:1px solid var(--vz-border-color);border-radius:.25rem}
@@ -383,6 +383,125 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         }
     })
 </script>
+
+
+
+
+<script>
+
+    $('#txtNeueMessungSys').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtNeueMessungDia').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+    $('#txtNeueMessungPuls').keypress(function (e) {
+        var charCode = (e.which) ? e.which : event.keyCode
+        if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            return false;
+    });
+
+    $('#txtNeueMessungSys').on('input', function() {
+        var len = $('#txtNeueMessungSys').val().length;
+        if  (len == 3) $('#txtNeueMessungDia').focus();
+    })
+
+    function zeigeNeueMessungModal(){
+        $('#txtNeueMessungDatum').val('');
+        $('#txtNeueMessungSys').val('');
+        $('#txtNeueMessungDia').val('');
+        $('#txtNeueMessungPuls').val('');
+        $('#modalNeueMessungEintragen').modal('toggle');
+
+    }
+
+    function neueMessungEintragen() {
+        var txtNeueMessungDatum = $('#txtNeueMessungDatum').val().trim();
+        var txtNeueMessungSys = $('#txtNeueMessungSys').val().trim();
+        var txtNeueMessungDia = $('#txtNeueMessungDia').val().trim();
+        var txtNeueMessungPuls = $('#txtNeueMessungPuls').val().trim();
+
+        if (txtNeueMessungDatum == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein Datum aus.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungSys == "") {
+            Toastify({
+                text: "Bitte geben Sie den Systolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungDia == "") {
+            Toastify({
+                text: "Bitte geben Sie den Diastolischen Blutdruck an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (txtNeueMessungPuls == "") {
+            Toastify({
+                text: "Bitte geben Sie den Puls an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.messungEintragen') }}",
+            data: {'txtNeueMessungDatum': txtNeueMessungDatum,
+                'txtNeueMessungSys': txtNeueMessungSys,
+                'txtNeueMessungDia': txtNeueMessungDia ,
+                'txtNeueMessungPuls': txtNeueMessungPuls },
+            success: function(data) {
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    $('#modalNeueMessungEintragen').modal('toggle');
+                    Toastify({
+                        text: "Die Messung wurde erfolgreich eingetragen.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+</script>
+
+
 
 <script>
 
