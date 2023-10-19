@@ -953,7 +953,7 @@ class UserController extends Controller
                                                                                 Sie erhalten diese E-Mail, da für Sie ein neues Passwort beantragt wurde.
                                                                                 <br>
                                                                                 <br>
-                                                                                Sie können sich nun mit folgenden Angaben in der ALLTAGGO-App einloggen:
+                                                                                Sie können sich nun mit folgenden Angaben in der ALLTAGO-App einloggen:
                                                                                 <br>
                                                                                 <br>Benutzer: '.$email.'
                                                                                 <br>Passwort: '.$passwortLesbar.'
@@ -1024,6 +1024,41 @@ class UserController extends Controller
 
 
         return ['success'=>''];
+
+    }
+
+
+
+
+
+
+    public function benutzerPasswortAendern(Request $request) {
+
+        $pdo = DB::connection()->getPdo();
+
+        $txtNeuesPasswort = trim($request->txtNeuesPasswort);
+        $benutzerID = Auth::user()->id;
+
+        $passwortLesbar = $txtNeuesPasswort;
+        $passwort = Hash::make($passwortLesbar);
+        try {
+            $stmt = $pdo->prepare("UPDATE `users` SET
+                                            `password` = :passwort
+                                   WHERE id = :benutzerID");
+            $stmt->bindParam(":benutzerID",$benutzerID);
+            $stmt->bindParam(":passwort",$passwort);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler' , 'text1' => "Fehler" , 'text2' => "Das Passwort konnte nicht zurückgesetzt werden.<br><br>".$e->getMessage()));
+        }
+
+        return json_encode(array('ergebnis' => 'erfolgreich' , 'text1' => "Fehler" , 'text2' => "Das Passwort wurde erfolgreich geändert."));
+
 
     }
 

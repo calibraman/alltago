@@ -491,16 +491,11 @@
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
-                    Toastify({
-                        text: "Ihr Passwort wurde zurückgesetzt. Bitte prüfen Sie Ihren Posteingang und ggf. den SPAM-Ordner.",
-                        className: "info",
-                        duration: 5000,
-                        position: "center",
-                        stopOnFocus: true,
-                        style: {
-                            background: "#6ADA7D"
-                        }
-                    }).showToast();
+                    Swal.fire({
+                        title: 'Passwort Zurückgesetzt',
+                        text: 'Bitte prüfen Sie Ihren Posteingang (und ggf. SPAM-Ordner). ',
+                        confirmButtonColor: '#6ADA7D'
+                    });
                 }
             }
         });

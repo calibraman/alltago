@@ -138,6 +138,21 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
 
         <div class="card card-style contact-form">
             <div class="content">
+                <h3>Passwort ändern</h3>
+                    Sie können hier das aktuelle Passwort ändern.<br>
+                    <div class="form-field form-name">
+                        <label class="contactNameField color-theme" for="txtNeuesPasswort">Neues Passwort:</label>
+                        <input type="password" name="txtNeuesPasswort" value="" class="round-small" id="txtNeuesPasswort" />
+                    </div>
+                    <div class="form-button">
+                        <input type="submit" class="btn bg-success text-uppercase font-900 btn-m btn-full rounded-sm  shadow-xl contactSubmitButton" value="Passwort ändern" onclick="passwortAendern()" />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="card card-style contact-form">
+            <div class="content">
                 <h3>Ausloggen</h3>
                     Sie können sich sicher hier ausloggen und erst bei erneutem Einloggen haben Sie wieder Zugriff auf ALLTAGO.<br>
                     <div class="form-button">
@@ -576,7 +591,78 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 });
             }
         })
+    }
 
+</script>
+<script>
+
+    function passwortAendern() {
+
+        var txtNeuesPasswort = $('#txtNeuesPasswort').val().trim();
+        if (txtNeuesPasswort == "") {
+            Toastify({
+                text: "Bitte wählen Sie ein neues Passwort ein.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        const length = txtNeuesPasswort.length;
+        if (length < 5) {
+            Toastify({
+                text: "Das Passwort muss mindestens 5 Zeichen lang sein.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+
+        Swal.fire({
+            icon: 'question',
+            title: "",
+            text: "Möchten Sie wirklich das Passwort ändern?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: 'Ja, Passwort ändern',
+            cancelButtonText: 'Abbrechen',
+            confirmButtonColor: '#6ADA7D',
+            cancelButtonColor: '#FA896B',
+        }).then(function(result) {
+            if(result.value) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url:"{{ route('user.passwortAendern') }}",
+                    data: {'txtNeuesPasswort': txtNeuesPasswort},
+                    success: function(data) {
+                        if(data.ergebnis == "fehler") {
+                            Swal.fire({
+                                title: 'Fehler',
+                                text: data.text2,
+                                type: 'error',
+                                icon: 'error',
+                                confirmButtonColor: '#6ADA7D'
+                            });
+                        } else {
+                            Toastify({
+                                text: "Das Passwort wurde erfolgreich geändert.",
+                                className: "info",
+                                duration: 5000,
+                                position: "center",
+                                stopOnFocus: true,
+                                style: {
+                                    background: "#6ADA7D"
+                                }
+                            }).showToast();
+                        }
+                    }
+                });
+            }
+        })
     }
 
 </script>
