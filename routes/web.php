@@ -71,7 +71,7 @@ Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropIma
 Route::post('user.einstellungenSpeichern', [UserController::class, 'einstellungenSpeichern'])->name('user.einstellungenSpeichern')->middleware(['auth', 'verified']);
 Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
 Route::post('loginKai', [\App\Http\Controllers\Auth\LoginController::class, 'loginKai'])->name('loginKai');
-
+Route::post('user.passwortZuruecksetzen', [UserController::class, 'benutzerPasswortZuruecksetzen'])->name('user.passwortZuruecksetzen');
 
 Auth::routes();
 

@@ -10,6 +10,46 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+
+    public function generierePasswort($passwordlength = 8,
+                                      $numNonAlpha = 0,
+                                      $numNumberChars = 0,
+                                      $useCapitalLetter = false ) {
+
+        $numberChars = '123456789';
+        $specialChars = '!$@';
+        $secureChars = 'abcdefghjkmnpqrstuvwxyzQWERTZUIOPASDFGHJKLYXCVBNM';
+        $stack = '';
+
+        // Stack für Password-Erzeugung füllen
+        $stack = $secureChars;
+
+        if ( $useCapitalLetter == true )
+            $stack .= strtoupper ( $secureChars );
+
+        $count = $passwordlength - $numNonAlpha - $numNumberChars;
+        $temp = str_shuffle ( $stack );
+        $stack = substr ( $temp , 0 , $count );
+
+        if ( $numNonAlpha > 0 ) {
+            $temp = str_shuffle ( $specialChars );
+            $stack .= substr ( $temp , 0 , $numNonAlpha );
+        }
+
+        if ( $numNumberChars > 0 ) {
+            $temp = str_shuffle ( $numberChars );
+            $stack .= substr ( $temp , 0 , $numNumberChars );
+        }
+
+
+        // Stack durchwürfeln
+        $stack = str_shuffle ( $stack );
+
+        // Rückgabe des erzeugten Passwort
+        return $stack;
+
+    }
+    
     public function logout(Request $request)
     {
 
@@ -547,6 +587,430 @@ class UserController extends Controller
 
         return ['success'=>''];
     }
+
+
+
+    public function benutzerPasswortZuruecksetzen(Request $request) {
+
+        $pdo = DB::connection()->getPdo();
+
+        $email = trim($request->txtNeuesPasswortUsername);
+
+        $passwortLesbar = $this->generierePasswort(8, 3, 5, true);
+        $passwort = Hash::make($passwortLesbar);
+        try {
+            $stmt = $pdo->prepare("UPDATE `users` SET
+                                            `password` = :passwort
+                                   WHERE id = :benutzerID");
+            $stmt->bindParam(":benutzerID",$benutzerID);
+            $stmt->bindParam(":passwort",$passwort);
+            $stmt->execute();
+            //$objEvent = new event();
+            //$arr = $objEvent->eventEintragen("Ansprechpartner", "Ein neuer Ansprechpartner (\"".$nachname.", ".$vorname."\") wurde angelegt". $text_add .".", $kundeID, $_SESSION['benutzer']['benutzerID'], false);
+            //$objEvent = null;
+            //$objKunden->updateKundenLetztesUpdateDatum($kundeID);
+        } catch(\PDOException $e){
+            //$objEmail->sendeFehler('Der Ansprechpartner '.$vorname.' '.$nachname.' konnte nicht angelegt werden über DELPHI, Benutzer: '.$_SESSION['benutzer']['benutzername'].'.<br><br>' . $e->getMessage(),'DELPHI/JANUS Fehler');
+            return json_encode(array('ergebnis' => 'fehler' , 'text1' => "Fehler" , 'text2' => "Das Passwort konnte nicht zurückgesetzt werden.<br><br>".$e->getMessage()));
+        }
+
+
+        $emailInhalt = '<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <!--[if gte mso 15]>
+    <xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>*|MC:MC_SUBJECT|*</title>
+    <style>
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
+
+    table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+    }
+
+    .mceStandardButton, .mceStandardButton td, .mceStandardButton td a {
+        mso-hide: all !important;
+    }
+
+    p, a, li, td, blockquote {
+        mso-line-height-rule: exactly;
+    }
+
+    p, a, li, td, body, table, blockquote {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    @media only screen and (max-width: 480px) {
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: none !important;
+        }
+    }
+
+    .mcnPreviewText {
+        display: none !important;
+    }
+
+    .bodyCell {
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+    }
+
+    .ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div, .ExternalClass span, .ExternalClass font {
+        line-height: 100%;
+    }
+
+    .ReadMsgBody {
+        width: 100%;
+    }
+
+    .ExternalClass {
+        width: 100%;
+    }
+
+    a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+    }
+
+    body {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+    }
+
+    p {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    td, p, a {
+        word-break: break-word;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        display: block;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    img, a img {
+        border: 0px;
+        height: auto;
+        outline: none;
+        text-decoration: none;
+    }
+
+    @media only screen and (max-width: 480px) {
+        body {
+            width: 100% !important;
+            min-width: 100% !important;
+        }
+
+        img {
+            height: auto !important;
+        }
+
+        .mceColumn {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .mceSpacing-24 {
+            padding-right: 12px !important;
+            padding-left: 12px !important;
+        }
+
+        .mceFooterSection .mceText, .mceFooterSection .mceText p, .mceFooterSection span {
+            font-size: 16px !important;
+            line-height: 150% !important;
+        }
+
+        .mceText, .mceText p {
+            font-size: 16px !important;
+            line-height: 150% !important;
+        }
+
+        h1 {
+            font-size: 36px !important;
+            line-height: 125% !important;
+        }
+    }
+
+    body {
+        background-color: rgb(244, 244, 244);
+    }
+
+    .mceText h1, .mceText h2, .mceText h3, .mceText h4 {
+        font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+    }
+
+    .mceText, .mceLabel {
+        font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+    }
+
+    .mceText h1, .mceText h2, .mceText h3, .mceText h4 {
+        color: rgb(0, 0, 0);
+    }
+
+    .mceText, .mceLabel {
+        color: rgb(0, 0, 0);
+    }
+
+    .mceSpacing-12 label {
+        margin-bottom: 12px;
+    }
+
+    .mceSpacing-12 input {
+        margin-bottom: 12px;
+    }
+
+    .mceSpacing-12 .mceInput + .mceErrorMessage {
+        margin-top: -6px;
+    }
+
+    .mceSpacing-24 h1 {
+        margin-bottom: 24px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 p {
+        margin-bottom: 24px;
+    }
+
+    .mceSpacing-24 p:last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 label {
+        margin-bottom: 24px;
+    }
+
+    .mceSpacing-24 input {
+        margin-bottom: 24px;
+    }
+
+    .mceSpacing-24 .last-child {
+        margin-bottom: 0px;
+    }
+
+    .mceSpacing-24 .mceInput + .mceErrorMessage {
+        margin-top: -12px;
+    }
+
+    .mceInput {
+        background-color: transparent;
+        border: 2px solid rgb(208, 208, 208);
+        width: 60%;
+        color: rgb(77, 77, 77);
+        display: block;
+    }
+
+    .mceInput[type="radio"], .mceInput[type="checkbox"] {
+        float: left;
+        margin-right: 12px;
+        display: inline;
+        width: auto !important;
+    }
+
+    .mceLabel > .mceInput {
+        margin-bottom: 0px;
+        margin-top: 2px;
+    }
+
+    .mceLabel {
+        display: block;
+    }
+
+    .mceText h1 {
+        font-size: 31.248px;
+        font-weight: 700;
+    }
+
+    .mceText p {
+        font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+    }
+
+    .mceText p {
+        font-size: 16px;
+    }
+
+    .mceText p {
+        color: rgb(0, 0, 0);
+    }
+
+    .mceText h1 {
+        font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+    }
+
+    .mceText h1 {
+        font-size: 31px;
+    }
+
+    .mceText h1 {
+        color: rgb(0, 0, 0);
+    }
+    </style>
+</head>
+<body>
+    <!---->
+    <center>
+        <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="background-color: rgb(244, 244, 244);">
+            <tbody>
+                <tr>
+                    <td id="root" class="bodyCell" align="center" valign="top">
+                        <!--[if (gte mso 9)|(IE)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="660" style="width:660px;"><tr><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:660px" role="presentation">
+                            <tbody>
+                                <tr class="mceRow">
+                                    <td style="background-position:center;background-repeat:no-repeat;background-size:cover" valign="top">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="background-color:#ffffff;background-position:center;background-repeat:no-repeat;background-size:cover" class="mceColumn" valign="top" colspan="12" width="100%">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" align="center" valign="top">
+                                                                        <a href="https://www.telefusion.de" style="display:block" target="_blank">
+                                                                            <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://dim.mcusercontent.com/cs/ce6b72c1c5d60036ec96a0f3b/images/86e8594c-f53f-22a6-39c7-f39291674310.png?w=161&dpr=2" class="">
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" valign="top">
+                                                                        <div class="mceText" style="font-size:16px;text-align:center;width:100%">
+                                                                            <h1>Willkommen bei ALLTAGO</h1>
+                                                                            <p class="last-child">
+                                                                                <br>
+                                                                                Sie erhalten diese E-Mail, da für Sie ein neues Passwort beantragt wurde.
+                                                                                <br>
+                                                                                <br>
+                                                                                Sie können sich nun mit folgenden Angaben einloggen:
+                                                                                <br>
+                                                                                <br>Benutzer: '.$email.'
+                                                                                <br>Passwort: '.$passwortLesbar.'
+                                                                                <br>
+                                                                                <br>
+                                                                                <br>
+                                                                                <br>
+                                                                            </p>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+    <center>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" id="canspamBarWrapper" style="background-color:#FFFFFF; border-top:1px solid #E5E5E5;">
+            <tr>
+                <td align="center" valign="top" style="padding-top:20px; padding-bottom:20px;">
+                    <table border="0" cellpadding="0" cellspacing="0" id="canspamBar">
+                        <tr>
+                            <td align="center" valign="top" style="color:#606060; font-family:Helvetica, Arial, sans-serif; font-size:11px; line-height:150%; padding-right:20px; padding-bottom:5px; padding-left:20px; text-align:center;">
+                                                                        Bitte antworten Sie nicht auf diese E-Mail. Sie wurde automatisch erstellt.
+                                <br>
+                                <br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <style type="text/css">
+        @media only screen and (max-width: 480px) {
+            table#canspamBar td {
+                font-size: 14px !important;
+            }
+
+            table#canspamBar td a {
+                display: block !important;
+                margin-top: 10px !important;
+            }
+        }
+        </style>
+    </center>
+</body>
+</html>
+';
+        $mailer = new MailerController();
+        $mailer->sendeEmail('Ihr neues Passwort bei ALLTAG',$emailInhalt,$email);
+
+
+
+
+        return ['success'=>''];
+
+    }
+
+
 
 
 

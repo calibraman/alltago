@@ -66,7 +66,7 @@
                     <label for="email" class="col-md-4 col-form-label text-md-end">E-Maill Adresse:</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" autofocus>
+                        <input id="email" type="email" class="form-control" name="email" value="" autofocus>
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <label for="password" class="col-md-4 col-form-label text-md-end">Passwort:</label>
 
                     <div class="col-md-6">
-                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" class="form-control" name="password">
 
                     </div>
                 </div>
@@ -166,17 +166,17 @@
         <div class="me-3 ms-3 mt-4">
             <h2 class="text-uppercase font-900 mb-0">Passwort vergessen?</h2>
             <p class="font-11 mb-3">
-                Kein Problem, geben Sie hier bitte Ihre E-Mail Adresse ein und Sie erhalten sofort ein neues Passwort.
+                Kein Problem, geben Sie hier bitte Ihre E-Mail Adresse ein mit der Sie sich registiert haben und Sie erhalten sofort ein neues Passwort.
             </p>
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-at"></i>
-                <input type="email" class="form-control validate-email" id="form1a4" placeholder="E-Mail Adresse">
+                <input type="email" class="form-control" id="txtNeuesPasswortUsername" placeholder="E-Mail Adresse">
                 <label for="form1a4" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
                 <em>(erforderlich)</em>
             </div>
-            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3">Neues Passwort zusenden</a>
+            <a href="#" class="btn btn-full btn-m shadow-l rounded-s bg-highlight text-uppercase font-900 mb-3" onclick="neuesPasswortZusenden()">Neues Passwort zusenden</a>
         </div>
     </div>
 
@@ -219,6 +219,39 @@
 
         var email = $("#email").val();
         var password = $("#password").val();
+
+
+        if (email == "") {
+            Toastify({
+                text: "Bitte geben Sie die E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+        if (validateEmail(email)) {
+        } else {
+            Toastify({
+                text: "Bitte geben Sie eine gültige E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+        if (password == "") {
+            Toastify({
+                text: "Bitte geben Sie ein Passwort an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+
 
         $.ajax({
             type: "POST",
@@ -417,6 +450,62 @@
         });
     }
 
+
+    function neuesPasswortZusenden() {
+        var txtNeuesPasswortUsername = $('#txtNeuesPasswortUsername').val().trim();
+
+        if (txtNeuesPasswortUsername == "") {
+            Toastify({
+                text: "Bitte geben Sie die E-Mail Adresse an, mit der sie sich registriert haben.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+        if (validateEmail(txtNeuesPasswortUsername)) {
+        } else {
+            Toastify({
+                text: "Bitte geben Sie eine gültige E-Mail Adresse an.",className:"info",duration: 5000,position:"center",stopOnFocus: true,
+                style: {
+                    background:"#FA896B"
+                }
+            }).showToast();
+            return false;
+        }
+
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url:"{{ route('user.passwortZuruecksetzen') }}",
+            data: {'txtNeuesPasswortUsername': txtNeuesPasswortUsername },
+            success: function(data) {
+                console.log(data);
+                if(data.ergebnis == "fehler") {
+                    Swal.fire({
+                        title: 'Fehler',
+                        text: data.text2,
+                        type: 'error',
+                        icon: 'error',
+                        confirmButtonColor: '#6ADA7D'
+                    });
+                } else {
+                    Toastify({
+                        text: "Ihr Passwort wurde zurückgesetzt. Bitte prüfen Sie Ihren Posteingang und ggf. den SPAM-Ordner.",
+                        className: "info",
+                        duration: 5000,
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#6ADA7D"
+                        }
+                    }).showToast();
+                }
+            }
+        });
+
+    }
 
 
     function validateEmail(email) {

@@ -385,7 +385,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             },
             error: function () {
                 // Fehlerbehandlung, wenn Daten nicht abgerufen werden können
-                console.log('Fehler beim Abrufen der Events.');
+                // console.log('Fehler beim Abrufen der Events.');
             }
         });
     }
