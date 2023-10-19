@@ -66,7 +66,7 @@
                     <label for="email" class="col-md-4 col-form-label text-md-end">E-Maill Adresse:</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" autofocus>
 
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <label for="password" class="col-md-4 col-form-label text-md-end">Passwort:</label>
 
                     <div class="col-md-6">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
 
                     </div>
                 </div>
@@ -322,6 +322,10 @@
                         confirmButtonColor: '#6ADA7D'
                     });
                 } else {
+
+                    $("#email").val(email);
+                    $("#password").val(passwort);
+                    $("#login-form").submit();
                     Toastify({
                         text: "Herzlich willkommen :)",
                         className: "info",

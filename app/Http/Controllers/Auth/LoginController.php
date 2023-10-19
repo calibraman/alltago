@@ -49,7 +49,7 @@ class LoginController extends Controller
             return response()->json(['message' => 'Erfolgreich eingeloggt']);
         } else {
             // Authentifizierung fehlgeschlagen
-            return response()->json(['message' => 'Die E-Mail Adresse oder das Passwort ist ungültig'], 401);
+            return response()->json(['message' => 'Die E-Mail Adresse oder das Passwort ist ungültig.'], 401);
         }
     }
 
