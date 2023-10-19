@@ -481,7 +481,6 @@
             url:"{{ route('user.passwortZuruecksetzen') }}",
             data: {'txtNeuesPasswortUsername': txtNeuesPasswortUsername },
             success: function(data) {
-                console.log(data);
                 if(data.ergebnis == "fehler") {
                     Swal.fire({
                         title: 'Fehler',
