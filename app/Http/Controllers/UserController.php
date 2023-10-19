@@ -49,7 +49,7 @@ class UserController extends Controller
         return $stack;
 
     }
-    
+
     public function logout(Request $request)
     {
 
@@ -505,16 +505,16 @@ class UserController extends Controller
                                                                 <tr>
                                                                     <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" align="center" valign="top">
                                                                         <a href="https://www.telefusion.de" style="display:block" target="_blank">
-                                                                            <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://dim.mcusercontent.com/cs/ce6b72c1c5d60036ec96a0f3b/images/86e8594c-f53f-22a6-39c7-f39291674310.png?w=161&dpr=2" class="">
+                                                                            <img width="160.954157782516" style="border:0;width:160.954157782516px;height:auto;max-width:100%;display:block" alt="Logo" src="https://alltago.de/mobile-ios/images/pictures/logo.png" class="">
                                                                         </a>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding-top:12px;padding-bottom:12px;padding-right:24px;padding-left:24px" class="mceSpacing-24" valign="top">
                                                                         <div class="mceText" style="font-size:16px;text-align:center;width:100%">
-                                                                            <h1>Willkommen bei TELEFLOW</h1>
+                                                                            <h1>Willkommen bei ALLTAGO</h1>
                                                                             <p class="last-child">
-                                                                                Sie können sich nun auf<br><br><a href="https://teleflow.de">https://teleflow.de</a><br><br>einloggen mit folgenden Angaben:
+                                                                                Sie können sich nun in die ALLTAGO-App mit folgenden Angaben einloggen:
                                                                                 <br>
                                                                                 <br>Benutzer: '.$email.'
                                                                                 <br>Passwort: '.$passwortLesbar.'
@@ -936,7 +936,7 @@ class UserController extends Controller
                                                                                 Sie erhalten diese E-Mail, da für Sie ein neues Passwort beantragt wurde.
                                                                                 <br>
                                                                                 <br>
-                                                                                Sie können sich nun mit folgenden Angaben einloggen:
+                                                                                Sie können sich nun mit folgenden Angaben in der ALLTAGGO-App einloggen:
                                                                                 <br>
                                                                                 <br>Benutzer: '.$email.'
                                                                                 <br>Passwort: '.$passwortLesbar.'
@@ -1001,7 +1001,7 @@ class UserController extends Controller
 </html>
 ';
         $mailer = new MailerController();
-        $mailer->sendeEmail('Ihr neues Passwort bei ALLTAG',$emailInhalt,$email);
+        $mailer->sendeEmail('Ihr neues Passwort bei ALLTAGO',$emailInhalt,$email);
 
 
 

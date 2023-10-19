@@ -14,7 +14,7 @@ class MailerController extends Controller
 {
 
     public function sendeEmail($betreff,$inhalt,$an,$cc = null,$bcc = null,$anhaenge = null,$pdo = null,$kundeID = null) {
-        require ("../../vendor/autoload.php");
+        require ("../vendor/autoload.php");
         $mail = new PHPMailer(true);     // Passing `true` enables exceptions
 
 
@@ -41,7 +41,9 @@ class MailerController extends Controller
             $mail->Body    = $inhalt;
             $mail->isHTML(true);                // Set email content format to HTML
 
-
+            if( !$mail->send() ) {
+                return array('ergebnis' => 'fehler' , 'text1' => "Die E-Mail konnte nicht gesendet werden." , 'text2' => $mail->ErrorInfo);
+            }
             return array('ergebnis' => 'erfolgreich' , 'text1' => "Erfolgreich" , 'text2' => 'text2');
 
 
