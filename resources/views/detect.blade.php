@@ -19,7 +19,7 @@
         $(document).ready(function() {
             var userAgent = navigator.userAgent;
 
-            alert ("*" + userAgent + "*");
+            // alert ("*" + userAgent + "*");
 
             // Prüfen, ob der Benutzer ein iOS-Gerät verwendet
             if (userAgent == "webviewgold") {
