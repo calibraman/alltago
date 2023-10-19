@@ -44,12 +44,13 @@ class MailerController extends Controller
             if( !$mail->send() ) {
                 return array('ergebnis' => 'fehler' , 'text1' => "Die E-Mail konnte nicht gesendet werden." , 'text2' => $mail->ErrorInfo);
             }
-            return array('ergebnis' => 'erfolgreich' , 'text1' => "Erfolgreich" , 'text2' => 'text2');
-
 
         } catch (Exception $e) {
             return array('ergebnis' => 'fehler' , 'text1' => "Die E-Mail konnte nicht gesendet werden." , 'text2' => $mail->ErrorInfo);
         }
+
+        return array('ergebnis' => 'erfolgreich' , 'text1' => "Erfolgreich" , 'text2' => 'text2');
+
     }
 
 

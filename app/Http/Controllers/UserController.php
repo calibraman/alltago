@@ -1018,8 +1018,8 @@ class UserController extends Controller
 </html>
 ';
         $mailer = new MailerController();
-        $mailer->sendeEmail('Ihr neues Passwort bei ALLTAGO',$emailInhalt,$email);
-
+        $arrErgebnis = $mailer->sendeEmail('Ihr neues Passwort bei ALLTAGO',$emailInhalt,$email);
+        print_r($arrErgebnis);
 
 
 
