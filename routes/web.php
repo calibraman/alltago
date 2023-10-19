@@ -70,7 +70,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('user.holeFeedWochenbuch', [UserController::class, 'holeFeedWochenbuch'])->name('user.holeFeedWochenbuch')->middleware(['auth', 'verified']);
     Route::post('user.crop-userimage-upload', [UserController::class, 'uploadCropImage'])->name('user.crop-userimage-upload')->middleware(['auth', 'verified']);
     Route::post('user.einstellungenSpeichern', [UserController::class, 'einstellungenSpeichern'])->name('user.einstellungenSpeichern')->middleware(['auth', 'verified']);
-    Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
     Route::post('user.passwortAendern', [UserController::class, 'benutzerPasswortAendern'])->name('user.passwortAendern');
 
     Auth::routes();
@@ -79,11 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-// Falls keine aktive Sitzung existiert, wird der Benutzer zur Login-Seite umgeleitet.
-
-
 Route::post('loginKai', [LoginController::class, 'loginKai'])->name('loginKai');
 Route::post('user.passwortZuruecksetzen', [UserController::class, 'benutzerPasswortZuruecksetzen'])->name('user.passwortZuruecksetzen');
+Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
 
 
 Route::get('splash', function () {
@@ -97,6 +94,7 @@ Route::get('/', function () {
         return view('splash');
     });
 
+    // Falls keine aktive Sitzung existiert, wird der Benutzer zur Login-Seite umgeleitet.
     return view('detect');
     //return redirect('https://www.google.de');
 });

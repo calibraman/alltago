@@ -43,14 +43,15 @@
             // Prüfen, ob der Benutzer ein iOS-Gerät verwendet
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 // Der Benutzer verwendet ein iOS-Gerät
-                window.location.href = "/home";
+                // window.location.href = "/home";
             } else if (/Android/.test(userAgent)) {
                 // Der Benutzer verwendet ein Android-Gerät
-                window.location.href = "/home";
+                // window.location.href = "/home";
             } else {
                 // Der Benutzer verwendet weder iOS noch Android
-                window.location.href = "https://www.google.de";
+                //window.location.href = "https://www.google.de";
             }
+            alert (userAgent);
         })
 
 
