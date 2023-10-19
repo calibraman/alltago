@@ -365,7 +365,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 // Prüfen ob es eine Messung gibt, Erstaufruf oder es wird der footer eingefügt
                 if ($('#eventContainer').html() == "") {
                     $('#eventContainer').append('<div class="card card-style" style="background-color: #7EB9AB;display: flex;justify-content: center; align-items: center;" onclick="zeigeNeueMessungModal()">' +
-                        '<img src="mobile-ios/images/pictures/herz_mit_stetoskop.jpg" alt="" style="max-width: 20%;height: auto">' +
+                        '<img src="mobile-ios/images/pictures/herz_mit_stetoskop.jpg" alt="" style="max-width: 30%;height: auto">' +
                         '<br>' +
                         '<div class="text-center text-white mb-3">Tragen Sie den ersten Messwert ein.<br>' +
                         'Klicken Sie hier oder unten im Menü auf "Neue Messung".</div>' +
