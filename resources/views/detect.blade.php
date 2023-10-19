@@ -36,6 +36,7 @@
                 window.location.href = "https://www.alltago.app";
             }
 
+            window.location.href = "https://www.alltago.de/splash";
         })
 
 
