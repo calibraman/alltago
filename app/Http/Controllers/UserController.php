@@ -596,6 +596,23 @@ class UserController extends Controller
 
         $email = trim($request->txtNeuesPasswortUsername);
 
+        // Ermittlung ob der Benutzer bzw. E-Mail Adresse besteht
+        try {
+            $stmt = $pdo->prepare("SELECT
+                                        id
+                                    FROM
+                                        users
+                                    WHERE
+                                        email = '".$email."'");
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                $benutzerID = $row['id'];
+            }
+        } catch (\PDOException $e) {
+            return json_encode(array('ergebnis' => 'fehler', 'text1' => "Fehler", 'text2' => "Die vorhandenen E-Mail Adresseon konnten nicht ermittelt werden.<br><br>" . $e->getMessage()));
+        }
+
+
         $passwortLesbar = $this->generierePasswort(8, 3, 5, true);
         $passwort = Hash::make($passwortLesbar);
         try {
