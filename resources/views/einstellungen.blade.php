@@ -97,7 +97,7 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
                 <?php
                 if (empty(Auth::user()->profilbild)) {
                 } else {
-                    echo ('<img src="{{ URL::asset(\'intern/pictures/users/\' . Auth::user()->profilbild) }}" alt="" class="img-thumbnail rounded-circle" style="width:100px">');
+                    echo ('<img src="{{ URL::asset(\'intern/pictures/users/'.Auth::user()->profilbild).'" alt="" class="img-thumbnail rounded-circle" style="width:100px">');
                 }
                 ?>
                 <span class="text-muted">Bitte wählen Sie ein Foto aus oder erstellen Sie eines auf einem Smartphone/Tablet mit der Kamera:</span><br>
