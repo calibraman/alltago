@@ -100,4 +100,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('detect', function () {
+    return view('detect');
+})->name('detect');
+
+
 
