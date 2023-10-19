@@ -40,16 +40,10 @@
                         Um ALLTAGO nutzen zu können benötigen Sie einen sicheren Zugang - schließlich handelt es sich um vertrauliche Daten.<br><br>Dieser ist Zugang kostenfrei.<br><br>Ihre Daten werden nicht an Dritte weitergegeben, das ist unser Versprechen an Sie.
                     </p>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-success text-white">Sie haben einen Zugang?<br>Bitte hier klicken um sich einzuloggen</a>
-                        </div>
-                    </div>
-                </div>
+                <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
+<br>
+                <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-success text-white">Sie haben einen Zugang?<br>Bitte hier klicken um sich einzuloggen</a>
+                
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
             <div class="card-overlay-infinite preload-img" data-src="{{ URL::asset('mobile-ios/images/pictures/_bg-infinite.jpg') }}"></div>
