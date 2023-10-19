@@ -20,7 +20,7 @@ class MailerController extends Controller
 
         try {
             $mail= new PHPMailer();
-            $mail->SMTPDebug  = 0;
+            $mail->SMTPDebug  = 1;
             $mail->CharSet ="UTF-8";
             $mail->IsSMTP();
             $mail->SMTPAuth = true;
