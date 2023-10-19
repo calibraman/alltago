@@ -39,7 +39,7 @@
             // Prüfen, ob der Benutzer ein iOS-Gerät verwendet
             if (userAgent == "webviewgold") {
                 // Der Benutzer verwendet die App
-                window.location.href = "/splash";
+                window.location.href = "https://www.alltago.de/splash";
             } else if (/Android/.test(userAgent)) {
                 // Der Benutzer verwendet ein Android-Gerät
                 window.location.href = "https://www.alltago.app";
