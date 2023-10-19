@@ -35,15 +35,15 @@
             var userAgent = navigator.userAgent;
 
             // Prüfen, ob der Benutzer ein iOS-Gerät verwendet
-            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                // Der Benutzer verwendet ein iOS-Gerät
-                window.location.href = "https://www.alltago.app";
-            } else if (/Android/.test(userAgent)) {
-                // Der Benutzer verwendet ein Android-Gerät
-                // window.location.href = "/home";
-            }  else if (userAgent == "webviewgold") {
+            if (userAgent == "webviewgold") {
                 // Der Benutzer verwendet die App
                 window.location.href = "/splash";
+            } else if (/Android/.test(userAgent)) {
+                // Der Benutzer verwendet ein Android-Gerät
+                window.location.href = "https://www.alltago.app";
+            }  else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // Der Benutzer verwendet ein iOS-Gerät
+                window.location.href = "https://www.alltago.app";
             } else {
                 // Der Benutzer verwendet weder iOS noch Android
                 window.location.href = "https://www.alltago.app";
