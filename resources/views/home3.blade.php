@@ -41,9 +41,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         <!--<a href="#" data-toggle-theme class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>-->
         <?php
         if (empty(Auth::user()->profilbild)) {
-            echo ('d');
+            echo ('');
         } else {
-            echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle" >');
+            echo ('<img src="intern/pictures/users/'.Auth::user()->profilbild.'" alt="" class="header-icon header-icon-4 img-thumbnail rounded-circle" style="width:50px">');
         }
         ?>
     </div>
