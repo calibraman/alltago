@@ -1,3 +1,18 @@
+<?php
+
+
+if (isset($_GET['webview_language'])) {
+    header("Location: https://alltago.de/slpash");
+    exit;
+} else {
+    header("Location: https://alltago.app");
+    exit;
+}
+
+?>
+
+
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -9,16 +24,7 @@
 <body>
 
 Einen Moment bitte...
-<?php
-foreach ($_GET as $key => $value) {
- //   echo "Parameter: " . $key . ", Wert: " . $value . "<br>";
-}
 
-if (isset($_GET['webview_language'])) {
-    echo "APP!";
-}
-
-?>
 
     <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
 
