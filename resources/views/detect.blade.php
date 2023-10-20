@@ -8,11 +8,16 @@
 
 <body>
 
-GET:
+Einen Moment bitte...
 <?php
 foreach ($_GET as $key => $value) {
-    echo "Parameter: " . $key . ", Wert: " . $value . "<br>";
+ //   echo "Parameter: " . $key . ", Wert: " . $value . "<br>";
 }
+
+if (isset($_GET['webview_language'])) {
+    echo "APP!";
+}
+
 ?>
 
     <script src="{{ URL::asset('mobile-ios/assets/libs/jquery/jquery-3.6.3.min.js') }}"></script>
