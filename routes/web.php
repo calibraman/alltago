@@ -105,5 +105,9 @@ Route::get('detect', function () {
     return view('detect');
 })->name('detect');
 
-return view('detect');
+
+Route::get('/', function () { 
+    return view('detect');
+});
+
 
