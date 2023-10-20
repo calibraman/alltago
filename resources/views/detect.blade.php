@@ -2,7 +2,7 @@
 
 
 if (isset($_GET['webview_language'])) {
-    header("Location: https://alltago.de/slpash");
+    header("Location: https://alltago.de/splash");
     exit;
 } else {
     header("Location: https://alltago.app");
