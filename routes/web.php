@@ -88,6 +88,7 @@ Route::get('splash', function () {
 })->name('splash');
 
 
+/*
 Route::get('/', function () {
 
     Route::middleware(['auth', 'verified'])->group(function () {
@@ -95,14 +96,14 @@ Route::get('/', function () {
     });
 
     // Falls keine aktive Sitzung existiert, wird der Benutzer zur Login-Seite umgeleitet.
-    return view('detect');
+
     //return redirect('https://www.google.de');
-});
+});*/
 
 
 Route::get('detect', function () {
     return view('detect');
 })->name('detect');
 
-
+return view('detect');
 
