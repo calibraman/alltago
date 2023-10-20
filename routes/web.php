@@ -61,7 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
     /// BENUTZER
     ///////////////////
     ///////////////////
-    Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
     Route::post('user.messungEintragen', [UserController::class, 'messungEintragen'])->name('user.messungEintragen')->middleware(['auth', 'verified']);
     Route::post('user.messungBearbeiten', [UserController::class, 'messungBearbeiten'])->name('user.messungBearbeiten')->middleware(['auth', 'verified']);
     Route::post('user.messungLoeschen', [UserController::class, 'messungLoeschen'])->name('user.messungLoeschen')->middleware(['auth', 'verified']);
@@ -79,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::post('loginKai', [LoginController::class, 'loginKai'])->name('loginKai');
+Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
 Route::post('user.passwortZuruecksetzen', [UserController::class, 'benutzerPasswortZuruecksetzen'])->name('user.passwortZuruecksetzen');
 Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);
 
@@ -106,7 +106,7 @@ Route::get('detect', function () {
 })->name('detect');
 
 
-Route::get('/', function () { 
+Route::get('/', function () {
     return view('detect');
 });
 

@@ -118,7 +118,7 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-user"></i>
-                <input type="name" class="form-control validate-name" id="txtNeuerAnsprechpartnerVorname" placeholder="Vorname" value="Tester">
+                <input type="name" class="form-control validate-name" id="txtNeuerAnsprechpartnerVorname" placeholder="Vorname" value="">
                 <label for="txtNeuerAnsprechpartnerVorname" class="color-blue-dark">Vorname</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -127,7 +127,7 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-at"></i>
-                <input type="email" class="form-control validate-email" id="txtNeuerAnsprechpartnerEmail" placeholder="E-Mail Adresse" value="tester@teste.de">
+                <input type="email" class="form-control validate-email" id="txtNeuerAnsprechpartnerEmail" placeholder="E-Mail Adresse" value="">
                 <label for="txtNeuerAnsprechpartnerEmail" class="color-blue-dark">E-Mail Adresse</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -136,7 +136,7 @@
 
             <div class="input-style no-borders has-icon validate-field mb-4">
                 <i class="fa fa-lock"></i>
-                <input type="password" class="form-control validate-password" id="txtNeuerAnsprechpartnerPasswort" placeholder="Passwort" value="12345">
+                <input type="password" class="form-control validate-password" id="txtNeuerAnsprechpartnerPasswort" placeholder="Passwort" value="">
                 <label for="txtNeuerAnsprechpartnerPasswort" class="color-blue-dark">Passwort</label>
                 <i class="fa fa-times disabled invalid color-red-dark"></i>
                 <i class="fa fa-check disabled valid color-green-dark"></i>

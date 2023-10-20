@@ -32,7 +32,7 @@ Einen Moment bitte...
 
     <script>
 
-
+/*
         $(document).ready(function() {
             var userAgent = navigator.userAgent;
 
@@ -55,7 +55,7 @@ Einen Moment bitte...
 
           //  window.location.href = "https://www.alltago.de/splash";
         })
-
+*/
 
     </script>
 
