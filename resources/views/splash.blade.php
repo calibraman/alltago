@@ -184,37 +184,8 @@
 
 <script>
 
-
-
-
-    var getFaceID = document.getElementById('faceID')
-    getFaceID.addEventListener('click', function(){
-        window.location.href = "bioauth://";
-        return true;
-        if (isWebViewBrowser()) {
-            if (typeof uuid !== 'undefined') {
-                alert(uuid);
-            } else {
-                alert("undefined")
-            }
-        } else {
-            alert("The WebViewGold browser is needed to perform this function.")
-        }
-    })
-
-
-    function onBioAuthSuccess() {
-        alert("Bio Authentication Succeeded");
-    }
-
-    function onBioAuthFailure(errorCode, errorMessage) {
-        // errorCode = Int, errorMessage = String
-        alert(`Bio Authentication Failed, ${errorMessage} (code ${errorCode})`);
-    }
-
-    function onBioAuthUnavailable() {
-        alert("Bio Authentication Unavailable");
-    }
+    var usernameValue = "";
+    var passwordValue = "";
 
     $.ajaxSetup({
         headers: {
@@ -232,6 +203,69 @@
            }*/
         }
     })
+
+
+
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+        if (key == "username") usernameValue = value;
+        if (key == "password") passwordValue = value;
+    }
+
+    if (usernameValue !== "") {
+
+        $.ajax({
+            type: "POST",
+            url: "/login", // Der Pfad zu Ihrer Laravel-Login-Route
+            data: {
+                email: usernameValue,
+                password: passwordValue,
+            },
+            success: function(data) {
+
+                // Erfolgreicher Login - Weiterleitung oder andere Aktionen
+                window.location.href = "/home"; // Beispiel: Weiterleitung zur Dashboard-Seite
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.responseText;
+                var jsonObj = JSON.parse(errorMessage);
+                $("#error-message").text(jsonObj.message);
+            }
+        });
+    }
+
+
+    /*
+    var getFaceID = document.getElementById('faceID')
+    getFaceID.addEventListener('click', function(){
+        window.location.href = "bioauth://";
+        return true;
+        if (isWebViewBrowser()) {
+            if (typeof uuid !== 'undefined') {
+                alert(uuid);
+            } else {
+                alert("undefined")
+            }
+        } else {
+            alert("The WebViewGold browser is needed to perform this function.")
+        }
+    })
+
+    function onBioAuthSuccess() {
+        alert("Bio Authentication Succeeded");
+    }
+
+    function onBioAuthFailure(errorCode, errorMessage) {
+        // errorCode = Int, errorMessage = String
+        alert(`Bio Authentication Failed, ${errorMessage} (code ${errorCode})`);
+    }
+
+    function onBioAuthUnavailable() {
+        alert("Bio Authentication Unavailable");
+    }
+    */
+
 
 
     $("#login-form").submit(function(event) {
@@ -275,12 +309,16 @@
 
         $.ajax({
             type: "POST",
-            url: "/loginKai", // Der Pfad zu Ihrer Laravel-Login-Route
+            url: "/login", // Der Pfad zu Ihrer Laravel-Login-Route
             data: {
                 email: email,
                 password: password,
             },
             success: function(data) {
+
+                localStorage.setItem('username', email);
+                localStorage.setItem('password', password);
+
                 // Erfolgreicher Login - Weiterleitung oder andere Aktionen
                 window.location.href = "/home"; // Beispiel: Weiterleitung zur Dashboard-Seite
             },
@@ -291,11 +329,9 @@
             }
         });
     });
-</script>
 
 
 
-<script>
     function benutzerAnlegen() {
         var email = $('#txtNeuerAnsprechpartnerEmail').val().trim();
         var vorname = $('#txtNeuerAnsprechpartnerVorname').val().trim();
@@ -419,23 +455,6 @@
             }).showToast();
             return false;
         }
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            statusCode: {
-                /*   401: function(){
-                       location.href = "./";
-                   },
-                   419: function(){
-                       location.href = "./";
-                   },
-               405: function(){
-                   location.href = "./";
-               }*/
-            }
-        })
 
         $.ajax({
             type: "POST",

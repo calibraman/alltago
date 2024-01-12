@@ -579,6 +579,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             cancelButtonColor: '#FA896B',
         }).then(function(result) {
             if(result.value) {
+
+                clearLocalStorage();
+
                 $.ajax({
                     type: "POST",
                     dataType: "json",
@@ -593,6 +596,9 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
         })
     }
 
+    function clearLocalStorage() {
+        localStorage.clear();
+    }
 </script>
 <script>
 

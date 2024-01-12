@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Route::post('loginKai', [LoginController::class, 'loginKai'])->name('loginKai');
+Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('user.anlegen', [UserController::class, 'userAnlegen'])->name('user.anlegen');
 Route::post('user.passwortZuruecksetzen', [UserController::class, 'benutzerPasswortZuruecksetzen'])->name('user.passwortZuruecksetzen');
 Route::post('user.logout', [UserController::class, 'logout'])->name('user.logout')->middleware(['auth', 'verified']);

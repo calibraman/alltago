@@ -692,6 +692,16 @@ if (date('G') >= 17) $anrede = 'Guten Abend';
             }
         })
     }
+
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+
+        console.log('Key:', key, 'Value:', value);
+
+        if (key == "username") usernameValue = value;
+        if (key == "password") passwordValue = value;
+    }
 </script>
 
 
