@@ -43,7 +43,7 @@
                 <a href="#" data-menu="menu-signup" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-highlight">Sie haben noch keinen Zugang?<br>Erstellen Sie hier einen kostenfrei</a>
 <br>
                 <a href="#" data-menu="menu-signin" class="btn btn-m font-900 text-uppercase rounded-l btn-center-xl mb-3 mt-5 bg-success text-white">Sie haben einen Zugang?<br>Bitte hier klicken um sich einzuloggen</a>
-
+                <button id="faceID" class="button">Face-ID</button>
             </div>
             <div class="card-overlay bg-theme opacity-85"></div>
             <div class="card-overlay-infinite preload-img" data-src="{{ URL::asset('mobile-ios/images/pictures/_bg-infinite.jpg') }}"></div>
@@ -183,6 +183,38 @@
 
 
 <script>
+
+
+
+
+    var getFaceID = document.getElementById('faceID')
+    getFaceID.addEventListener('click', function(){
+        window.location.href = "bioauth://";
+        return true;
+        if (isWebViewBrowser()) {
+            if (typeof uuid !== 'undefined') {
+                alert(uuid);
+            } else {
+                alert("undefined")
+            }
+        } else {
+            alert("The WebViewGold browser is needed to perform this function.")
+        }
+    })
+
+
+    function onBioAuthSuccess() {
+        alert("Bio Authentication Succeeded");
+    }
+
+    function onBioAuthFailure(errorCode, errorMessage) {
+        // errorCode = Int, errorMessage = String
+        alert(`Bio Authentication Failed, ${errorMessage} (code ${errorCode})`);
+    }
+
+    function onBioAuthUnavailable() {
+        alert("Bio Authentication Unavailable");
+    }
 
     $.ajaxSetup({
         headers: {
